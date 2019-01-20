@@ -1,2 +1,2 @@
-# ktwo
+# k'two
 Currently unannounced project
