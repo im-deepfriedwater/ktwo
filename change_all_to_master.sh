@@ -8,7 +8,7 @@ while true; do
         [Yy]* ) 
             echo "Changing to both branches to master..."
             git checkout master
-            cd unity-ktwo/Assets/ExternalAssets/ktwo-Assets
+            cd unity-ktwo/Assets/ExternalAssets/assets-ktwo
             git checkout master
             cd $pwd
             echo "Done!"

@@ -5,7 +5,7 @@ while true; do
     case $yn in
         [Yy]* ) 
             git pull  
-            cd unity-ktwo/assets/ExternalAssets/ktwo-assets
+            cd unity-ktwo/assets/ExternalAssets/assets-ktwo
             git pull
             cd $cwd
             exit;;
