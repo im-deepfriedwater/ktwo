@@ -5,7 +5,6 @@
 ## How to access these assets?
 
 - Simply get access to the repository and clone it here! 
-
   - Version control within the repository is standard.
   - It is important to make sure not only is the main repository synced, but that this repository is synced as well! 
     - This can get confusing between branches, so keep  in communication and keep branch names between the two repositories synced up.
