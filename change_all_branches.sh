@@ -1,15 +1,4 @@
-while true; do
-    cwd=$(pwd)
-    echo "Please run this while in the root directory of the repository."
-    read -p "Change ? [y\n]: " yn
-    case $yn in
-        [Yy]* ) 
-            git pull  
-            cd unity-ktwo/assets/ExternalAssets/assets-ktwo
-            git pull
-            cd $cwd
-            exit;;
-        [Nn]* ) echo "Okie, cancelling..." && exit;;
-        * ) echo "Please enter: [y\n]";;
-    esac
-done
+# Echo to user what this script does.
+# Ask for confirmation before continuing.
+# If user gives consent, ask for the name of the branch the user wants to switch ALL repositories too.
+# Be sure to return the user to their original path they were in before starting the script.
