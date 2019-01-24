@@ -8,6 +8,6 @@
   - Version control within the repository is standard.
   - It is important to make sure not only is the main repository synced, but that this repository is synced as well! 
     - This can get confusing between branches, so keep  in communication and keep branch names between the two repositories synced up.
-  - I'll keep a simple .sh script at the root directory that will pull both the main repository and the nested repository. 
+  - I'll keep a few .sh scripts in the root directory to make accessing this nested repository and keeping it updated relatively simple.
 
   

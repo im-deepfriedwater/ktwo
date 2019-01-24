@@ -15,7 +15,7 @@ while true; do
             break
             ;;
         [Nn]* ) 
-            echo "Okie, cancelling..." && exit
+            echo "Okie, cancelling..." && break
             ;;
         * )  
             echo ""
