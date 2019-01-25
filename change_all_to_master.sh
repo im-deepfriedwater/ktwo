@@ -10,7 +10,7 @@ while true; do
             git checkout master
             cd unity-ktwo/Assets/ExternalAssets/assets-ktwo
             git checkout master
-            cd $cwd
+            cd "$cwd"
             echo "Done!"
             break
             ;;

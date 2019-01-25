@@ -3,5 +3,4 @@ cwd=$(pwd)
 cd unity-ktwo/Assets/ExternalAssets/assets-ktwo
 echo "Branch at path: $(pwd)"
 git branch
-cd $cwd
-echo "_____________________"
+cd "$cwd"
