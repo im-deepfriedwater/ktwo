@@ -1,13 +1,13 @@
 cwd=$(pwd)
 echo "Please run this while in the root directory of the repository."
-read -p "Change all repos to which branch? [branch name]: " branchName
+read -p "What branch do you want to create on all repos? [branch name]: " branchName
 
 while true; do
- read -p "Change all branches to $branchName ? [y\n]: " yn
+ read -p "Create $branchName on all repos? [y\n]: " yn
     case $yn in
-        [Yy]* ) git checkout "$branchName"
+        [Yy]* ) git checkout -b "$branchName"
         cd unity-ktwo/assets/ExternalAssets/assets-ktwo
-        git checkout "$branchName"
+        git checkout -b "$branchName"
         cd "$cwd"
         break;;
         [Nn]* ) echo "Okie, cancelling..." && break;;
