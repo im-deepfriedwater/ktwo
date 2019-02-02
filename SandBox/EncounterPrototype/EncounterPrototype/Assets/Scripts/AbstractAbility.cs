@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public abstract class AbstractAbility : MonoBehaviour
 {
-
     public Buttons[] inputButtons;
-    public MonoBehaviour[] disableScripts;
     public float cooldown;
 
     [Range(0, 3)]
@@ -89,13 +87,5 @@ public abstract class AbstractAbility : MonoBehaviour
     protected virtual void Awake()
     {
         inputState = GetComponent<InputState>();
-    }
-
-    protected void ToggleScripts(bool value)
-    {
-        foreach (var script in disableScripts)
-        {
-            script.enabled = value;
-        }
     }
 }
