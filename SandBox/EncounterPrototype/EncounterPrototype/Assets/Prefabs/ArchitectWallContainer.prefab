@@ -37,13 +37,13 @@ GameObject:
   - component: {fileID: 33850530622852020}
   - component: {fileID: 23814229178971568}
   - component: {fileID: 65961016805337060}
-  - component: {fileID: 111571931671762932}
+  - component: {fileID: 95236908362832648}
   m_Layer: 0
   m_Name: ArchitectWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &4435379868929064
 Transform:
@@ -52,7 +52,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1115670171414198}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.56, y: -1.55, z: 1.87}
+  m_LocalPosition: {x: 5.567315, y: -1.65, z: -22.508656}
   m_LocalScale: {x: 2.582786, y: 2.9159653, z: -0.9840221}
   m_Children:
   - {fileID: 4624311973885620}
@@ -66,8 +66,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1692240931094456}
   m_LocalRotation: {x: 0, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.02, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -0.02, z: 0.00000012114}
+  m_LocalScale: {x: 1, y: 1, z: 0.29116}
   m_Children: []
   m_Father: {fileID: 4435379868929064}
   m_RootOrder: 0
@@ -87,7 +87,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: dd1be64ed03fd8a418d4aa8101a88173, type: 2}
+  - {fileID: 2100000, guid: a4cf20bbf9f03e54bafe1a27a993962b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -126,18 +126,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!111 &111571931671762932
-Animation:
+--- !u!95 &95236908362832648
+Animator:
+  serializedVersion: 3
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1692240931094456}
   m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations:
-  - {fileID: 7400000, guid: 38fc6c69ee16f3847bcde411e202e747, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a2e8bb84ca697ea409517c598bccac75, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

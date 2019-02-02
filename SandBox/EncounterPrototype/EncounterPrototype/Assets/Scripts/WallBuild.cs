@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallBuild : AbstractBehaviour
+public class WallBuild : AbstractAbility
 {
     [SerializeField]
-    public GameObject wallPrefab; // Wall prefab that the Architect builds.
+    GameObject wallPrefab; // Wall prefab that the Architect builds.
     [SerializeField]
-    public float wallBuildDistance = 5; // Distance to spawn wall from player.
+    float wallDistanceFactor = 3.5f; // Distance to spawn wall from player.
     [SerializeField]
-    float wallHeight = 5;
+    float wallHeightOffset = 5;
 
     Transform playerTransform;
 
-    private void Start()
+     void Start()
     {
+        Initialize();
         playerTransform = GetComponent<Transform>();
     }
 
@@ -27,17 +28,20 @@ public class WallBuild : AbstractBehaviour
             StartCoroutine("WaitForCooldown");
             SpawnWall();
         }
+
+        UpdateAbilityUI();
     }
 
     void SpawnWall()
-    { 
+    {
         var newPosition = new Vector3(
-            playerTransform.position.x, 
-            playerTransform.position.y + wallHeight, 
-            playerTransform.position.z + wallBuildDistance
+            playerTransform.position.x,
+            playerTransform.position.y + wallHeightOffset,
+            playerTransform.position.z
         );
-   
-        Object.Instantiate(wallPrefab, newPosition, playerTransform.rotation);
+
+        newPosition += playerTransform.forward * wallDistanceFactor;
+        Instantiate(wallPrefab, newPosition, playerTransform.rotation);
     }
 
 }
