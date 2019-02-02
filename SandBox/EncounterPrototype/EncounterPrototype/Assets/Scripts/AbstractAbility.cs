@@ -40,17 +40,16 @@ public abstract class AbstractAbility : MonoBehaviour
 
     private void MarkAbilityAsUsed()
     {
-        // abilityGroupImage.enabled = false;
+        abilityGroupImage.enabled = false;
 
     }
 
     private void UpdateCooldownMask()
     {
         abilityIcon.fillAmount = cooldownPercentage; // The range is from 0 - 1
-        Debug.Log(cooldownPercentage);
     }
 
-    protected void UpdateAbilityUI() // This should be called at some point in the derived ability's update method
+    protected void UpdateAbilityUI() // This should be called at some point in the derived's update method
     {
         if (cooldownOver)
         {
@@ -58,7 +57,8 @@ public abstract class AbstractAbility : MonoBehaviour
         }
         else
         {
-            MarkAbilityAsUsed();
+            // Commented out right now because it looks better without it.
+            // MarkAbilityAsUsed();
             UpdateCooldownMask();
         }
     }

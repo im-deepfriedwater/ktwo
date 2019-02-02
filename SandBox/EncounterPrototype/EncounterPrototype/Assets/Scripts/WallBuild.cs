@@ -28,7 +28,6 @@ public class WallBuild : AbstractAbility
             StartCoroutine("WaitForCooldown");
             SpawnWall();
         }
-
         UpdateAbilityUI();
     }
 

@@ -249,8 +249,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 372312367}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.6190505, y: 0.02, z: -4.57}
-  m_LocalScale: {x: 8.594409, y: 0.0636621, z: 2.7213}
+  m_LocalPosition: {x: 1.6190505, y: 0.07, z: -4.57}
+  m_LocalScale: {x: 9.245007, y: 0.0636621, z: 2.7213}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
@@ -356,7 +356,7 @@ MonoBehaviour:
     offValue: 0
     button: 4
     condition: 0
-  - axisName: 1
+  - axisName: Fire2
     offValue: 0
     button: 5
     condition: 0
