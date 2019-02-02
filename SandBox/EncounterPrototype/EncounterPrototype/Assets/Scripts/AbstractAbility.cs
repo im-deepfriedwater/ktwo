@@ -5,12 +5,15 @@ using UnityEngine.UI;
 
 public abstract class AbstractAbility : MonoBehaviour
 {
+
     public Buttons[] inputButtons;
     public MonoBehaviour[] disableScripts;
     public float cooldown;
+
     [Range(0, 3)]
     public int abilitySlot;
 
+    protected Transform playerTransform;
     protected InputState inputState;
     protected Image abilityIcon;
     protected bool cooldownOver = true;
@@ -27,8 +30,12 @@ public abstract class AbstractAbility : MonoBehaviour
         abilityIcon = GameObject
             .Find(string.Format("AbilityIcon{0}", abilitySlot))
             .GetComponent<Image>();
+    }
 
-        Debug.Log(abilityIcon.name);
+    void Start() // Will get called automatically on startup.
+    {
+        Initialize();
+        playerTransform = GetComponent<Transform>();
     }
 
     #region ability icon UI methods
