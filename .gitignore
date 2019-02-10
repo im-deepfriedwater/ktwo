@@ -1,6 +1,9 @@
 # K'two specific
 unity-ktwo/Assets/ExternalAssets/assets-ktwo/
 
+# personal vscode settings
+.vscode/
+
 # end
 
 [Ll]ibrary/
