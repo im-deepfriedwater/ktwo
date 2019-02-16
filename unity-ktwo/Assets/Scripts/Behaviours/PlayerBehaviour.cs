@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Invector.CharacterController;
+using UnityEngine.UI;
 
 public class PlayerBehaviour : MonoBehaviour
-{
+{   
+    public Slider healthBar;
     public float defaultSpeed;
     vThirdPersonController playerController;
     Collider lastCollided;
@@ -15,7 +17,9 @@ public class PlayerBehaviour : MonoBehaviour
     void Start()
     {
         playerController = GameObject.Find("Player").GetComponent<vThirdPersonController>();
+        healthBar = GameObject.Find("HealthBarSlider").GetComponent<Slider>();
         ResetSpeed();
+        GetComponent<Rigidbody>().AddForce(new Vector3(100, 100, 100));
     }
 
 
@@ -47,5 +51,15 @@ public class PlayerBehaviour : MonoBehaviour
     private void ResetSpeed()
     {
         playerController.freeRunningSpeed = defaultSpeed;
+    }
+
+    public void UpdateHealthBar(float healthPercentage)
+    {
+        healthBar.value = healthPercentage;
+    }
+
+    public void Die ()
+    {
+        Debug.Log("ur ded");
     }
 }
