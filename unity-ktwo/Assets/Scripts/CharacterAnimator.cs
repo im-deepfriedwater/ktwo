@@ -15,7 +15,6 @@ public class CharacterAnimator : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
-        Debug.Log(animator.gameObject.name);
     }
 
     // Update is called once per frame

@@ -8,7 +8,8 @@ using UnityEngine.EventSystems;
 namespace Invector.CharacterController
 {
     public abstract class vThirdPersonMotor : MonoBehaviour
-    {
+    {   
+        #region BuiltIn
         #region Variables        
 
         #region Layers
@@ -157,6 +158,12 @@ namespace Invector.CharacterController
         #endregion
 
         #endregion
+        #endregion
+
+        #region Ktwo
+        PlayerBehaviour player;
+        #endregion
+        
 
         public void Init()
         {
@@ -168,16 +175,16 @@ namespace Invector.CharacterController
             // slides the character through walls and edges
             frictionPhysics = new PhysicMaterial();
             frictionPhysics.name = "frictionPhysics";
-            frictionPhysics.staticFriction = .25f;
-            frictionPhysics.dynamicFriction = .25f;
-            frictionPhysics.frictionCombine = PhysicMaterialCombine.Multiply;
+            // frictionPhysics.staticFriction = .25f;
+            // frictionPhysics.dynamicFriction = .25f;
+            // frictionPhysics.frictionCombine = PhysicMaterialCombine.Multiply;
 
             // prevents the collider from slipping on ramps
             maxFrictionPhysics = new PhysicMaterial();
             maxFrictionPhysics.name = "maxFrictionPhysics";
-            maxFrictionPhysics.staticFriction = 1f;
-            maxFrictionPhysics.dynamicFriction = 1f;
-            maxFrictionPhysics.frictionCombine = PhysicMaterialCombine.Maximum;
+            // maxFrictionPhysics.staticFriction = 1f;
+            // maxFrictionPhysics.dynamicFriction = 1f;
+            // maxFrictionPhysics.frictionCombine = PhysicMaterialCombine.Maximum;
 
             // air physics 
             slippyPhysics = new PhysicMaterial();
@@ -191,6 +198,8 @@ namespace Invector.CharacterController
 
             // capsule collider info
             _capsuleCollider = GetComponent<CapsuleCollider>();
+            player = GetComponent<PlayerBehaviour>();
+
         }
 
         public virtual void UpdateMotor()
@@ -270,15 +279,14 @@ namespace Invector.CharacterController
                 var velX = transform.right * velocity * direction;
                 velX.x = _rigidbody.velocity.x;
 
-                if (isStrafing)
+                if (player.recentlyHit)
                 {
-                    Vector3 v = (transform.TransformDirection(new Vector3(input.x, 0, input.y)) * (velocity > 0 ? velocity : 1f));
-                    v.y = _rigidbody.velocity.y;
-                    _rigidbody.velocity = Vector3.Lerp(_rigidbody.velocity, v, 20f * Time.deltaTime);
+                    _rigidbody.AddForce(transform.forward * (velocity * speed) * Time.deltaTime, ForceMode.VelocityChange);
+
                 }
                 else
                 {
-                    _rigidbody.velocity = velY;
+                    _rigidbody.velocity = velY; // This line right here prevents changes in velocity from other scripts.
                     _rigidbody.AddForce(transform.forward * (velocity * speed) * Time.deltaTime, ForceMode.VelocityChange);
                 }
             }
@@ -355,7 +363,10 @@ namespace Invector.CharacterController
 
             // change the physics material to very slip when not grounded or maxFriction when is
             if (isGrounded && input == Vector2.zero)
-                _capsuleCollider.material = maxFrictionPhysics;
+            {
+            _capsuleCollider.material = maxFrictionPhysics;
+            }
+                
             else if (isGrounded && input != Vector2.zero)
                 _capsuleCollider.material = frictionPhysics;
             else

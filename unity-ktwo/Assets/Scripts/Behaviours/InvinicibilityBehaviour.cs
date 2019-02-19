@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DELETETHIS : MonoBehaviour
+public class InvinicibilityBehaviour : MonoBehaviour
 {
+    PlayerBehaviour player;
+    float duration = 2; // 2 by default;
+
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<Rigidbody>().AddForce(50, 0, 100);
+        player = GetComponent<PlayerBehaviour>();
     }
 
     // Update is called once per frame

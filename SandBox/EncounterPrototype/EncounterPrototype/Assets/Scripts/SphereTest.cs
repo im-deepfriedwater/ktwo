@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DELETETHIS : MonoBehaviour
+public class SphereTest : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<Rigidbody>().AddForce(50, 0, 100);
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        var pos = GetComponent<Transform>().position;
+        GetComponent<Transform>().position = new Vector3(pos.x, pos.y + pos.y *0.01f * Time.deltaTime, pos.z);
     }
 }

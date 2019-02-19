@@ -13,6 +13,11 @@ public class Damagable : MonoBehaviour
     void Start()
     {
         currentHealth = startingHealth;
+
+        if (OnZeroHealth == null)
+        {
+            OnZeroHealth = new UnityEvent();
+        }
     }
 
     virtual public void Hit (float damage) 

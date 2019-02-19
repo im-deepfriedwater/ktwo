@@ -6,6 +6,7 @@ public class DamagablePlayer: Damagable
 {   
     public float health = 100; // 100 by default.
     public float knockbackScale = 2;
+    public float invincibilityDuration = 2; // 2 by default;
     public new UnityEventFloat OnHit; // Overrides original OnHit field.
     public Rigidbody rbd;
     
@@ -16,6 +17,7 @@ public class DamagablePlayer: Damagable
         {
             OnHit = new UnityEventFloat();
         }
+        OnHit.AddListener(GetComponent<PlayerBehaviour>().UpdateHealthBar);
     }
 
     override public void Hit (float damage)
@@ -41,9 +43,7 @@ public class DamagablePlayer: Damagable
 
     void KnockbackPlayer (Vector3 direction)
     {
-        Debug.Log("PUSHED");
-        Vector3 randomForce = new Vector3(10, 10, 10);
-        // rbd.AddForce(direction.normalized * 100);
-        rbd.AddForce(randomForce);
+        Debug.Log("pushed");
+        rbd.AddForce(direction * 1000, ForceMode.Acceleration);
     }
 }

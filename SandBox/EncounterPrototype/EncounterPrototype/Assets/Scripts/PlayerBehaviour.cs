@@ -21,10 +21,13 @@ public class PlayerBehaviour : MonoBehaviour
 
     void Update()
     {
-        if (!lastCollided) // Continegency in case trigger is destroyed before OnExit is called
-        {
-            ResetSpeed();
-        }
+        Debug.Log("lol");
+        GetComponent<Rigidbody>().AddForce(100, 100, 100, ForceMode.Force);
+        // if (!lastCollided) // Continegency in case trigger is destroyed before OnExit is called
+        // {
+        //     ResetSpeed();
+        // }
+
     }
 
     private void OnTriggerEnter(Collider other)

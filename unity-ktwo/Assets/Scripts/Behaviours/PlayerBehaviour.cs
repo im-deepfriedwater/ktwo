@@ -8,18 +8,19 @@ public class PlayerBehaviour : MonoBehaviour
 {   
     public Slider healthBar;
     public float defaultSpeed;
+    public float iFrameDuration;
+    public bool recentlyHit;
     vThirdPersonController playerController;
     Collider lastCollided;
 
     [Range(0, 10)]
-    public float boostedSpeedFactor; // 0 - 1
+    public float boostedSpeedFactor; // Goes from 0 - 1.
 
     void Start()
     {
         playerController = GameObject.Find("Player").GetComponent<vThirdPersonController>();
         healthBar = GameObject.Find("HealthBarSlider").GetComponent<Slider>();
         ResetSpeed();
-        GetComponent<Rigidbody>().AddForce(new Vector3(100, 100, 100));
     }
 
 
@@ -55,7 +56,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void UpdateHealthBar(float healthPercentage)
     {
-        healthBar.value = healthPercentage;
+        healthBar.value = 1 - healthPercentage;
     }
 
     public void Die ()

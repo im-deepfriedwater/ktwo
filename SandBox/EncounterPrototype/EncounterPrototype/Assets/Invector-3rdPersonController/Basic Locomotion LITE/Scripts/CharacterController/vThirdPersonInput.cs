@@ -63,7 +63,7 @@ namespace Invector.CharacterController
 
         protected virtual void FixedUpdate()
         {
-            cc.AirControl();
+            // cc.AirControl();
             CameraInput();
         }
 
