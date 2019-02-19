@@ -8,6 +8,8 @@ public enum Buttons {
 	Down,
 	A,
 	B,
+	C,
+	D,
     Click
 }
 
