@@ -27,7 +27,7 @@ public class DamagablePlayer: Damagable
             OnHit = new UnityEventFloat();
         }
         OnHit.AddListener(GetComponent<PlayerBehaviour>().UpdateHealthBar);
-
+        
         calculatedKnockBackFactor = knockbackFactor * 10; // Adjusted from 1-10 -> 10 -> 100
     }
 

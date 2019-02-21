@@ -170,6 +170,8 @@ GameObject:
   - component: {fileID: 3717785548497034850}
   - component: {fileID: 4093846184599429261}
   - component: {fileID: 8694314728623872770}
+  - component: {fileID: 6833309943782882766}
+  - component: {fileID: 3138698243780853082}
   - component: {fileID: 2656795568673864430}
   - component: {fileID: 2656795568673442530}
   - component: {fileID: 2656795568673453002}
@@ -302,12 +304,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputButtons: 05000000
-  cooldown: 20
+  cooldown: 10
   abilitySlot: 1
   abilityName: Build Paved Road
   heightOffset: 0.025
   distanceFactor: 7
   buildPrefab: {fileID: 1665861210242492, guid: fad5ded93bf476a47a721f0788dde652,
+    type: 3}
+--- !u!114 &6833309943782882766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2656795568666333104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f46cb6020aba09241b568a071637a3f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputButtons: 06000000
+  cooldown: 3
+  abilitySlot: 2
+  abilityName: Cement Trap
+  heightOffset: 0
+  distanceFactor: 0
+  buildPrefab: {fileID: 2505295284718713562, guid: d4a5ca2ebe5903142a5d3a58e5ccded4,
+    type: 3}
+--- !u!114 &3138698243780853082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2656795568666333104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f46cb6020aba09241b568a071637a3f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputButtons: 07000000
+  cooldown: 3
+  abilitySlot: 3
+  abilityName: Spike Trap
+  heightOffset: 0
+  distanceFactor: 0
+  buildPrefab: {fileID: 545332260647542018, guid: 267f5691320c94340a441600cad0899a,
     type: 3}
 --- !u!95 &2656795568673864430
 Animator:
