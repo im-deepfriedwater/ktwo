@@ -10,7 +10,7 @@ public class Damagable : MonoBehaviour
     public UnityEvent OnZeroHealth; // Death animations, or functions to call on death go here.
     public UnityEvent OnHit;
 
-    void Start()
+    protected void Start()
     {
         currentHealth = startingHealth;
 

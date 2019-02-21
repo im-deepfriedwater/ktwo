@@ -166,9 +166,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2656795568666649020}
   - component: {fileID: 4878783622219392687}
+  - component: {fileID: 2457974746571506634}
+  - component: {fileID: 3717785548497034850}
   - component: {fileID: 4093846184599429261}
   - component: {fileID: 8694314728623872770}
-  - component: {fileID: 2457974746571506634}
   - component: {fileID: 2656795568673864430}
   - component: {fileID: 2656795568673442530}
   - component: {fileID: 2656795568673453002}
@@ -211,7 +212,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 0}
   defaultSpeed: 3
+  iFrameDuration: 0
+  recentlyHit: 0
   boostedSpeedFactor: 1.5
+--- !u!114 &2457974746571506634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2656795568666333104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cd22cea9c80630419569e3468785cac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  currentHealth: 0
+  OnZeroHealth:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  health: 100
+  knockbackScale: 2
+  invincibilityDuration: 2
+  rbd: {fileID: 0}
+--- !u!114 &3717785548497034850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2656795568666333104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f97a017275fec94e8414c1a88de60dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh: {fileID: 0}
+  rateOfFlash: 0.1
 --- !u!114 &4093846184599429261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,32 +297,6 @@ MonoBehaviour:
   distanceFactor: 7
   buildPrefab: {fileID: 1665861210242492, guid: fad5ded93bf476a47a721f0788dde652,
     type: 3}
---- !u!114 &2457974746571506634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2656795568666333104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cd22cea9c80630419569e3468785cac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 100
-  OnZeroHealth:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnHit:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  health: 100
-  knockbackScale: 2
-  rbd: {fileID: 0}
 --- !u!95 &2656795568673864430
 Animator:
   serializedVersion: 3

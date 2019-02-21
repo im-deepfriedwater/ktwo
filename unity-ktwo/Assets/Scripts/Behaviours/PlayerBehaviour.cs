@@ -8,7 +8,6 @@ public class PlayerBehaviour : MonoBehaviour
 {   
     public Slider healthBar;
     public float defaultSpeed;
-    public float iFrameDuration;
     public bool recentlyHit;
     vThirdPersonController playerController;
     Collider lastCollided;
