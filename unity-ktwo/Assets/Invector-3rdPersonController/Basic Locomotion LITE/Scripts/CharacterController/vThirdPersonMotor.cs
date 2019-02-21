@@ -158,6 +158,9 @@ namespace Invector.CharacterController
 
         #endregion
 
+        #region ktwo variables
+        DamagablePlayer dp;
+        #endregion
         public void Init()
         {
             // this method is called on the Start of the ThirdPersonController
@@ -191,6 +194,10 @@ namespace Invector.CharacterController
 
             // capsule collider info
             _capsuleCollider = GetComponent<CapsuleCollider>();
+
+            // ktwo code
+            _capsuleCollider.material = maxFrictionPhysics; // Adding this to be the default material.
+             dp = GetComponent<DamagablePlayer>();
         }
 
         public virtual void UpdateMotor()
@@ -257,21 +264,34 @@ namespace Invector.CharacterController
         {
             if (Time.deltaTime == 0) return;
 
-            if (useRootMotion)
+            // original third party invector code
+            // if (useRootMotion)
+            // {
+            //     Vector3 v = (animator.deltaPosition * (velocity > 0 ? velocity : 1f)) / Time.deltaTime;
+            //     v.y = _rigidbody.velocity.y;
+            //     _rigidbody.velocity = Vector3.Lerp(_rigidbody.velocity, v, 20f * Time.deltaTime);
+            // }
+            // else
+            // {
+            //     var velY = transform.forward * velocity * speed;
+            //     velY.y = _rigidbody.velocity.y;
+            //     var velX = transform.right * velocity * direction;
+            //     velX.x = _rigidbody.velocity.x;
+            //     _rigidbody.velocity = velY; // it's fricken this guy holyyyy
+            //     _rigidbody.AddForce(transform.forward * (velocity * speed) * Time.deltaTime, ForceMode.VelocityChange);
+            // }
+
+            var velY = transform.forward * velocity * speed;
+            velY.y = _rigidbody.velocity.y;
+            var velX = transform.right * velocity * direction;
+            velX.x = _rigidbody.velocity.x;
+
+            if (!dp.isInvincible)
             {
-                Vector3 v = (animator.deltaPosition * (velocity > 0 ? velocity : 1f)) / Time.deltaTime;
-                v.y = _rigidbody.velocity.y;
-                _rigidbody.velocity = Vector3.Lerp(_rigidbody.velocity, v, 20f * Time.deltaTime);
+                _rigidbody.velocity = velY; // it's fricken this guy holyyyy
             }
-            else
-            {
-                var velY = transform.forward * velocity * speed;
-                velY.y = _rigidbody.velocity.y;
-                var velX = transform.right * velocity * direction;
-                velX.x = _rigidbody.velocity.x;
-                _rigidbody.velocity = velY;
-                _rigidbody.AddForce(transform.forward * (velocity * speed) * Time.deltaTime, ForceMode.VelocityChange);
-            }
+
+            _rigidbody.AddForce(transform.forward * (velocity * speed) * Time.deltaTime, ForceMode.VelocityChange);
         }
 
         #endregion
@@ -344,12 +364,16 @@ namespace Invector.CharacterController
             CheckGroundDistance();
 
             // change the physics material to very slip when not grounded or maxFriction when is
-            if (isGrounded && input == Vector2.zero)
-                _capsuleCollider.material = maxFrictionPhysics;
-            else if (isGrounded && input != Vector2.zero)
-                _capsuleCollider.material = frictionPhysics;
-            else
-                _capsuleCollider.material = slippyPhysics;
+            // if (isGrounded && input == Vector2.zero)
+            //     _capsuleCollider.material = maxFrictionPhysics;
+            // else if (isGrounded && input != Vector2.zero)
+            //     _capsuleCollider.material = frictionPhysics;
+            // else
+            //     _capsuleCollider.material = slippyPhysics;
+            
+            // the code above came originally with the 3rd person controller.
+            // we instead will control the material changes in the player behaviour.
+            // - justin
 
             var magVel = (float)System.Math.Round(new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z).magnitude, 2);
             magVel = Mathf.Clamp(magVel, 0, 1);

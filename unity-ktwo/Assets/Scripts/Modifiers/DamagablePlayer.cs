@@ -6,13 +6,16 @@ using UnityEngine;
 public class DamagablePlayer: Damagable
 {   
     public float health = 100; // 100 by default.
-    public float knockbackScale = 2;
+    [Range(1,10)]
+    public int knockbackFactor; // There's not really any sense of units here sorry...
+    private float calculatedKnockBackFactor;
     public float invincibilityDuration = 2; // 2 by default;
+    public Rigidbody rbd;
+    public bool isInvincible = false;
+    public PlayerBehaviour player;
+
     [Tooltip("These are populated at runtime")]
     public new UnityEventFloat OnHit; // `new` Overrides original OnHit field.
-    public Rigidbody rbd;
-
-    public bool isInvincible = false;
 
     InvinicibilityFlashModifier invinicibilityComponent;
     
@@ -24,11 +27,14 @@ public class DamagablePlayer: Damagable
             OnHit = new UnityEventFloat();
         }
         OnHit.AddListener(GetComponent<PlayerBehaviour>().UpdateHealthBar);
+
+        calculatedKnockBackFactor = knockbackFactor * 10; // Adjusted from 1-10 -> 10 -> 100
     }
 
     new void Start ()
     {
         invinicibilityComponent = GetComponent<InvinicibilityFlashModifier>();
+        player = GetComponent<PlayerBehaviour>();
         base.Start();
     }
 
@@ -68,8 +74,7 @@ public class DamagablePlayer: Damagable
 
     void KnockbackPlayer (Vector3 direction)
     {
-        Debug.Log("pushed");
-        rbd.AddForce(direction * 1000, ForceMode.Acceleration);
+        rbd.AddForce(direction.normalized * calculatedKnockBackFactor, ForceMode.VelocityChange);
     }
 
     IEnumerator BeginInvincibility ()

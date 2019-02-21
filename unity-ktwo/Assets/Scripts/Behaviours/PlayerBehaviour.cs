@@ -4,24 +4,29 @@ using UnityEngine;
 using Invector.CharacterController;
 using UnityEngine.UI;
 
+// For controlling the main behaviours of the player.
+// We have methods to change the physics material the 
+// capsule collider uses. The initial material is set 
+//
 public class PlayerBehaviour : MonoBehaviour
 {   
     public Slider healthBar;
     public float defaultSpeed;
-    public bool recentlyHit;
-    vThirdPersonController playerController;
-    Collider lastCollided;
-
     [Range(0, 10)]
     public float boostedSpeedFactor; // Goes from 0 - 1.
+    public bool recentlyHit;
 
+    vThirdPersonController playerController;
+    Collider lastCollided;
+    CapsuleCollider capsuleCollider;
+    
     void Start()
     {
         playerController = GameObject.Find("Player").GetComponent<vThirdPersonController>();
         healthBar = GameObject.Find("HealthBarSlider").GetComponent<Slider>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
         ResetSpeed();
     }
-
 
     void Update()
     {
@@ -61,17 +66,5 @@ public class PlayerBehaviour : MonoBehaviour
     public void Die ()
     {
         Debug.Log("ur ded");
-    }
-    
-    // For use with knockback.
-    public void SetMaterialSlippery()
-    {
-
-    }
-
-    // Generally the default material for players.
-    public void SetMaterialHighFriction()
-    {
-
     }
 }

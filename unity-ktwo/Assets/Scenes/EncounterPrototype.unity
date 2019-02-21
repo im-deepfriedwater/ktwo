@@ -732,6 +732,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4093846184599429261, guid: e020449f980b5b64f9c38da0787f4fe5,
+        type: 3}
+      propertyPath: abilitySlot
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2656795568673442530, guid: e020449f980b5b64f9c38da0787f4fe5,
         type: 3}
       propertyPath: jumpAirControl
@@ -830,6 +835,26 @@ PrefabInstance:
     - target: {fileID: 2457974746571506634, guid: e020449f980b5b64f9c38da0787f4fe5,
         type: 3}
       propertyPath: OnHit.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2457974746571506634, guid: e020449f980b5b64f9c38da0787f4fe5,
+        type: 3}
+      propertyPath: knockbackScale
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2457974746571506634, guid: e020449f980b5b64f9c38da0787f4fe5,
+        type: 3}
+      propertyPath: invincibilityDuration
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2457974746571506634, guid: e020449f980b5b64f9c38da0787f4fe5,
+        type: 3}
+      propertyPath: knockbackFactor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3717785548497034850, guid: e020449f980b5b64f9c38da0787f4fe5,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1001,6 +1026,12 @@ PrefabInstance:
       propertyPath: timeUntilDamageCalculation
       value: 1.04
       objectReference: {fileID: 0}
+    - target: {fileID: 7086454018950713937, guid: 27df18849fea7834eacf23589b8fe0cb,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 1c5ad589b3e009846a4618b3b0654da0,
+        type: 2}
     - target: {fileID: 7086454019129749317, guid: 27df18849fea7834eacf23589b8fe0cb,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1039,7 +1070,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1171739511}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 1c5ad589b3e009846a4618b3b0654da0, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
