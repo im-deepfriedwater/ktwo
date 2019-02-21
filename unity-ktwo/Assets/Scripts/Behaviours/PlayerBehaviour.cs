@@ -62,4 +62,16 @@ public class PlayerBehaviour : MonoBehaviour
     {
         Debug.Log("ur ded");
     }
+    
+    // For use with knockback.
+    public void SetMaterialSlippery()
+    {
+
+    }
+
+    // Generally the default material for players.
+    public void SetMaterialHighFriction()
+    {
+
+    }
 }
