@@ -269,18 +269,8 @@ namespace Invector.CharacterController
                 velY.y = _rigidbody.velocity.y;
                 var velX = transform.right * velocity * direction;
                 velX.x = _rigidbody.velocity.x;
-
-                if (isStrafing)
-                {
-                    Vector3 v = (transform.TransformDirection(new Vector3(input.x, 0, input.y)) * (velocity > 0 ? velocity : 1f));
-                    v.y = _rigidbody.velocity.y;
-                    _rigidbody.velocity = Vector3.Lerp(_rigidbody.velocity, v, 20f * Time.deltaTime);
-                }
-                else
-                {
-                    _rigidbody.velocity = velY;
-                    _rigidbody.AddForce(transform.forward * (velocity * speed) * Time.deltaTime, ForceMode.VelocityChange);
-                }
+                _rigidbody.velocity = velY;
+                _rigidbody.AddForce(transform.forward * (velocity * speed) * Time.deltaTime, ForceMode.VelocityChange);
             }
         }
 
