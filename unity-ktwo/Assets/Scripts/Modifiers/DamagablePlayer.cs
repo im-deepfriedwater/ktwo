@@ -28,7 +28,6 @@ public class DamagablePlayer: Damagable
         }
         OnHit.AddListener(GetComponent<PlayerBehaviour>().UpdateHealthBar);
         
-        calculatedKnockBackFactor = knockbackFactor * 10; // Adjusted from 1-10 -> 10 -> 100
     }
 
     new void Start ()
@@ -74,6 +73,7 @@ public class DamagablePlayer: Damagable
 
     void KnockbackPlayer (Vector3 direction)
     {
+        calculatedKnockBackFactor = knockbackFactor * 10; // Adjusted from 1-10 -> 10 - 100
         rbd.AddForce(direction.normalized * calculatedKnockBackFactor, ForceMode.VelocityChange);
     }
 

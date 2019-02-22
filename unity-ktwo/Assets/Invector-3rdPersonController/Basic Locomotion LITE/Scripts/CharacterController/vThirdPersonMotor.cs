@@ -288,7 +288,7 @@ namespace Invector.CharacterController
 
             if (!dp.isInvincible)
             {
-                _rigidbody.velocity = velY; // it's fricken this guy holyyyy
+                _rigidbody.velocity = velY;
             }
 
             _rigidbody.AddForce(transform.forward * (velocity * speed) * Time.deltaTime, ForceMode.VelocityChange);
