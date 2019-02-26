@@ -108,7 +108,6 @@ public class EnemyController : MonoBehaviour
         } else if (isAttacking && !isAttackOnCooldown && hitboxActivated && other.gameObject.tag == "Player")
         {
             hasAttacked = true;
-            Debug.Log("tryn");
             Vector3 direction = currentTransform.forward;
             other.gameObject.GetComponent<DamagablePlayer>().Hit(damage, direction);
             hitboxActivated = false;
@@ -161,12 +160,7 @@ public class EnemyController : MonoBehaviour
 
     IEnumerator CalculateAttackCooldown ()
     {   
-        float currentTime = 0;
-        while (currentTime <= attackCooldown)
-        {
-            currentTime += Time.deltaTime;
-            yield return null;
-        }
+        yield return new WaitForSeconds(attackCooldown);
         isAttackOnCooldown = true;
     }
 }
