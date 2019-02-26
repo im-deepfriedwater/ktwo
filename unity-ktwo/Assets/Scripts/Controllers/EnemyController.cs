@@ -20,12 +20,12 @@ public class EnemyController : MonoBehaviour
 
     bool CountDownForAttackHitBoxCourtineStarted = false;
     bool StartAttackCooldownCourtineStarted = false;
-    bool WaitForAttackAnimationToFinishCourtineStarted = false;
 
     Transform currentTransform;
     Transform target;
     NavMeshAgent agent;
     Animator animator;
+    Rigidbody rbd;
     GameObject previouslyCollided;
 
     // Start is called before the first frame update
@@ -35,14 +35,14 @@ public class EnemyController : MonoBehaviour
         target = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
+        rbd = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (previouslyCollided == null && hasAttacked)
+        if (previouslyCollided == null)
         {
-            Debug.Log("Itsa me Previously Collided Garbgio");
             ResumeMovement();
         }
 
@@ -56,9 +56,12 @@ public class EnemyController : MonoBehaviour
             {
                 FaceTarget();
             }
-        } else 
+        }
+
+        if (isAttacking)
         {
             agent.isStopped = true;
+            rbd.velocity = Vector3.zero;
         }
     }
 
@@ -75,20 +78,16 @@ public class EnemyController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, lookRadius);
     }
 
-    void OnCollisionEnter(Collision other)
+    void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Destructable" || other.gameObject.tag == "Player")
-        {   
+        {
             SetAttackAnimation(true);
             previouslyCollided = other.gameObject;
             isAttacking = true;
             agent.isStopped = true;
         }
-    }
 
-    void OnCollisionStay(Collision other)
-    {
-        Debug.Log("colliding...");
         if (isAttacking && !isAttackOnCooldown && !hitboxActivated)
         {
             if (!CountDownForAttackHitBoxCourtineStarted)
@@ -122,39 +121,21 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void OnCollisionExit(Collision other)
+    void OnTriggerExit(Collider other)
     {
-        Debug.Log("yuh");
-        if (WaitForAttackAnimationToFinishCourtineStarted)
-        {
-            return;
-        } 
-        StartCoroutine("WaitForAttackAnimationToFinish");
+        ResumeMovement();
     }
 
     void ResumeMovement ()
     {
-        Debug.Log("RESET");
         SetAttackAnimation(false);
         isAttackOnCooldown = false;
         isAttacking = false;
         hitboxActivated = false;
-        WaitForAttackAnimationToFinishCourtineStarted = false;
         CountDownForAttackHitBoxCourtineStarted = false;
         StartAttackCooldownCourtineStarted = false;
         agent.SetDestination(target.position);
         StopAllCoroutines();
-    }
-
-    IEnumerator WaitForAttackAnimationToFinish ()
-    {
-        WaitForAttackAnimationToFinishCourtineStarted = true;
-        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !animator.IsInTransition(0))
-        {
-            yield return null;
-        }
-        Debug.Log("what the heck is triggering me");
-        WaitForAttackAnimationToFinishCourtineStarted = false;
     }
 
     IEnumerator StartAttackCooldown ()

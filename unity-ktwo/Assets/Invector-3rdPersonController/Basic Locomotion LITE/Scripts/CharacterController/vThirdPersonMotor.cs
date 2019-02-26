@@ -196,7 +196,7 @@ namespace Invector.CharacterController
             _capsuleCollider = GetComponent<CapsuleCollider>();
 
             // ktwo code
-            _capsuleCollider.material = maxFrictionPhysics; // Adding this to be the default material.
+            _capsuleCollider.material = frictionPhysics; // Adding this to be the default material.
              dp = GetComponent<DamagablePlayer>();
         }
 
@@ -372,8 +372,9 @@ namespace Invector.CharacterController
             //     _capsuleCollider.material = slippyPhysics;
             
             // the code above came originally with the 3rd person controller.
-            // we instead will control the material changes in the player behaviour.
-            // - justin
+            // we instead will default to a general frictionPhysics material.
+
+            _capsuleCollider.material = frictionPhysics;
 
             var magVel = (float)System.Math.Round(new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z).magnitude, 2);
             magVel = Mathf.Clamp(magVel, 0, 1);

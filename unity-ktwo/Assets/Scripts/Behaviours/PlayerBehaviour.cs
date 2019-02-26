@@ -5,9 +5,6 @@ using Invector.CharacterController;
 using UnityEngine.UI;
 
 // For controlling the main behaviours of the player.
-// We have methods to change the physics material the 
-// capsule collider uses. The initial material is set 
-//
 public class PlayerBehaviour : MonoBehaviour
 {   
     public Slider healthBar;
@@ -18,13 +15,11 @@ public class PlayerBehaviour : MonoBehaviour
 
     vThirdPersonController playerController;
     Collider lastCollided;
-    CapsuleCollider capsuleCollider;
     
     void Start()
     {
         playerController = GameObject.Find("Player").GetComponent<vThirdPersonController>();
         healthBar = GameObject.Find("HealthBarSlider").GetComponent<Slider>();
-        capsuleCollider = GetComponent<CapsuleCollider>();
         ResetSpeed();
     }
 
