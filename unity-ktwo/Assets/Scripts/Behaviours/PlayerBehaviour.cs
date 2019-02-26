@@ -7,19 +7,28 @@ using UnityEngine.UI;
 // For controlling the main behaviours of the player.
 public class PlayerBehaviour : MonoBehaviour
 {   
-    public Slider healthBar;
+    [HideInInspector]
+    Slider healthBar;
+    [Tooltip("UI for game screen. Should be in Canvas, called GameOverScreen")]
+    public GameObject gameOverScreen;
     public float defaultSpeed;
     [Range(0, 10)]
     public float boostedSpeedFactor; // Goes from 0 - 1.
     public bool recentlyHit;
 
     vThirdPersonController playerController;
+    vThirdPersonInput input;
     Collider lastCollided;
+    Animator animator;
+    Rigidbody rbd;
     
     void Start()
     {
         playerController = GameObject.Find("Player").GetComponent<vThirdPersonController>();
         healthBar = GameObject.Find("HealthBarSlider").GetComponent<Slider>();
+        input = GameObject.Find("Player").GetComponent<vThirdPersonInput>();
+        animator = GetComponentInChildren<Animator>();
+        rbd = GetComponent<Rigidbody>();
         ResetSpeed();
     }
 
@@ -60,6 +69,14 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void Die ()
     {
-        Debug.Log("ur ded");
+        InitiateGameOver();
+    }
+
+    public void InitiateGameOver()
+    {
+        gameOverScreen.SetActive(true);
+        input.enabled = false;
+        animator.SetBool("IsDead", true);
+        rbd.isKinematic = true;
     }
 }
