@@ -10,7 +10,7 @@ namespace Invector.CharacterController
     public abstract class vThirdPersonMotor : MonoBehaviour
     {
         #region Variables        
-
+        float x = 5;
         #region Layers
         [Header("---! Layers !---")]
         [Tooltip("Layers that the character can walk on")]
@@ -168,15 +168,15 @@ namespace Invector.CharacterController
             // slides the character through walls and edges
             frictionPhysics = new PhysicMaterial();
             frictionPhysics.name = "frictionPhysics";
-            frictionPhysics.staticFriction = .25f;
-            frictionPhysics.dynamicFriction = .25f;
+            frictionPhysics.staticFriction = 0f;
+            frictionPhysics.dynamicFriction = 0f;
             frictionPhysics.frictionCombine = PhysicMaterialCombine.Multiply;
 
             // prevents the collider from slipping on ramps
             maxFrictionPhysics = new PhysicMaterial();
             maxFrictionPhysics.name = "maxFrictionPhysics";
-            maxFrictionPhysics.staticFriction = 1f;
-            maxFrictionPhysics.dynamicFriction = 1f;
+            maxFrictionPhysics.staticFriction = 0f;
+            maxFrictionPhysics.dynamicFriction = 0f;
             maxFrictionPhysics.frictionCombine = PhysicMaterialCombine.Maximum;
 
             // air physics 
@@ -196,8 +196,13 @@ namespace Invector.CharacterController
         public virtual void UpdateMotor()
         {
             CheckGround();
-            ControlJumpBehaviour();
             ControlLocomotion();
+
+            if (x == 5)
+            {
+                _rigidbody.AddForce(transform.forward * extraGravity, ForceMode.VelocityChange);
+                x++;
+            }
         }
 
         #region Locomotion 
@@ -232,8 +237,8 @@ namespace Invector.CharacterController
         public virtual void FreeMovement()
         {
             // set speed to both vertical and horizontal inputs
-            speed = Mathf.Abs(input.x) + Mathf.Abs(input.y);            
-            speed = Mathf.Clamp(speed, 0, 1f);
+            // speed = Mathf.Abs(input.x) + Mathf.Abs(input.y);            
+            // speed = Mathf.Clamp(speed, 0, 1f);
             // add 0.5f on sprint to change the animation on animator
             if (isSprinting) speed += 0.5f;
                         
@@ -269,79 +274,6 @@ namespace Invector.CharacterController
                 velY.y = _rigidbody.velocity.y;
                 var velX = transform.right * velocity * direction;
                 velX.x = _rigidbody.velocity.x;
-
-                if (isStrafing)
-                {
-                    Vector3 v = (transform.TransformDirection(new Vector3(input.x, 0, input.y)) * (velocity > 0 ? velocity : 1f));
-                    v.y = _rigidbody.velocity.y;
-                    _rigidbody.velocity = Vector3.Lerp(_rigidbody.velocity, v, 20f * Time.deltaTime);
-                }
-                else
-                {
-                    _rigidbody.velocity = velY;
-                    _rigidbody.AddForce(transform.forward * (velocity * speed) * Time.deltaTime, ForceMode.VelocityChange);
-                }
-            }
-        }
-
-        #endregion
-
-        #region Jump Methods
-
-        protected void ControlJumpBehaviour()
-        {
-            if (!isJumping) return;
-
-            jumpCounter -= Time.deltaTime;
-            if (jumpCounter <= 0)
-            {
-                jumpCounter = 0;
-                isJumping = false;
-            }
-            // apply extra force to the jump height   
-            var vel = _rigidbody.velocity;
-            vel.y = jumpHeight;
-            _rigidbody.velocity = vel;
-        }
-
-        public void AirControl()
-        {
-            if (isGrounded) return;
-            if (!jumpFwdCondition) return;
-
-            var velY = transform.forward * jumpForward * speed;
-            velY.y = _rigidbody.velocity.y;
-            var velX = transform.right * jumpForward * direction;
-            velX.x = _rigidbody.velocity.x;            
-
-            if (jumpAirControl)
-            {
-                if (isStrafing)
-                {
-                    _rigidbody.velocity = new Vector3(velX.x, velY.y, _rigidbody.velocity.z);
-                    var vel = transform.forward * (jumpForward * speed) + transform.right * (jumpForward * direction);
-                    _rigidbody.velocity = new Vector3(vel.x, _rigidbody.velocity.y, vel.z);
-                }
-                else
-                {
-                    var vel = transform.forward * (jumpForward * speed);
-                    _rigidbody.velocity = new Vector3(vel.x, _rigidbody.velocity.y, vel.z);
-                }
-            }
-            else
-            {
-                var vel = transform.forward * (jumpForward);
-                _rigidbody.velocity = new Vector3(vel.x, _rigidbody.velocity.y, vel.z);
-            }
-        }
-
-        protected bool jumpFwdCondition
-        {
-            get
-            {
-                Vector3 p1 = transform.position + _capsuleCollider.center + Vector3.up * -_capsuleCollider.height * 0.5F;
-                Vector3 p2 = p1 + Vector3.up * _capsuleCollider.height;
-                return Physics.CapsuleCastAll(p1, p2, _capsuleCollider.radius * 0.5f, transform.forward, 0.6f, groundLayer).Length == 0;
             }
         }
 
