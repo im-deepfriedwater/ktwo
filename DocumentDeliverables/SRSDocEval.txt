@@ -1,0 +1,43 @@
+
+
+This is nice work, and I can see that there are a lot of things you have
+thought about for the project.
+
+You can ALWAYS specify more.  Try to think in terms of "if someone else
+were to code this project, what would they need to know about the way it
+operates?  What information could I provide them so they can be successful
+in the implementation?
+
+One thing to remember: any time you see the word "and" in a requirement,
+you are likely looking at TWO requirements; see if you can split them.
+For example, consider 5.2.2.1.....
+
+Note that you have two copies of 5.2.2.4.
+
+You need more detail in requirements such as 5.2.2.6, which actually should
+become two requirements and a "will":
+
+5.2.2.6 Players shall get rewarded as a group
+5.2.2.7 Rewards comprise a currency based on two metrics.
+        Metrics will be the number of zombies killed and duration of time
+        the group has survived.
+
+In 5.2.3.3, the will statement says "This will be given....."; it's not
+clear WHAT will be given: leadership?  hostship?  control?
+
+These are a few examples.  Make some changes to these things, and perhaps
+add a few more requirements, and you're good to go.
+
+Otherwise, nice work!
+
+So far for the semester:
+Proposal:      5.0  out of  5.0  points
+Requirements: 14.0  out of 15.0  points
+Homework 1:    3.34 out of  3.34 points
+Homework 2:    3.34 out of  3.34 points
+Particip.:     1.5  out of  1.5  points
+              27.18 out of 28.18 points = 96.45% which is an A
+
+Keep it up!
+		      
+
