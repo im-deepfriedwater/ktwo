@@ -6,6 +6,8 @@ TagManager:
   tags:
   - SpeedBoost
   - Destructable
+  - SlowDown
+  - Damaging
   layers:
   - Default
   - TransparentFX

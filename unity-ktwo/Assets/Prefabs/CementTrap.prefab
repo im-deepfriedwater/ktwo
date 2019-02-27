@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 5048569730843379628}
   - component: {fileID: 7900940984209323044}
   - component: {fileID: 7410757626851982787}
+  - component: {fileID: 2095400331855779941}
   m_Layer: 0
   m_Name: CementTrap
-  m_TagString: Untagged
+  m_TagString: SlowDown
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -91,7 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab9e87e3e92ea7b49b3e75f4a716027e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 5
+  lifetime: 10
 --- !u!65 &7410757626851982787
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -101,6 +102,19 @@ BoxCollider:
   m_GameObject: {fileID: 2505295284718713562}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.09675361, z: 1}
+  m_Center: {x: 0, y: -0.4516232, z: 0}
+--- !u!65 &2095400331855779941
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2505295284718713562}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}

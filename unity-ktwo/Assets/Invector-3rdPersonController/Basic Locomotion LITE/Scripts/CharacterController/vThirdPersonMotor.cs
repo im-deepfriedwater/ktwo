@@ -159,7 +159,7 @@ namespace Invector.CharacterController
         #endregion
 
         #region ktwo variables
-        DamagablePlayer dp;
+        DamagableEntity dp;
         #endregion
         public void Init()
         {
@@ -197,7 +197,7 @@ namespace Invector.CharacterController
 
             // ktwo code
             _capsuleCollider.material = frictionPhysics; // Adding this to be the default material.
-             dp = GetComponent<DamagablePlayer>();
+             dp = GetComponent<DamagableEntity>();
         }
 
         public virtual void UpdateMotor()

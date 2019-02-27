@@ -10,6 +10,8 @@ public class EnemyController : MonoBehaviour
     public float lookRadius = 10f;
     public float damage;
     public float attackAnimationSpeed;
+    [Range(0, 1)]
+    public float slowedSpeedFactor;  // Goes from 0 - 1.
 
     float previousAnimatorSpeed;
 
@@ -28,6 +30,8 @@ public class EnemyController : MonoBehaviour
     Rigidbody rbd;
     GameObject previouslyCollided;
 
+    private float baseSpeed;
+
     // Start is called before the first frame update
     void Start()
     {   
@@ -36,6 +40,7 @@ public class EnemyController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         rbd = GetComponent<Rigidbody>();
+        baseSpeed = agent.speed;
     }
 
     // Update is called once per frame
@@ -88,6 +93,12 @@ public class EnemyController : MonoBehaviour
             agent.isStopped = true;
         }
 
+        if (other.gameObject.tag == "SlowDown")
+        {
+            previouslyCollided = other.gameObject;
+            agent.speed = baseSpeed - (baseSpeed * slowedSpeedFactor);
+        }
+
         if (isAttacking && !isAttackOnCooldown && !hitboxActivated)
         {
             if (!CountDownForAttackHitBoxCourtineStarted)
@@ -109,7 +120,7 @@ public class EnemyController : MonoBehaviour
         {
             hasAttacked = true;
             Vector3 direction = currentTransform.forward;
-            other.gameObject.GetComponent<DamagablePlayer>().Hit(damage, direction);
+            other.gameObject.GetComponent<DamagableEntity>().Hit(damage, direction);
             hitboxActivated = false;
             isAttackOnCooldown = true;
             if (StartAttackCooldownCourtineStarted)
@@ -134,6 +145,7 @@ public class EnemyController : MonoBehaviour
         CountDownForAttackHitBoxCourtineStarted = false;
         StartAttackCooldownCourtineStarted = false;
         agent.SetDestination(target.position);
+        agent.speed = baseSpeed;
         StopAllCoroutines();
     }
 

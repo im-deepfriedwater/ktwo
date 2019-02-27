@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(InvinicibilityFlashModifier))]
-public class DamagablePlayer: Damagable
+public class DamagableEntity: Damagable
 {   
     public float health = 100; // 100 by default.
     [Range(1,10)]
