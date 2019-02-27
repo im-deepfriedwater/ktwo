@@ -57,7 +57,7 @@ namespace Invector.CharacterController
 
         [Header("--- Movement Speed ---")]
         [Tooltip("Check to drive the character using RootMotion of the animation")]
-        public bool useRootMotion = false;      
+        public bool useRootMotion = false;
         [Tooltip("Add extra speed for the locomotion movement, keep this value at 0 if you want to use only root motion speed.")]
         public float freeWalkSpeed = 2.5f;
         [Tooltip("Add extra speed for the locomotion movement, keep this value at 0 if you want to use only root motion speed.")]
@@ -81,7 +81,7 @@ namespace Invector.CharacterController
         public float stepSmooth = 4f;
         [Tooltip("Max angle to walk")]
         [SerializeField]
-        protected float slopeLimit = 45f;       
+        protected float slopeLimit = 45f;
         [Tooltip("Apply extra gravity when the character is not grounded")]
         [SerializeField]
         protected float extraGravity = -10f;
@@ -126,7 +126,7 @@ namespace Invector.CharacterController
         [HideInInspector]
         public Quaternion freeRotation;
         [HideInInspector]
-        public bool keepDirection;        
+        public bool keepDirection;
 
         #endregion
 
@@ -158,6 +158,9 @@ namespace Invector.CharacterController
 
         #endregion
 
+        #region ktwo variables
+        DamagablePlayer dp;
+        #endregion
         public void Init()
         {
             // this method is called on the Start of the ThirdPersonController
@@ -191,6 +194,10 @@ namespace Invector.CharacterController
 
             // capsule collider info
             _capsuleCollider = GetComponent<CapsuleCollider>();
+
+            // ktwo code
+            _capsuleCollider.material = frictionPhysics; // Adding this to be the default material.
+             dp = GetComponent<DamagablePlayer>();
         }
 
         public virtual void UpdateMotor()
@@ -232,11 +239,11 @@ namespace Invector.CharacterController
         public virtual void FreeMovement()
         {
             // set speed to both vertical and horizontal inputs
-            speed = Mathf.Abs(input.x) + Mathf.Abs(input.y);            
+            speed = Mathf.Abs(input.x) + Mathf.Abs(input.y);
             speed = Mathf.Clamp(speed, 0, 1f);
             // add 0.5f on sprint to change the animation on animator
             if (isSprinting) speed += 0.5f;
-                        
+
             if (input != Vector2.zero && targetDirection.magnitude > 0.1f)
             {
                 Vector3 lookDirection = targetDirection.normalized;
@@ -250,38 +257,41 @@ namespace Invector.CharacterController
                     if (diferenceRotation < 0 || diferenceRotation > 0) eulerY = freeRotation.eulerAngles.y;
                     var euler = new Vector3(transform.eulerAngles.x, eulerY, transform.eulerAngles.z);
                     transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(euler), freeRotationSpeed * Time.deltaTime);
-                }               
+                }
             }
         }
         protected void ControlSpeed(float velocity)
         {
             if (Time.deltaTime == 0) return;
 
-            if (useRootMotion)
-            {
-                Vector3 v = (animator.deltaPosition * (velocity > 0 ? velocity : 1f)) / Time.deltaTime;
-                v.y = _rigidbody.velocity.y;
-                _rigidbody.velocity = Vector3.Lerp(_rigidbody.velocity, v, 20f * Time.deltaTime);
-            }
-            else
-            {
-                var velY = transform.forward * velocity * speed;
-                velY.y = _rigidbody.velocity.y;
-                var velX = transform.right * velocity * direction;
-                velX.x = _rigidbody.velocity.x;
+            // original third party invector code
+            // if (useRootMotion)
+            // {
+            //     Vector3 v = (animator.deltaPosition * (velocity > 0 ? velocity : 1f)) / Time.deltaTime;
+            //     v.y = _rigidbody.velocity.y;
+            //     _rigidbody.velocity = Vector3.Lerp(_rigidbody.velocity, v, 20f * Time.deltaTime);
+            // }
+            // else
+            // {
+            //     var velY = transform.forward * velocity * speed;
+            //     velY.y = _rigidbody.velocity.y;
+            //     var velX = transform.right * velocity * direction;
+            //     velX.x = _rigidbody.velocity.x;
+            //     _rigidbody.velocity = velY; // it's fricken this guy holyyyy
+            //     _rigidbody.AddForce(transform.forward * (velocity * speed) * Time.deltaTime, ForceMode.VelocityChange);
+            // }
 
-                if (isStrafing)
-                {
-                    Vector3 v = (transform.TransformDirection(new Vector3(input.x, 0, input.y)) * (velocity > 0 ? velocity : 1f));
-                    v.y = _rigidbody.velocity.y;
-                    _rigidbody.velocity = Vector3.Lerp(_rigidbody.velocity, v, 20f * Time.deltaTime);
-                }
-                else
-                {
-                    _rigidbody.velocity = velY;
-                    _rigidbody.AddForce(transform.forward * (velocity * speed) * Time.deltaTime, ForceMode.VelocityChange);
-                }
+            var velY = transform.forward * velocity * speed;
+            velY.y = _rigidbody.velocity.y;
+            var velX = transform.right * velocity * direction;
+            velX.x = _rigidbody.velocity.x;
+
+            if (!dp.isInvincible)
+            {
+                _rigidbody.velocity = velY;
             }
+
+            _rigidbody.AddForce(transform.forward * (velocity * speed) * Time.deltaTime, ForceMode.VelocityChange);
         }
 
         #endregion
@@ -312,7 +322,7 @@ namespace Invector.CharacterController
             var velY = transform.forward * jumpForward * speed;
             velY.y = _rigidbody.velocity.y;
             var velX = transform.right * jumpForward * direction;
-            velX.x = _rigidbody.velocity.x;            
+            velX.x = _rigidbody.velocity.x;
 
             if (jumpAirControl)
             {
@@ -354,12 +364,17 @@ namespace Invector.CharacterController
             CheckGroundDistance();
 
             // change the physics material to very slip when not grounded or maxFriction when is
-            if (isGrounded && input == Vector2.zero)
-                _capsuleCollider.material = maxFrictionPhysics;
-            else if (isGrounded && input != Vector2.zero)
-                _capsuleCollider.material = frictionPhysics;
-            else
-                _capsuleCollider.material = slippyPhysics;
+            // if (isGrounded && input == Vector2.zero)
+            //     _capsuleCollider.material = maxFrictionPhysics;
+            // else if (isGrounded && input != Vector2.zero)
+            //     _capsuleCollider.material = frictionPhysics;
+            // else
+            //     _capsuleCollider.material = slippyPhysics;
+            
+            // the code above came originally with the 3rd person controller.
+            // we instead will default to a general frictionPhysics material.
+
+            _capsuleCollider.material = frictionPhysics;
 
             var magVel = (float)System.Math.Round(new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z).magnitude, 2);
             magVel = Mathf.Clamp(magVel, 0, 1);
@@ -424,7 +439,7 @@ namespace Invector.CharacterController
         {
             var groundAngle = Vector3.Angle(groundHit.normal, Vector3.up);
             return groundAngle;
-        }      
+        }
 
         void Sliding()
         {
