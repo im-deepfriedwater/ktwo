@@ -1,9 +1,9 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(InvinicibilityFlashModifier))]
-public class DamagablePlayer: Damagable
+public class DamagableEnemy: Damagable
 {   
     public float health = 100; // 100 by default.
     [Range(1,10)]
@@ -12,7 +12,6 @@ public class DamagablePlayer: Damagable
     public float invincibilityDuration = 2; // 2 by default;
     public Rigidbody rbd;
     public bool isInvincible = false;
-    public PlayerBehaviour player;
 
     [Tooltip("These are populated at runtime")]
     public new UnityEventFloat OnHit; // `new` Overrides original OnHit field.
@@ -26,8 +25,6 @@ public class DamagablePlayer: Damagable
         {
             OnHit = new UnityEventFloat();
         }
-        OnHit.AddListener(GetComponent<PlayerBehaviour>().UpdateHealthBar);
-        
     }
 
     new void Start ()
@@ -83,5 +80,10 @@ public class DamagablePlayer: Damagable
         yield return new WaitForSeconds(invincibilityDuration);
         isInvincible = false;
         invinicibilityComponent.enabled = false;
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
     }
 }

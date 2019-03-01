@@ -6,6 +6,9 @@ TagManager:
   tags:
   - SpeedBoost
   - Destructable
+  - SlowDown
+  - Damaging
+  - Zombie
   layers:
   - Default
   - TransparentFX

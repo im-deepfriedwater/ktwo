@@ -134,7 +134,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2656795568448256115}
   m_Layer: 0
-  m_Name: PlayerAndCameraGroup
+  m_Name: Architect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f71dfdc0ab70a58429b64288e64e0a8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 0}
+  gameOverScreen: {fileID: 0}
   defaultSpeed: 3
   boostedSpeedFactor: 1.5
   recentlyHit: 0
@@ -226,7 +226,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2656795568666333104}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cd22cea9c80630419569e3468785cac, type: 3}
+  m_Script: {fileID: 11500000, guid: 17254697f4cd062498b2036d5bdbec7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 100
@@ -253,11 +253,11 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   health: 100
-  knockbackFactor: 3
+  knockbackFactor: 2
   invincibilityDuration: 1.2
   rbd: {fileID: 0}
   isInvincible: 0
-  player: {fileID: 0}
+  player: {fileID: 4878783622219392687}
 --- !u!114 &3717785548497034850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f97a017275fec94e8414c1a88de60dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mesh: {fileID: 0}
+  mesh: {fileID: 5761108413642579468}
   rateOfFlash: 0.1
 --- !u!114 &4093846184599429261
 MonoBehaviour:
