@@ -120,7 +120,7 @@ public class EnemyController : MonoBehaviour
         {
             hasAttacked = true;
             Vector3 direction = currentTransform.forward;
-            other.gameObject.GetComponent<DamagableEntity>().Hit(damage, direction);
+            other.gameObject.GetComponent<DamagablePlayer>().Hit(damage, direction);
             hitboxActivated = false;
             isAttackOnCooldown = true;
             if (StartAttackCooldownCourtineStarted)

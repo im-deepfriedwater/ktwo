@@ -8,6 +8,7 @@ TagManager:
   - Destructable
   - SlowDown
   - Damaging
+  - Zombie
   layers:
   - Default
   - TransparentFX
