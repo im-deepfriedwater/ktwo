@@ -46,10 +46,11 @@ public class PlayerBehaviour : MonoBehaviour
         playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange) ;
     }
 
-    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff) {
+    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff, HashSet<GameObject> set = null) {
         var speedChange = defaultSpeed * percent;
         playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange) ;
         yield return new WaitForSeconds(time);
+        if (set != null) set.Remove(gameObject);
         ResetSpeed();
     }
 

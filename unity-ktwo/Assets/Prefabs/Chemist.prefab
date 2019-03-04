@@ -12,13 +12,14 @@ GameObject:
   - component: {fileID: 8966175394879292273}
   - component: {fileID: 4508746933523634497}
   - component: {fileID: 6148021259025062257}
+  - component: {fileID: 8663981446539605631}
+  - component: {fileID: 3711018044131867624}
   - component: {fileID: 1946821268403822384}
   - component: {fileID: 1946821268403482428}
   - component: {fileID: 1946821268403475988}
   - component: {fileID: 1946821268407905328}
   - component: {fileID: 1946821268401292584}
   - component: {fileID: 2385839451419078736}
-  - component: {fileID: 3400991173388633878}
   - component: {fileID: 8725775805233537350}
   m_Layer: 0
   m_Name: Player
@@ -56,7 +57,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameOverScreen: {fileID: 0}
   defaultSpeed: 3
-  boostedSpeedFactor: 1.5
   recentlyHit: 0
 --- !u!114 &4508746933523634497
 MonoBehaviour:
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1946821268413213294}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cd22cea9c80630419569e3468785cac, type: 3}
+  m_Script: {fileID: 11500000, guid: 17254697f4cd062498b2036d5bdbec7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 100
@@ -94,11 +94,11 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   health: 100
-  knockbackFactor: 3
+  knockbackFactor: 2
   invincibilityDuration: 1.2
   rbd: {fileID: 0}
   isInvincible: 0
-  player: {fileID: 0}
+  player: {fileID: 8966175394879292273}
 --- !u!114 &6148021259025062257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,6 +113,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mesh: {fileID: 5861601652345695075}
   rateOfFlash: 0.1
+--- !u!114 &8663981446539605631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946821268413213294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e92019ef820e57148b56d6f558def1e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputButtons: 04000000
+  cooldown: 15
+  abilitySlot: 0
+  abilityName: Helpful Vial
+  heightOffset: 1
+  throwDistance: 2
+  projectilePrefab: {fileID: 8783224552434920197, guid: 48843267f77e356439ce3bf1f8da3e58,
+    type: 3}
+  puddlePrefab: {fileID: 7102904733362769555, guid: 49e9a2ce24f5ee340bb983dcf4028214,
+    type: 3}
+  firingAngle: 45
+  gravity: 9.8
+--- !u!114 &3711018044131867624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946821268413213294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e92019ef820e57148b56d6f558def1e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputButtons: 05000000
+  cooldown: 10
+  abilitySlot: 1
+  abilityName: Flammable Vial
+  heightOffset: 1
+  throwDistance: 1
+  projectilePrefab: {fileID: 8783224552434920197, guid: 48843267f77e356439ce3bf1f8da3e58,
+    type: 3}
+  puddlePrefab: {fileID: 7102904733362769555, guid: 450ba91f2b0dd9348af6fa5e880a14c9,
+    type: 3}
+  firingAngle: 45
+  gravity: 9.8
 --- !u!95 &1946821268403822384
 Animator:
   serializedVersion: 3
@@ -256,20 +304,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a9136f324d4544d9b1acfc83521224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3400991173388633878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1946821268413213294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f97a017275fec94e8414c1a88de60dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mesh: {fileID: 0}
-  rateOfFlash: 0.1
 --- !u!65 &8725775805233537350
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -281,8 +315,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 1.2, z: 0.8}
-  m_Center: {x: 0, y: 0.9, z: 0.05}
+  m_Size: {x: 0.5543226, y: 0.14739406, z: 0.43410268}
+  m_Center: {x: -0.0001604408, y: 0.047761858, z: 0.0064408034}
 --- !u!1 &1946821268631264674
 GameObject:
   m_ObjectHideFlags: 0

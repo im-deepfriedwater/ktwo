@@ -125,7 +125,7 @@ MonoBehaviour:
   lookRadius: 70
   damage: 30
   attackAnimationSpeed: 1
-  slowedSpeedFactor: 0.7
+  defaultSpeed: 2
   isAttackOnCooldown: 0
   isAttacking: 0
   hitboxActivated: 0

@@ -48,6 +48,19 @@ public class DamagableEnemy: Damagable
         }
     }
 
+    public IEnumerator DamageOverTime(float damageAmount, float duration, HashSet<GameObject> set = null)
+    {
+        var zombie = gameObject;
+        var elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            Hit(damageAmount);
+            yield return new WaitForSeconds(1.0f);
+            elapsedTime++;
+        }
+        if (set != null) set.Remove(zombie);
+    }
+
     // A hit with knockback.
     public void Hit (float damage, Vector3 direction)
     {

@@ -9,6 +9,10 @@ TagManager:
   - SlowDown
   - Damaging
   - Zombie
+  - HelpfulPuddle
+  - FlammablePuddle
+  - AggressionPuddle
+  - RandomPuddle
   layers:
   - Default
   - TransparentFX

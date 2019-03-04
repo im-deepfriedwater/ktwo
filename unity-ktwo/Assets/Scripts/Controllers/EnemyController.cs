@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour
     public float lookRadius = 10f;
     public float damage;
     public float attackAnimationSpeed;
+    public float defaultSpeed;
 
     float previousAnimatorSpeed;
 
@@ -26,9 +27,6 @@ public class EnemyController : MonoBehaviour
     NavMeshAgent agent;
     Animator animator;
     Rigidbody rbd;
-    GameObject previouslyCollided;
-
-    private float baseSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -38,17 +36,11 @@ public class EnemyController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         rbd = GetComponent<Rigidbody>();
-        baseSpeed = agent.speed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (previouslyCollided == null)
-        {
-            ResumeMovement();
-        }
-
         float distance = Vector3.Distance(target.position, transform.position);
 
         if (!isAttacking && distance <= lookRadius)
@@ -86,7 +78,6 @@ public class EnemyController : MonoBehaviour
         if (other.gameObject.tag == "Destructable" || other.gameObject.tag == "Player")
         {
             SetAttackAnimation(true);
-            previouslyCollided = other.gameObject;
             isAttacking = true;
             agent.isStopped = true;
         }
@@ -108,7 +99,8 @@ public class EnemyController : MonoBehaviour
                 return;
             }
             StartCoroutine("StartAttackCooldown");
-        } else if (isAttacking && !isAttackOnCooldown && hitboxActivated && other.gameObject.tag == "Player")
+        } 
+        else if (isAttacking && !isAttackOnCooldown && hitboxActivated && other.gameObject.tag == "Player")
         {
             hasAttacked = true;
             Vector3 direction = currentTransform.forward;
@@ -130,8 +122,16 @@ public class EnemyController : MonoBehaviour
 
     public void AffectSpeed(float percent, bool buff)
     {
-        var speedChange = baseSpeed * percent;
-        agent.speed = buff ? (baseSpeed + speedChange) : (baseSpeed - speedChange) ;
+        var speedChange = defaultSpeed * percent;
+        agent.speed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange) ;
+    }
+
+    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff, HashSet<GameObject> set = null) {
+        var speedChange = defaultSpeed * percent;
+        agent.speed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange) ;
+        yield return new WaitForSeconds(time);
+        if (set != null) set.Remove(gameObject);
+        agent.speed = defaultSpeed;
     }
 
     public void ResumeMovement ()
@@ -143,7 +143,6 @@ public class EnemyController : MonoBehaviour
         CountDownForAttackHitBoxCourtineStarted = false;
         StartAttackCooldownCourtineStarted = false;
         agent.SetDestination(target.position);
-        agent.speed = baseSpeed;
         StopAllCoroutines();
     }
 
