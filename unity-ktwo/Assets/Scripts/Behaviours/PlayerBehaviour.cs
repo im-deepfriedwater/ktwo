@@ -40,13 +40,15 @@ public class PlayerBehaviour : MonoBehaviour
 
     }
 
-    public void SpeedBoost(float percent)
+    public void AffectSpeed(float percent, bool buff)
     {
-        playerController.freeRunningSpeed = defaultSpeed + (defaultSpeed * percent);
+        var speedChange = defaultSpeed * percent;
+        playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange) ;
     }
 
-    public IEnumerator TimedSpeedBoost(float percent, float time) {
-        playerController.freeRunningSpeed = defaultSpeed + (defaultSpeed * percent);
+    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff) {
+        var speedChange = defaultSpeed * percent;
+        playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange) ;
         yield return new WaitForSeconds(time);
         ResetSpeed();
     }

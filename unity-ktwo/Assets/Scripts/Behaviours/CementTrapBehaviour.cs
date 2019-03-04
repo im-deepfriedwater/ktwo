@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpikeTrapBehaviour : MonoBehaviour
+public class CementTrapBehaviour : MonoBehaviour
 {
-    public float damageAmount;
+    public float speedSlowPercent;
     Collider lastCollided;
     
     void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag != "Zombie") return;
         lastCollided = other;
-        other.gameObject.GetComponent<DamagableEnemy>().Hit(damageAmount, Vector3.zero);
+        other.gameObject.GetComponent<EnemyController>().AffectSpeed(speedSlowPercent, false);
     }
 
     void OnTriggerExit(Collider other)

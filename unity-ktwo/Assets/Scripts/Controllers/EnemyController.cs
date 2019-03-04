@@ -10,8 +10,6 @@ public class EnemyController : MonoBehaviour
     public float lookRadius = 10f;
     public float damage;
     public float attackAnimationSpeed;
-    [Range(0, 1)]
-    public float slowedSpeedFactor;  // Goes from 0 - 1.
 
     float previousAnimatorSpeed;
 
@@ -93,12 +91,6 @@ public class EnemyController : MonoBehaviour
             agent.isStopped = true;
         }
 
-        if (other.gameObject.tag == "SlowDown")
-        {
-            previouslyCollided = other.gameObject;
-            agent.speed = baseSpeed - (baseSpeed * slowedSpeedFactor);
-        }
-
         if (isAttacking && !isAttackOnCooldown && !hitboxActivated)
         {
             if (!CountDownForAttackHitBoxCourtineStarted)
@@ -136,7 +128,13 @@ public class EnemyController : MonoBehaviour
         ResumeMovement();
     }
 
-    void ResumeMovement ()
+    public void AffectSpeed(float percent, bool buff)
+    {
+        var speedChange = baseSpeed * percent;
+        agent.speed = buff ? (baseSpeed + speedChange) : (baseSpeed - speedChange) ;
+    }
+
+    public void ResumeMovement ()
     {
         SetAttackAnimation(false);
         isAttackOnCooldown = false;
