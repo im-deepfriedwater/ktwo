@@ -17,7 +17,7 @@ public class CementTrapBehaviour : MonoBehaviour
     void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag != "Zombie") return;
-        other.gameObject.GetComponent<EnemyController>().ResumeMovement();
+        other.gameObject.GetComponent<EnemyController>().ResetSpeed();
     }
 
     private void OnDestroy()

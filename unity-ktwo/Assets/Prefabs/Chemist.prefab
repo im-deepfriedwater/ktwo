@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6148021259025062257}
   - component: {fileID: 8663981446539605631}
   - component: {fileID: 3711018044131867624}
+  - component: {fileID: 6911402233525246962}
   - component: {fileID: 1946821268403822384}
   - component: {fileID: 1946821268403482428}
   - component: {fileID: 1946821268403475988}
@@ -133,7 +134,7 @@ MonoBehaviour:
   throwDistance: 2
   projectilePrefab: {fileID: 8783224552434920197, guid: 48843267f77e356439ce3bf1f8da3e58,
     type: 3}
-  puddlePrefab: {fileID: 7102904733362769555, guid: 49e9a2ce24f5ee340bb983dcf4028214,
+  puddlePrefab: {fileID: 6777690292249990457, guid: 3c42b3ff83fde5f45816529795f14df4,
     type: 3}
   firingAngle: 45
   gravity: 9.8
@@ -157,7 +158,31 @@ MonoBehaviour:
   throwDistance: 1
   projectilePrefab: {fileID: 8783224552434920197, guid: 48843267f77e356439ce3bf1f8da3e58,
     type: 3}
-  puddlePrefab: {fileID: 7102904733362769555, guid: 450ba91f2b0dd9348af6fa5e880a14c9,
+  puddlePrefab: {fileID: 6777690292249990457, guid: 5118f6c76654bc14e853908ff9f49a35,
+    type: 3}
+  firingAngle: 45
+  gravity: 9.8
+--- !u!114 &6911402233525246962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946821268413213294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e92019ef820e57148b56d6f558def1e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputButtons: 07000000
+  cooldown: 10
+  abilitySlot: 3
+  abilityName: Random Vial
+  heightOffset: 1
+  throwDistance: 2
+  projectilePrefab: {fileID: 8783224552434920197, guid: 48843267f77e356439ce3bf1f8da3e58,
+    type: 3}
+  puddlePrefab: {fileID: 6777690292249990457, guid: 5bf20a98b18fc2a41a03ab74ccd31c0f,
     type: 3}
   firingAngle: 45
   gravity: 9.8

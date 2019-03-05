@@ -9,17 +9,17 @@ public class HelpfulPuddle : MonoBehaviour
     public float buffDuration;
     public float speedDebuffPercent;
     public float debuffDuration;
-
+    
     private HashSet<GameObject> affectedEntities = new HashSet<GameObject>();
     
+    void Update()
+    {
+        if (numberOfUses == 0 && affectedEntities.Count == 0) Destroy(gameObject);
+    }
+
     void OnTriggerStay(Collider other)
     {
-        // if (numberOfUses == 0)
-        // {
-        //     Destroy(gameObject);
-        // }
-        // numberOfUses -= 1;
-
+        if (numberOfUses == 0) return;
         if (affectedEntities.Contains(other.gameObject)) return;
 
         if (other.gameObject.tag == "Player")
@@ -30,6 +30,7 @@ public class HelpfulPuddle : MonoBehaviour
                 other.GetComponent<PlayerBehaviour>().
                 TimedAffectSpeed(speedBoostPercent, buffDuration, true, affectedEntities)
             );
+            numberOfUses -= 1;
         }
 
         if (other.gameObject.tag == "Structure")
@@ -46,6 +47,7 @@ public class HelpfulPuddle : MonoBehaviour
             //     if a structure has one,
             //     Call each structure's AffectDPS(float percent, float time)
             // );
+            numberOfUses -= 1;
         }
 
         if (other.gameObject.tag == "Zombie")
@@ -56,6 +58,7 @@ public class HelpfulPuddle : MonoBehaviour
                 other.GetComponent<EnemyController>().
                 TimedAffectSpeed(speedDebuffPercent, debuffDuration, false, affectedEntities)
             );
+            numberOfUses -= 1;
         }
     }
 }

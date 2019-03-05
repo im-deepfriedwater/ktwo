@@ -131,6 +131,11 @@ public class EnemyController : MonoBehaviour
         agent.speed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange) ;
         yield return new WaitForSeconds(time);
         if (set != null) set.Remove(gameObject);
+        ResetSpeed();
+    }
+
+    public void ResetSpeed()
+    {
         agent.speed = defaultSpeed;
     }
 
