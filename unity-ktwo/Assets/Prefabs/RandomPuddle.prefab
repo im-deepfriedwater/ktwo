@@ -124,10 +124,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedBoostPercent: 0.7
   buffDuration: 5
-  healAmount: 50
+  healAmount: 10
   speedDebuffPercent: 0.7
   debuffDuration: 5
-  damageAmount: 20
+  DPS: 5
+  DOTDuration: 4
   DPSBuffPercent: 0
   DPSBuffDuration: 0
   invincibilityDuration: 0
@@ -136,6 +137,8 @@ MonoBehaviour:
   DPSDebuffDuration: 0
   structureDamageAmount: 0
   numberOfUses: 3
+  buffPuddle: {fileID: 2100000, guid: a27b7f8a42f70ef4f81f0a9d0e78cee3, type: 2}
+  debuffPuddle: {fileID: 2100000, guid: 53481d1de80e4d14cb0248d402b316b6, type: 2}
 --- !u!136 &3160449240614949933
 CapsuleCollider:
   m_ObjectHideFlags: 0

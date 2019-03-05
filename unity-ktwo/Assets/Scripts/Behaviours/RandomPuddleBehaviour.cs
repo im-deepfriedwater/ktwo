@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RandomPuddleBehaviour : MonoBehaviour
 {
-
     [Header("Player/Zombie BUFF Settings")]
     public float speedBoostPercent;
     public float buffDuration;
@@ -13,7 +12,8 @@ public class RandomPuddleBehaviour : MonoBehaviour
     [Header("Player/Zombie DEBUFF Settings")]
     public float speedDebuffPercent;
     public float debuffDuration;
-    public float damageAmount;
+    public float DPS;
+    public float DOTDuration;
 
     [Header("Structure BUFF Settings")]
     public float DPSBuffPercent;
@@ -29,12 +29,17 @@ public class RandomPuddleBehaviour : MonoBehaviour
     [Header("Number of Uses")]
     public int numberOfUses;
 
+    [Header("Materials")]
+    public Material buffPuddle;
+    public Material debuffPuddle;
+
     private HashSet<GameObject> affectedEntities = new HashSet<GameObject>();
     private bool buff;
         
     void Awake()
     {
         buff = (Random.Range(0, 2) == 0);
+        gameObject.GetComponentInChildren<Renderer>().material = buff ? buffPuddle : debuffPuddle;
     }
 
     void Update()
@@ -57,21 +62,17 @@ public class RandomPuddleBehaviour : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("player health before " + other.GetComponent<DamagablePlayer>().currentHealth);
             affectedEntities.Add(other.gameObject);
-            // +15% run speed for 8 seconds
             StartCoroutine(
                 other.GetComponent<PlayerBehaviour>().
                 TimedAffectSpeed(speedBoostPercent, buffDuration, true, affectedEntities)
             );
             other.GetComponent<DamagablePlayer>().Heal(healAmount);
-            Debug.Log("player health after " + other.GetComponent<DamagablePlayer>().currentHealth);
             numberOfUses -= 1;
         }
 
         if (other.gameObject.tag == "Zombie")
         {
-            Debug.Log("zombie health before " + other.GetComponent<DamagableEnemy>().currentHealth);
             affectedEntities.Add(other.gameObject);
             // -15% run speed for 5 seconds
             StartCoroutine(
@@ -79,7 +80,6 @@ public class RandomPuddleBehaviour : MonoBehaviour
                 TimedAffectSpeed(speedBoostPercent, buffDuration, true, affectedEntities)
             );
             other.GetComponent<DamagableEnemy>().Heal(healAmount);
-            Debug.Log("zombie health after " + other.GetComponent<DamagableEnemy>().currentHealth);
             numberOfUses -= 1;
         }
 
@@ -96,10 +96,13 @@ public class RandomPuddleBehaviour : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             affectedEntities.Add(other.gameObject);
-            // +15% run speed for 8 seconds
             StartCoroutine(
                 other.GetComponent<PlayerBehaviour>().
                 TimedAffectSpeed(speedDebuffPercent, debuffDuration, false, affectedEntities)
+            );
+            StartCoroutine(
+                other.GetComponent<DamagablePlayer>().
+                DamageOverTime(DPS, DOTDuration, affectedEntities)
             );
             numberOfUses -= 1;
         }
@@ -107,11 +110,20 @@ public class RandomPuddleBehaviour : MonoBehaviour
         if (other.gameObject.tag == "Zombie")
         {
             affectedEntities.Add(other.gameObject);
-            // -15% run speed for 5 seconds
             StartCoroutine(
                 other.GetComponent<EnemyController>().
                 TimedAffectSpeed(speedDebuffPercent, debuffDuration, false, affectedEntities)
             );
+            StartCoroutine(
+                other.GetComponent<DamagableEnemy>().
+                DamageOverTime(DPS, DOTDuration, affectedEntities)
+            );
+            numberOfUses -= 1;
+        }
+        if (other.gameObject.tag == "Structure")
+        {
+            affectedEntities.Add(other.gameObject);
+            // TO DO
             numberOfUses -= 1;
         }
     }
