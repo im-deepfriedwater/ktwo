@@ -18,9 +18,12 @@ EditorBuildSettings:
     path: Assets/Scenes/NetworkClientPrototype.unity
     guid: 7aa1d8bf7eb2d7d4c874eb2788a220f3
   - enabled: 0
-    path: Assets/Scenes/yert.unity
+    path: 
     guid: 6bf65f5aed98daf409ba3723c14ddd47
   - enabled: 0
     path: Assets/Scenes/NetworkHostPrototype.unity
     guid: d2f744ad540adb4479d03ff859d29fbc
+  - enabled: 1
+    path: Assets/Scenes/NetworkClientMapPrototype.unity
+    guid: d5d51d75b8988d747b0f1341a639fd4e
   m_configObjects: {}
