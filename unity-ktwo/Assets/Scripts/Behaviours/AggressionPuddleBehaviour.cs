@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlammablePuddleBehaviour : MonoBehaviour
+public class AggressionPuddleBehaviour : MonoBehaviour
 {
-
     public int numberOfUses;
-    public int DPS;
     public int duration;
 
     private HashSet<GameObject> affectedEntities = new HashSet<GameObject>();
@@ -25,10 +23,10 @@ public class FlammablePuddleBehaviour : MonoBehaviour
 
         if (other.gameObject.tag != "Zombie") return;
         affectedEntities.Add(other.gameObject);
-
+        
         StartCoroutine(
-            other.GetComponent<DamagableEnemy>().
-            DamageOverTime(DPS, duration, affectedEntities)
+            other.GetComponent<EnemyController>().
+            TurnAgainstOwn(duration, affectedEntities)
         );
         numberOfUses -= 1;
     }

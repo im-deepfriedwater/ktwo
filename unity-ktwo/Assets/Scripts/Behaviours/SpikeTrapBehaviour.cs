@@ -20,7 +20,6 @@ public class SpikeTrapBehaviour : MonoBehaviour
         if (other.gameObject.tag != "Zombie") return;
         if (!spikesActive) return;
         other.gameObject.GetComponent<DamagableEnemy>().Hit(dpsMod.damageAmount, Vector3.zero);
-        Debug.Log("hit for " + dpsMod.damageAmount);
     }
 
     private IEnumerator CycleSpikes()
