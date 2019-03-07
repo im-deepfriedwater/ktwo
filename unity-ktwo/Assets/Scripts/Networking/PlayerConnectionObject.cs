@@ -9,10 +9,21 @@ using UnityEngine.SceneManagement;
 // make sure each client loads the same scenes and is in the same states.
 public class PlayerConnectionObject : NetworkBehaviour
 {
+
+    public GameObject PlayerUnitPrefab;
+
     [ClientRpc]
     public void RpcLoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+    }
+
+    [Command]
+    void CmdSpawn()
+    {
+        GameObject go = Instantiate(PlayerUnitPrefab);
+
+        NetworkServer.SpawnWithClientAuthority(go, connectionToClient);
     }
     bool isPartyLeader = false;
 
