@@ -52,6 +52,12 @@ public class InputManager : MonoBehaviour
 	public InputAxisState[] inputs;
 	public InputState playerInputState;
 
+
+	void Start()
+	{
+		playerInputState = GameObject.Find("Player").GetComponent<InputState>();
+	}
+
 	// Update is called once per frame
 	void Update ()
     {

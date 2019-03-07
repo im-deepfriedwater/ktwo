@@ -29,7 +29,6 @@ public class DamagableStructure : Damagable
         {
             OnZeroHealth.Invoke();
         }
-        Debug.Log("current health " + currentHealth);
     }
 
     public IEnumerator BeginInvincibility (float duration)
