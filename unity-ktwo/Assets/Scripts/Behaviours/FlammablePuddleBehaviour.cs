@@ -13,9 +13,7 @@ public class FlammablePuddleBehaviour : MonoBehaviour
         
     void Update()
     {
-        if (numberOfUses == 0 && affectedEntities.Count == 0) {
-            Destroy(gameObject);
-        }
+        if (numberOfUses == 0 && affectedEntities.Count == 0) Destroy(gameObject);
     }
 
     void OnTriggerEnter(Collider other)
@@ -27,8 +25,8 @@ public class FlammablePuddleBehaviour : MonoBehaviour
         affectedEntities.Add(other.gameObject);
 
         StartCoroutine(
-            other.GetComponent<DamagableEnemy>().
-            DamageOverTime(DPS, duration, affectedEntities)
+            other.GetComponent<DamagableEnemy>()
+                .DamageOverTime(DPS, duration, affectedEntities)
         );
         numberOfUses -= 1;
     }

@@ -22,8 +22,7 @@ public class Damagable : MonoBehaviour
 
     virtual public void Heal(float healAmount)
     {
-        currentHealth += healAmount;
-        if (currentHealth > startingHealth) currentHealth = startingHealth;
+        currentHealth = Mathf.Min(currentHealth + healAmount, startingHealth);
     }
 
     virtual public void Hit (float damage) 

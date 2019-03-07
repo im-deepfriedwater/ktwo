@@ -24,7 +24,8 @@ public class SpikeTrapBehaviour : MonoBehaviour
 
     private IEnumerator CycleSpikes()
     {
-        while (true){
+        while (true)
+        {
             spikesActive = !spikesActive;
             yield return new WaitForSeconds(attackFrequency);
         }

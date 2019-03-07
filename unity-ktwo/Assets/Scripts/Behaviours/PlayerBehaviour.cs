@@ -30,33 +30,19 @@ public class PlayerBehaviour : MonoBehaviour
         ResetSpeed();
     }
 
-    void Update()
-    {
-
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-
-    }
-
     public void AffectSpeed(float percent, bool buff)
     {
         var speedChange = defaultSpeed * percent;
-        playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange) ;
+        playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
     }
 
-    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff, HashSet<GameObject> set = null) {
+    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff, HashSet<GameObject> set = null) 
+    {
         var speedChange = defaultSpeed * percent;
-        playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange) ;
+        playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
         yield return new WaitForSeconds(time);
         if (set != null) set.Remove(gameObject);
         ResetSpeed();
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        
     }
 
     public void ResetSpeed()

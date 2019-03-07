@@ -67,7 +67,8 @@ public class EnemyController : MonoBehaviour
     void FindNewTarget()
     {
         // this might all break when we have more than one player
-        if (turned) {
+        if (turned)
+        {
             var zombies = GameObject.FindGameObjectsWithTag("Zombie");
             target = zombies[Random.Range(0, zombies.Length)];
         }
@@ -222,7 +223,8 @@ public class EnemyController : MonoBehaviour
         agent.speed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange) ;
     }
 
-    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff, HashSet<GameObject> set = null) {
+    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff, HashSet<GameObject> set = null) 
+    {
         var zombie = gameObject;
         var speedChange = defaultSpeed * percent;
         agent.speed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange) ;

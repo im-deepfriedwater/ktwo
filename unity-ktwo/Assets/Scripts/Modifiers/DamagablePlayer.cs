@@ -26,7 +26,6 @@ public class DamagablePlayer: Damagable
             OnHit = new UnityEventFloat();
         }
         OnHit.AddListener(GetComponent<PlayerBehaviour>().UpdateHealthBar);
-        
     }
 
     new void Start ()
@@ -37,8 +36,7 @@ public class DamagablePlayer: Damagable
 
     override public void Heal(float healAmount)
     {
-        currentHealth += healAmount;
-        if (currentHealth > startingHealth) currentHealth = startingHealth;
+        currentHealth = Mathf.Min(currentHealth + healAmount, startingHealth);
         OnHit.Invoke(currentHealth / startingHealth);
     }
 

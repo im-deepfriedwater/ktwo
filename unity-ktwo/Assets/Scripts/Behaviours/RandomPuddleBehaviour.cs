@@ -52,10 +52,14 @@ public class RandomPuddleBehaviour : MonoBehaviour
         if (numberOfUses == 0) return;
         if (affectedEntities.Contains(other.gameObject)) return;
 
-        if (buff) 
+        if (buff)
+        {
             Buff(other);
+        }    
         else
+        {
             Debuff(other);
+        } 
     }
 
     private void Buff(Collider other)
@@ -64,8 +68,8 @@ public class RandomPuddleBehaviour : MonoBehaviour
         {
             affectedEntities.Add(other.gameObject);
             StartCoroutine(
-                other.GetComponent<PlayerBehaviour>().
-                TimedAffectSpeed(speedBoostPercent, buffDuration, true, affectedEntities)
+                other.GetComponent<PlayerBehaviour>()
+                    .TimedAffectSpeed(speedBoostPercent, buffDuration, true, affectedEntities)
             );
             other.GetComponent<DamagablePlayer>().Heal(healAmount);
             numberOfUses -= 1;
@@ -76,8 +80,8 @@ public class RandomPuddleBehaviour : MonoBehaviour
             affectedEntities.Add(other.gameObject);
             // -15% run speed for 5 seconds
             StartCoroutine(
-                other.GetComponent<EnemyController>().
-                TimedAffectSpeed(speedBoostPercent, buffDuration, true, affectedEntities)
+                other.GetComponent<EnemyController>()
+                    .TimedAffectSpeed(speedBoostPercent, buffDuration, true, affectedEntities)
             );
             other.GetComponent<DamagableEnemy>().Heal(healAmount);
             numberOfUses -= 1;
@@ -113,12 +117,12 @@ public class RandomPuddleBehaviour : MonoBehaviour
         {
             affectedEntities.Add(other.gameObject);
             StartCoroutine(
-                other.GetComponent<PlayerBehaviour>().
-                TimedAffectSpeed(speedDebuffPercent, debuffDuration, false, affectedEntities)
+                other.GetComponent<PlayerBehaviour>()
+                    .TimedAffectSpeed(speedDebuffPercent, debuffDuration, false, affectedEntities)
             );
             StartCoroutine(
-                other.GetComponent<DamagablePlayer>().
-                DamageOverTime(DPS, DOTDuration, affectedEntities)
+                other.GetComponent<DamagablePlayer>()
+                    .DamageOverTime(DPS, DOTDuration, affectedEntities)
             );
             numberOfUses -= 1;
         }
@@ -127,12 +131,12 @@ public class RandomPuddleBehaviour : MonoBehaviour
         {
             affectedEntities.Add(other.gameObject);
             StartCoroutine(
-                other.GetComponent<EnemyController>().
-                TimedAffectSpeed(speedDebuffPercent, debuffDuration, false, affectedEntities)
+                other.GetComponent<EnemyController>()
+                    .TimedAffectSpeed(speedDebuffPercent, debuffDuration, false, affectedEntities)
             );
             StartCoroutine(
-                other.GetComponent<DamagableEnemy>().
-                DamageOverTime(DPS, DOTDuration, affectedEntities)
+                other.GetComponent<DamagableEnemy>()
+                    .DamageOverTime(DPS, DOTDuration, affectedEntities)
             );
             numberOfUses -= 1;
         }

@@ -29,8 +29,8 @@ public class HelpfulPuddle : MonoBehaviour
         {
             affectedEntities.Add(other.gameObject);
             StartCoroutine(
-                other.GetComponent<PlayerBehaviour>().
-                TimedAffectSpeed(speedBoostPercent, buffDuration, true, affectedEntities)
+                other.GetComponent<PlayerBehaviour>()
+                    .TimedAffectSpeed(speedBoostPercent, buffDuration, true, affectedEntities)
             );
             numberOfUses -= 1;
         }
@@ -61,8 +61,8 @@ public class HelpfulPuddle : MonoBehaviour
         {
             affectedEntities.Add(other.gameObject);
             StartCoroutine(
-                other.GetComponent<EnemyController>().
-                TimedAffectSpeed(speedDebuffPercent, debuffDuration, false, affectedEntities)
+                other.GetComponent<EnemyController>()
+                    .TimedAffectSpeed(speedDebuffPercent, debuffDuration, false, affectedEntities)
             );
             numberOfUses -= 1;
         }

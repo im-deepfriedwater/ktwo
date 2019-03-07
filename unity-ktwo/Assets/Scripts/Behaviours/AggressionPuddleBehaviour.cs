@@ -11,9 +11,7 @@ public class AggressionPuddleBehaviour : MonoBehaviour
         
     void Update()
     {
-        if (numberOfUses == 0 && affectedEntities.Count == 0) {
-            Destroy(gameObject);
-        }
+        if (numberOfUses == 0 && affectedEntities.Count == 0) Destroy(gameObject);
     }
 
     void OnTriggerEnter(Collider other)
@@ -25,8 +23,8 @@ public class AggressionPuddleBehaviour : MonoBehaviour
         affectedEntities.Add(other.gameObject);
         
         StartCoroutine(
-            other.GetComponent<EnemyController>().
-            TurnAgainstOwn(duration, affectedEntities)
+            other.GetComponent<EnemyController>()
+                .TurnAgainstOwn(duration, affectedEntities)
         );
         numberOfUses -= 1;
     }
