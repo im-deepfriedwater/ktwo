@@ -50,10 +50,11 @@ public class InputAxisState
 public class InputManager : MonoBehaviour
 {
 	public InputAxisState[] inputs;
+	[HideInInspector]
 	public InputState playerInputState;
 
 
-	void Start()
+	void Awake()
 	{
 		playerInputState = GameObject.Find("Player").GetComponent<InputState>();
 	}

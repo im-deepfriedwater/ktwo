@@ -75,12 +75,11 @@ public class EnemyController : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        Debug.Log(other.gameObject.tag);
         if (other.gameObject.tag == "Structure") AttackStructure(other);
 
         if (other.gameObject.tag == "Player") AttackPlayer(other);
 
-        if (other.gameObject.tag != "Structure" && other.gameObject.tag != "Player") ResumeMovement();
+        if (other.gameObject.tag != "Structure" && other.gameObject.tag != "Player") return;
     }
 
     void OnTriggerExit(Collider other)
@@ -90,8 +89,8 @@ public class EnemyController : MonoBehaviour
 
     void AttackStructure(Collider other)
     {
-        var structure = other.gameObject.GetComponent<DamagableStructure>();
 
+        var structure = other.gameObject.GetComponent<DamagableStructure>();
         if (structure == null) return;
 
         SetAttackAnimation(true);
@@ -119,7 +118,6 @@ public class EnemyController : MonoBehaviour
 
         if (structure.currentHealth <= 0) 
         {
-            Debug.Log("structure health 0");
             ResumeMovement();
             return;
         }
@@ -128,7 +126,6 @@ public class EnemyController : MonoBehaviour
     void AttackPlayer(Collider other)
     {
         var player = other.gameObject.GetComponent<DamagablePlayer>();
-
         if (player == null) return;
 
         SetAttackAnimation(true);
@@ -142,7 +139,7 @@ public class EnemyController : MonoBehaviour
                 StartCoroutine("CountDownForAttackHitBox");
             }
         }
-        else if (isAttacking && !isAttackOnCooldown && hitboxActivated && other.gameObject.tag == "Player")
+        else if (isAttacking && !isAttackOnCooldown && hitboxActivated)
         {
             hasAttacked = true;
             Vector3 direction = currentTransform.forward;
