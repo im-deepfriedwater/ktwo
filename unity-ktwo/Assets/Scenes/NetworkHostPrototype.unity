@@ -374,6 +374,7 @@ GameObject:
   - component: {fileID: 1387971570}
   - component: {fileID: 1387971571}
   - component: {fileID: 1387971569}
+  - component: {fileID: 1387971572}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -424,7 +425,7 @@ MonoBehaviour:
   m_NetworkPort: 7777
   m_ServerBindToIP: 0
   m_ServerBindAddress: 
-  m_NetworkAddress: 10.27.247.196
+  m_NetworkAddress: 192.168.1.11
   m_DontDestroyOnLoad: 1
   m_RunInBackground: 1
   m_ScriptCRCCheck: 1
@@ -492,6 +493,18 @@ MonoBehaviour:
   matchSize: 4
   isNetworkActive: 0
   matchMaker: {fileID: 0}
+--- !u!114 &1387971572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1387971568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d956dc019e0d25c4e814111cbf383640, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1705204712
 GameObject:
   m_ObjectHideFlags: 0
