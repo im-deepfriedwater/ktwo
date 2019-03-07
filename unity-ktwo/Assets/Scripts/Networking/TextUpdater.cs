@@ -23,10 +23,15 @@ public class TextUpdater : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        foreach (Transform child in textGroup.transform)
+        {
+            DestroyImmediate(child.gameObject);
+        }
+
         foreach (KeyValuePair<NetworkConnection, int> entry in manager.connections)
         {
             var x = Instantiate(text, textGroup.transform);
             x.GetComponent<Text>().text = string.Format("Player {0} Connected", entry.Value);
-        } 
+        }
     }
 }
