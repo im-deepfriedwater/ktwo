@@ -26,7 +26,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         playerController = GetComponent<vThirdPersonController>();
         healthBar = GameObject.Find("HealthBarSlider").GetComponent<Slider>();
-        input = GameObject.Find("Player").GetComponent<vThirdPersonInput>();
+        input = GetComponent<vThirdPersonInput>();
         animator = GetComponentInChildren<Animator>();
         rbd = GetComponent<Rigidbody>();
         ResetSpeed();
