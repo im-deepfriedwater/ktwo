@@ -10,7 +10,6 @@ public class ServerManager : MonoBehaviour
     void Start()
     {
         managerHost = GetComponent<NetworkManagerHost>();
-        managerHost.Start();
-        Debug.Log("Server started");
+        managerHost.StartServer();
     }
 }

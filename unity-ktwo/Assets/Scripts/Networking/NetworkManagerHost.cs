@@ -17,6 +17,7 @@ public class NetworkManagerHost : NetworkManager
     public override void OnServerConnect(NetworkConnection conn)
     {
         Debug.Log("A client connected to the server: " + conn);
+        connections.Add(conn, playerSpot++);
     }
 
     public override void OnServerDisconnect(NetworkConnection conn)
@@ -30,6 +31,7 @@ public class NetworkManagerHost : NetworkManager
             }
         }
         Debug.Log("A client disconnected from the server: " + conn);
+        connections.Remove(conn);
     }
 
     public override void OnServerReady(NetworkConnection conn)
@@ -83,7 +85,6 @@ public class NetworkManagerHost : NetworkManager
     {
         base.OnClientConnect(conn);
         Debug.Log("Connected successfully to server, now to set up other stuff for the client...");
-        connections.Add(conn, playerSpot++);
     }
 
     public override void OnClientDisconnect(NetworkConnection conn)
@@ -97,7 +98,6 @@ public class NetworkManagerHost : NetworkManager
             }
         }
         Debug.Log("Client disconnected from server: " + conn);
-        connections.Remove(conn);
     }
 
     public override void OnClientError(NetworkConnection conn, int errorCode)

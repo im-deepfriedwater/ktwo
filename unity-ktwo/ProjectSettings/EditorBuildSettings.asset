@@ -11,7 +11,16 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/EncounterPrototype.unity
     guid: 8e8b42707ee8e5d4ea2c7e15fd4193c4
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MapPrototype.unity
     guid: 2a9b8c61aa1fc5e4c8ba7ed8e4eff9fd
+  - enabled: 1
+    path: Assets/Scenes/NetworkClientPrototype.unity
+    guid: 7aa1d8bf7eb2d7d4c874eb2788a220f3
+  - enabled: 0
+    path: Assets/Scenes/yert.unity
+    guid: 6bf65f5aed98daf409ba3723c14ddd47
+  - enabled: 0
+    path: Assets/Scenes/NetworkHostPrototype.unity
+    guid: d2f744ad540adb4479d03ff859d29fbc
   m_configObjects: {}
