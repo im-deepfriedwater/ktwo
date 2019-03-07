@@ -43,7 +43,9 @@ public class NetworkManagerHost : NetworkManager
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
         var player = (GameObject)GameObject.Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
+        // add to a hashmap of connections to players
         NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
+        player.GetComponent<PlayerConnectionObject>().RpcLoadScene("NetworkClientMapPrototype");
         Debug.Log("Client has requested to get his player added to the game");
     }
 
