@@ -24,7 +24,7 @@ public class PlayerBehaviour : MonoBehaviour
     
     void Start()
     {
-        playerController = GameObject.Find("Player").GetComponent<vThirdPersonController>();
+        playerController = GetComponent<vThirdPersonController>();
         healthBar = GameObject.Find("HealthBarSlider").GetComponent<Slider>();
         input = GameObject.Find("Player").GetComponent<vThirdPersonInput>();
         animator = GetComponentInChildren<Animator>();
