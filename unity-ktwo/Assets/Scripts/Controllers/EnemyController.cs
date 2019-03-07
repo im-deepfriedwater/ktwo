@@ -10,8 +10,7 @@ public class EnemyController : MonoBehaviour
     public float lookRadius = 10f;
     public float damage;
     public float attackAnimationSpeed;
-    [Range(0, 1)]
-    public float slowedSpeedFactor;  // Goes from 0 - 1.
+    public float defaultSpeed;
 
     float previousAnimatorSpeed;
 
@@ -20,43 +19,38 @@ public class EnemyController : MonoBehaviour
     public bool hitboxActivated = false;
     public bool hasAttacked = false; // False on spawn, should be set true after first attack.
 
-    bool CountDownForAttackHitBoxCourtineStarted = false;
-    bool StartAttackCooldownCourtineStarted = false;
+    bool CountDownForAttackHitBoxCoroutineStarted = false;
+    bool StartAttackCooldownCoroutineStarted = false;
+    
+    private bool turned = false;
 
     Transform currentTransform;
-    Transform target;
+    GameObject target;
     NavMeshAgent agent;
     Animator animator;
     Rigidbody rbd;
-    GameObject previouslyCollided;
-
-    private float baseSpeed;
 
     // Start is called before the first frame update
     void Start()
     {   
         currentTransform = GetComponent<Transform>();
-        target = PlayerManager.instance.player.transform;
+        target = PlayerManager.instance.player;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         rbd = GetComponent<Rigidbody>();
-        baseSpeed = agent.speed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (previouslyCollided == null)
-        {
-            ResumeMovement();
-        }
+        // if (target == null) FindNewTarget();
 
-        float distance = Vector3.Distance(target.position, transform.position);
+        float distance = Vector3.Distance(target.transform.position, transform.position);
 
         if (!isAttacking && distance <= lookRadius)
         {
             agent.isStopped = false;
-            agent.SetDestination(target.position);
+            agent.SetDestination(target.transform.position);
             if (distance <= agent.stoppingDistance)
             {
                 FaceTarget();
@@ -70,9 +64,24 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    void FindNewTarget()
+    {
+        // this might all break when we have more than one player
+        if (turned)
+        {
+            var zombies = GameObject.FindGameObjectsWithTag("Zombie");
+            target = zombies[Random.Range(0, zombies.Length)];
+        }
+        target = PlayerManager.instance.player;
+    }
+
     void FaceTarget ()
     {
-        Vector3 direction = (target.position - transform.position).normalized;
+        Vector3 direction = (target.transform.position - transform.position).normalized;
+        if (direction == Vector3.zero)
+        {
+            direction += Vector3.one;
+        }
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
@@ -85,50 +94,11 @@ public class EnemyController : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Destructable" || other.gameObject.tag == "Player")
-        {
-            SetAttackAnimation(true);
-            previouslyCollided = other.gameObject;
-            isAttacking = true;
-            agent.isStopped = true;
-        }
+        if (other.gameObject.tag == "Structure") AttackStructure(other);
 
-        if (other.gameObject.tag == "SlowDown")
-        {
-            previouslyCollided = other.gameObject;
-            agent.speed = baseSpeed - (baseSpeed * slowedSpeedFactor);
-        }
+        if (other.gameObject.tag == "Player" && !turned) AttackPlayer(other);
 
-        if (isAttacking && !isAttackOnCooldown && !hitboxActivated)
-        {
-            if (!CountDownForAttackHitBoxCourtineStarted)
-            {
-                StartCoroutine("CountDownForAttackHitBox");
-            }
-        }
-        else if (isAttacking && !isAttackOnCooldown && hitboxActivated && other.gameObject.tag == "Destructable")
-        {
-            other.gameObject.GetComponent<Damagable>().Hit(damage);
-            hitboxActivated = false;
-            isAttackOnCooldown = true;
-            if (StartAttackCooldownCourtineStarted)
-            {
-                return;
-            }
-            StartCoroutine("StartAttackCooldown");
-        } else if (isAttacking && !isAttackOnCooldown && hitboxActivated && other.gameObject.tag == "Player")
-        {
-            hasAttacked = true;
-            Vector3 direction = currentTransform.forward;
-            other.gameObject.GetComponent<DamagablePlayer>().Hit(damage, direction);
-            hitboxActivated = false;
-            isAttackOnCooldown = true;
-            if (StartAttackCooldownCourtineStarted)
-            {
-                return;
-            }
-            StartCoroutine("StartAttackCooldown");
-        }
+        if (other.gameObject.tag == "Zombie" && turned) AttackZombie(other);
     }
 
     void OnTriggerExit(Collider other)
@@ -136,33 +106,177 @@ public class EnemyController : MonoBehaviour
         ResumeMovement();
     }
 
-    void ResumeMovement ()
+    void AttackStructure(Collider other)
+    {
+        var structure = other.gameObject.GetComponent<DamagableStructure>();
+        if (structure == null) return;
+
+        SetAttackAnimation(true);
+        isAttacking = true;
+        agent.isStopped = true;
+
+        if (isAttacking && !isAttackOnCooldown && !hitboxActivated)
+        {
+            if (!CountDownForAttackHitBoxCoroutineStarted)
+            {
+                StartCoroutine("CountDownForAttackHitBox");
+            }
+        }
+        else if (isAttacking && !isAttackOnCooldown && hitboxActivated)
+        {
+            structure.Hit(damage);
+            hitboxActivated = false;
+            isAttackOnCooldown = true;
+            if (StartAttackCooldownCoroutineStarted)
+            {
+                return;
+            }
+            StartCoroutine("StartAttackCooldown");
+        }
+
+        if (structure.currentHealth <= 0) 
+        {
+            ResumeMovement();
+            return;
+        }
+    }
+
+    void AttackPlayer(Collider other)
+    {
+        var player = other.gameObject.GetComponent<DamagablePlayer>();
+        if (player == null) return;
+
+        SetAttackAnimation(true);
+        isAttacking = true;
+        agent.isStopped = true;
+
+        if (isAttacking && !isAttackOnCooldown && !hitboxActivated)
+        {
+            if (!CountDownForAttackHitBoxCoroutineStarted)
+            {
+                StartCoroutine("CountDownForAttackHitBox");
+            }
+        }
+        else if (isAttacking && !isAttackOnCooldown && hitboxActivated)
+        {
+            hasAttacked = true;
+            Vector3 direction = currentTransform.forward;
+            player.Hit(damage, direction);
+            hitboxActivated = false;
+            isAttackOnCooldown = true;
+            if (StartAttackCooldownCoroutineStarted)
+            {
+                return;
+            }
+            StartCoroutine("StartAttackCooldown");
+        }
+
+        if (player.currentHealth <= 0) 
+        {
+            // FindNewTarget(); may need this in the future
+            ResumeMovement();
+            return;
+        }
+    }
+
+    void AttackZombie(Collider other)
+    {
+        var zombie = other.gameObject.GetComponent<DamagableEnemy>();
+        if (zombie == null) return;
+
+        SetAttackAnimation(true);
+        isAttacking = true;
+        agent.isStopped = true;
+
+        if (isAttacking && !isAttackOnCooldown && !hitboxActivated)
+        {
+            if (!CountDownForAttackHitBoxCoroutineStarted)
+            {
+                StartCoroutine("CountDownForAttackHitBox");
+            }
+        }
+        else if (isAttacking && !isAttackOnCooldown && hitboxActivated)
+        {
+            hasAttacked = true;
+            Vector3 direction = currentTransform.forward;
+            zombie.Hit(damage, direction);
+            hitboxActivated = false;
+            isAttackOnCooldown = true;
+            if (StartAttackCooldownCoroutineStarted)
+            {
+                return;
+            }
+            StartCoroutine("StartAttackCooldown");
+        }
+
+        if (zombie.currentHealth <= 0) 
+        {
+            FindNewTarget();
+            ResumeMovement();
+            return;
+        }
+    }
+
+    public void AffectSpeed(float percent, bool buff)
+    {
+        var speedChange = defaultSpeed * percent;
+        agent.speed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange) ;
+    }
+
+    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff, HashSet<GameObject> set = null) 
+    {
+        var zombie = gameObject;
+        var speedChange = defaultSpeed * percent;
+        agent.speed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange) ;
+        yield return new WaitForSeconds(time);
+        if (set != null) set.Remove(zombie);
+        ResetSpeed();
+    }
+
+    public void ResetSpeed()
+    {
+        agent.speed = defaultSpeed;
+    }
+
+    public IEnumerator TurnAgainstOwn(float time, HashSet<GameObject> set = null)
+    {
+        var zombie = gameObject;
+        var oldTarget = target;
+        var activeZombies = GameObject.FindGameObjectsWithTag("Zombie");
+        target = activeZombies[Random.Range(0, activeZombies.Length)];
+        turned = true;
+        yield return new WaitForSeconds(time);
+        turned = false;
+        target = oldTarget;
+        if (set != null) set.Remove(zombie);
+    }
+
+    public void ResumeMovement ()
     {
         SetAttackAnimation(false);
         isAttackOnCooldown = false;
         isAttacking = false;
         hitboxActivated = false;
-        CountDownForAttackHitBoxCourtineStarted = false;
-        StartAttackCooldownCourtineStarted = false;
-        agent.SetDestination(target.position);
-        agent.speed = baseSpeed;
+        CountDownForAttackHitBoxCoroutineStarted = false;
+        StartAttackCooldownCoroutineStarted = false;
+        agent.SetDestination(target.transform.position);
         StopAllCoroutines();
     }
 
     IEnumerator StartAttackCooldown ()
     {
-        StartAttackCooldownCourtineStarted = true;
+        StartAttackCooldownCoroutineStarted = true;
         yield return new WaitForSeconds(attackCooldown);
         isAttackOnCooldown = false;
-        StartAttackCooldownCourtineStarted = false;
+        StartAttackCooldownCoroutineStarted = false;
     }
 
     IEnumerator CountDownForAttackHitBox () 
     {
-        CountDownForAttackHitBoxCourtineStarted = true;
+        CountDownForAttackHitBoxCoroutineStarted = true;
         yield return new WaitForSeconds(timeUntilDamageCalculation);
         hitboxActivated = true;
-        CountDownForAttackHitBoxCourtineStarted = false;
+        CountDownForAttackHitBoxCoroutineStarted = false;
     }
 
     void SetAttackAnimation (bool value)

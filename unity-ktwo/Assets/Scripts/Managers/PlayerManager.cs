@@ -10,10 +10,13 @@ public class PlayerManager : MonoBehaviour
 
     void Awake ()
     {
+        player = GameObject.Find("Player");
         instance = this;
     }
 
     #endregion
 
+    [HideInInspector]
     public GameObject player;
+
 }

@@ -5,7 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(InvinicibilityFlashModifier))]
 public class DamagablePlayer: Damagable
 {   
-    public float health = 100; // 100 by default.
     [Range(1,10)]
     public int knockbackFactor; // There's not really any sense of units here sorry...
     private float calculatedKnockBackFactor;
@@ -27,13 +26,18 @@ public class DamagablePlayer: Damagable
             OnHit = new UnityEventFloat();
         }
         OnHit.AddListener(GetComponent<PlayerBehaviour>().UpdateHealthBar);
-        
     }
 
     new void Start ()
     {
         invinicibilityComponent = GetComponent<InvinicibilityFlashModifier>();
         base.Start();
+    }
+
+    override public void Heal(float healAmount)
+    {
+        currentHealth = Mathf.Min(currentHealth + healAmount, startingHealth);
+        OnHit.Invoke(currentHealth / startingHealth);
     }
 
     override public void Hit (float damage)
@@ -44,11 +48,24 @@ public class DamagablePlayer: Damagable
         }
 
         currentHealth -= damage;
-        OnHit.Invoke(currentHealth / health);
+        OnHit.Invoke(currentHealth / startingHealth);
         if (currentHealth <= 0)
         {
             OnZeroHealth.Invoke();
         }
+    }
+
+    public IEnumerator DamageOverTime(float damageAmount, float duration, HashSet<GameObject> set = null)
+    {
+        var player = gameObject;
+        var elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            Hit(damageAmount);
+            yield return new WaitForSeconds(1.0f);
+            elapsedTime++;
+        }
+        if (set != null) set.Remove(player);
     }
 
     // A hit with knockback.
@@ -60,7 +77,7 @@ public class DamagablePlayer: Damagable
         }
 
         currentHealth -= damage;
-        OnHit.Invoke(currentHealth / health);
+        OnHit.Invoke(currentHealth / startingHealth);
         KnockbackPlayer(direction);
         if (currentHealth <= 0)
         {
