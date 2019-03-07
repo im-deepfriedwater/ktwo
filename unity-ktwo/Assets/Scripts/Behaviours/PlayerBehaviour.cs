@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Invector.CharacterController;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 // For controlling the main behaviours of the player.
-public class PlayerBehaviour : MonoBehaviour
+public class PlayerBehaviour : NetworkBehaviour
 {   
     [HideInInspector]
     Slider healthBar;
