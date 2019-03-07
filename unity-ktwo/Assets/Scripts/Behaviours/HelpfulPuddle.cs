@@ -9,6 +9,9 @@ public class HelpfulPuddle : MonoBehaviour
     public float buffDuration;
     public float speedDebuffPercent;
     public float debuffDuration;
+    public float invincibilityDuration;
+    public float DPSBuffPercent;
+    public float DPSBuffDuration;
     
     private HashSet<GameObject> affectedEntities = new HashSet<GameObject>();
     
@@ -25,7 +28,6 @@ public class HelpfulPuddle : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             affectedEntities.Add(other.gameObject);
-            // +15% run speed for 8 seconds
             StartCoroutine(
                 other.GetComponent<PlayerBehaviour>().
                 TimedAffectSpeed(speedBoostPercent, buffDuration, true, affectedEntities)
@@ -36,24 +38,28 @@ public class HelpfulPuddle : MonoBehaviour
         if (other.gameObject.tag == "Structure")
         {
             affectedEntities.Add(other.gameObject);
-            // invincibility for 2 seconds
-            // StartCoroutine(
-            //     if a structure has one,
-            //     Call each structure's MakeInvincible(float time)
-            // );
-            
-            // +25% DPS for 8 seconds
-            // StartCoroutine(
-            //     if a structure has one,
-            //     Call each structure's AffectDPS(float percent, float time)
-            // );
+
+            var structureDamagable = other.gameObject.GetComponent<DamagableStructure>();
+            if (structureDamagable != null)
+            {
+                StartCoroutine(
+                    structureDamagable.BeginInvincibility(invincibilityDuration)
+                );
+            }
+
+            var dpsMod = other.gameObject.GetComponent<DPSModifier>();
+            if (dpsMod != null)
+            {
+                StartCoroutine(
+                    dpsMod.AffectDPS(DPSBuffPercent, DPSBuffDuration, true)
+                );
+            }
             numberOfUses -= 1;
         }
 
         if (other.gameObject.tag == "Zombie")
         {
             affectedEntities.Add(other.gameObject);
-            // -15% run speed for 5 seconds
             StartCoroutine(
                 other.GetComponent<EnemyController>().
                 TimedAffectSpeed(speedDebuffPercent, debuffDuration, false, affectedEntities)

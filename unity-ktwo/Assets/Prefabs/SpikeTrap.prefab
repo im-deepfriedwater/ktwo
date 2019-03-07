@@ -12,12 +12,14 @@ GameObject:
   - component: {fileID: 3533182750087312595}
   - component: {fileID: 5168626307174337314}
   - component: {fileID: 4671561584349696272}
+  - component: {fileID: 3185391509847867484}
   - component: {fileID: 5624330204641981449}
   - component: {fileID: 1562752019785951143}
   - component: {fileID: 5611261912786985512}
+  - component: {fileID: 7300744935124728064}
   m_Layer: 0
   m_Name: SpikeTrap
-  m_TagString: Damaging
+  m_TagString: Structure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93,6 +95,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3680a86cfae77a946bf4ffa4f17c9aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackFrequency: 3
+--- !u!114 &3185391509847867484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545332260647542018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f6c8c1a4bcdb04fb27b49fb43ee125, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   damageAmount: 25
 --- !u!114 &5624330204641981449
 MonoBehaviour:
@@ -133,3 +148,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &7300744935124728064
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545332260647542018}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

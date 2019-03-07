@@ -127,6 +127,9 @@ MonoBehaviour:
   buffDuration: 8
   speedDebuffPercent: 0.4
   debuffDuration: 5
+  invincibilityDuration: 2
+  DPSPercentIncrease: 0.25
+  DPSBuffDuration: 8
 --- !u!136 &3160449240614949933
 CapsuleCollider:
   m_ObjectHideFlags: 0

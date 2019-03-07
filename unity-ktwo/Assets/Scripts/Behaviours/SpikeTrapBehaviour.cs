@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class SpikeTrapBehaviour : MonoBehaviour
 {
-    public float damageAmount;
+    public float attackFrequency;
 
     private bool spikesActive = true;
+    private DPSModifier dpsMod;
     
     void Awake()
     {   
+        dpsMod = gameObject.GetComponent<DPSModifier>();
         StartCoroutine(CycleSpikes());
     }
 
@@ -17,15 +19,15 @@ public class SpikeTrapBehaviour : MonoBehaviour
     {
         if (other.gameObject.tag != "Zombie") return;
         if (!spikesActive) return;
-        other.gameObject.GetComponent<DamagableEnemy>().Hit(damageAmount, Vector3.zero);
+        other.gameObject.GetComponent<DamagableEnemy>().Hit(dpsMod.damageAmount, Vector3.zero);
+        Debug.Log("hit for " + dpsMod.damageAmount);
     }
 
     private IEnumerator CycleSpikes()
     {
         while (true){
             spikesActive = !spikesActive;
-            Debug.Log("spikesActive: " + spikesActive);
-            yield return new WaitForSeconds(3.0f);
+            yield return new WaitForSeconds(attackFrequency);
         }
     }
 }

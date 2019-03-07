@@ -44,12 +44,12 @@ GameObject:
   - component: {fileID: 23814229178971568}
   - component: {fileID: 65961016805337060}
   - component: {fileID: 95236908362832648}
-  - component: {fileID: 3254990090232699069}
+  - component: {fileID: 3664958320725262459}
   - component: {fileID: 7444413066260199695}
   - component: {fileID: 6025500435998042357}
   m_Layer: 0
   m_Name: ArchitectWall
-  m_TagString: Destructable
+  m_TagString: Structure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -145,7 +145,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3254990090232699069
+--- !u!114 &3664958320725262459
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -154,15 +154,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1692240931094456}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46a49cc604e27c945b35ec530c6917ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 3616a322c5ca63e4ab6178dbbecb0770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 100
+  startingHealth: 100
+  currentHealth: 0
   OnZeroHealth:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7444413066260199695}
-        m_MethodName: Break
+      - m_Target: {fileID: 3664958320725262459}
+        m_MethodName: Die
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -179,6 +180,11 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  health: 100
+  isInvincible: 0
+  canBeHurt: 1
+  canHurt: 0
+  invincibleMaterial: {fileID: 2100000, guid: 1040580661b403c42966896a13777758, type: 2}
 --- !u!114 &7444413066260199695
 MonoBehaviour:
   m_ObjectHideFlags: 0

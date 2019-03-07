@@ -75,11 +75,26 @@ public class EnemyController : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Destructable" || other.gameObject.tag == "Player")
+        var structureDamagable = other.gameObject.GetComponent<DamagableStructure>();
+        var playerDamagable = other.gameObject.GetComponent<DamagablePlayer>();
+
+        if (structureDamagable == null && playerDamagable == null) return;
+
+        if (structureDamagable.currentHealth <= 0) 
         {
-            SetAttackAnimation(true);
-            isAttacking = true;
-            agent.isStopped = true;
+            Debug.Log("whats poppin");
+            ResumeMovement();
+            return;
+        }
+
+        if (other.gameObject.tag == "Structure" || other.gameObject.tag == "Player")
+        {
+            if (playerDamagable != null || structureDamagable != null)
+            {
+                SetAttackAnimation(true);
+                isAttacking = true;
+                agent.isStopped = true;
+            }
         }
 
         if (isAttacking && !isAttackOnCooldown && !hitboxActivated)
@@ -89,9 +104,10 @@ public class EnemyController : MonoBehaviour
                 StartCoroutine("CountDownForAttackHitBox");
             }
         }
-        else if (isAttacking && !isAttackOnCooldown && hitboxActivated && other.gameObject.tag == "Destructable")
+        else if (isAttacking && !isAttackOnCooldown && hitboxActivated && other.gameObject.tag == "Structure")
         {
-            other.gameObject.GetComponent<Damagable>().Hit(damage);
+            structureDamagable.Hit(damage);
+            Debug.Log("remaining health " + structureDamagable.currentHealth);
             hitboxActivated = false;
             isAttackOnCooldown = true;
             if (StartAttackCooldownCourtineStarted)
@@ -99,12 +115,13 @@ public class EnemyController : MonoBehaviour
                 return;
             }
             StartCoroutine("StartAttackCooldown");
+            
         } 
         else if (isAttacking && !isAttackOnCooldown && hitboxActivated && other.gameObject.tag == "Player")
         {
             hasAttacked = true;
             Vector3 direction = currentTransform.forward;
-            other.gameObject.GetComponent<DamagablePlayer>().Hit(damage, direction);
+            playerDamagable.Hit(damage, direction);
             hitboxActivated = false;
             isAttackOnCooldown = true;
             if (StartAttackCooldownCourtineStarted)
@@ -127,10 +144,11 @@ public class EnemyController : MonoBehaviour
     }
 
     public IEnumerator TimedAffectSpeed(float percent, float time, bool buff, HashSet<GameObject> set = null) {
+        var zombie = gameObject;
         var speedChange = defaultSpeed * percent;
         agent.speed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange) ;
         yield return new WaitForSeconds(time);
-        if (set != null) set.Remove(gameObject);
+        if (set != null) set.Remove(zombie);
         ResetSpeed();
     }
 
@@ -141,6 +159,7 @@ public class EnemyController : MonoBehaviour
 
     public void ResumeMovement ()
     {
+        Debug.Log("ResumeMovement");
         SetAttackAnimation(false);
         isAttackOnCooldown = false;
         isAttacking = false;

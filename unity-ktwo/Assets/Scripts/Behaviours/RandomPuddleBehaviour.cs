@@ -86,7 +86,23 @@ public class RandomPuddleBehaviour : MonoBehaviour
         if (other.gameObject.tag == "Structure")
         {
             affectedEntities.Add(other.gameObject);
-            // TO DO
+
+            var structureDamagable = other.gameObject.GetComponent<DamagableStructure>();
+            if (structureDamagable != null)
+            {
+                structureDamagable.Heal(structureHealAmount);
+                StartCoroutine(
+                    structureDamagable.BeginInvincibility(invincibilityDuration)
+                );
+            }
+
+            var dpsMod = other.gameObject.GetComponent<DPSModifier>();
+            if (dpsMod != null)
+            {
+                StartCoroutine(
+                    dpsMod.AffectDPS(DPSBuffPercent, DPSBuffDuration, true)
+                );
+            }
             numberOfUses -= 1;
         }
     }
@@ -123,7 +139,20 @@ public class RandomPuddleBehaviour : MonoBehaviour
         if (other.gameObject.tag == "Structure")
         {
             affectedEntities.Add(other.gameObject);
-            // TO DO
+
+            var structureDamagable = other.gameObject.GetComponent<DamagableStructure>();
+            if (structureDamagable != null)
+            {
+                structureDamagable.Hit(structureDamageAmount);
+            }
+
+            var dpsMod = other.gameObject.GetComponent<DPSModifier>();
+            if (dpsMod != null)
+            {
+                StartCoroutine(
+                    dpsMod.AffectDPS(DPSDebuffPercent, DPSDebuffDuration, false)
+                );
+            }
             numberOfUses -= 1;
         }
     }

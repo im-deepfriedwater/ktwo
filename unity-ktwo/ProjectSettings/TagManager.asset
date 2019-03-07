@@ -4,15 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - SpeedBoost
   - Destructable
-  - SlowDown
-  - Damaging
   - Zombie
-  - HelpfulPuddle
-  - FlammablePuddle
-  - AggressionPuddle
-  - RandomPuddle
+  - Damaging
+  - SlowDown
+  - SpeedBoost
+  - Structure
   layers:
   - Default
   - TransparentFX

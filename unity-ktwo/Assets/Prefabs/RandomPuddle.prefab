@@ -129,13 +129,13 @@ MonoBehaviour:
   debuffDuration: 5
   DPS: 5
   DOTDuration: 4
-  DPSBuffPercent: 0
-  DPSBuffDuration: 0
-  invincibilityDuration: 0
-  structureHealAmount: 0
-  DPSDebuffPercent: 0
-  DPSDebuffDuration: 0
-  structureDamageAmount: 0
+  DPSBuffPercent: 0.5
+  DPSBuffDuration: 8
+  invincibilityDuration: 5
+  structureHealAmount: 25
+  DPSDebuffPercent: 1
+  DPSDebuffDuration: 3
+  structureDamageAmount: 25
   numberOfUses: 3
   buffPuddle: {fileID: 2100000, guid: a27b7f8a42f70ef4f81f0a9d0e78cee3, type: 2}
   debuffPuddle: {fileID: 2100000, guid: 53481d1de80e4d14cb0248d402b316b6, type: 2}
