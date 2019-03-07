@@ -1,9 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Networking.Match;
+using System.Collections.Generic;
 
 public class NetworkManagerHost : NetworkManager
 {
+    public Dictionary<NetworkConnection, int> connections;
+    int playerSpot = 0;
+    
+    public void Start ()
+    {
+        connections = new Dictionary<NetworkConnection, int>();
+    }
+
     // Server callbacks
     public override void OnServerConnect(NetworkConnection conn)
     {
@@ -13,7 +22,6 @@ public class NetworkManagerHost : NetworkManager
     public override void OnServerDisconnect(NetworkConnection conn)
     {
         NetworkServer.DestroyPlayersForConnection(conn);
-
         if (conn.lastError != NetworkError.Ok)
         {
             if (LogFilter.logError)
@@ -71,11 +79,11 @@ public class NetworkManagerHost : NetworkManager
     }
 
     // Client callbacks
-
     public override void OnClientConnect(NetworkConnection conn)
     {
         base.OnClientConnect(conn);
         Debug.Log("Connected successfully to server, now to set up other stuff for the client...");
+        connections.Add(conn, playerSpot++);
     }
 
     public override void OnClientDisconnect(NetworkConnection conn)
@@ -89,6 +97,7 @@ public class NetworkManagerHost : NetworkManager
             }
         }
         Debug.Log("Client disconnected from server: " + conn);
+        connections.Remove(conn);
     }
 
     public override void OnClientError(NetworkConnection conn, int errorCode)
