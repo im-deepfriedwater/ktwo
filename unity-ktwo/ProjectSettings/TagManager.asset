@@ -4,11 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - SpeedBoost
   - Destructable
-  - SlowDown
-  - Damaging
   - Zombie
+  - Damaging
+  - SlowDown
+  - SpeedBoost
+  - Structure
   layers:
   - Default
   - TransparentFX

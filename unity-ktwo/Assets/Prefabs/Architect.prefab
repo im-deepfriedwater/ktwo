@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 2656795568669542894}
   - component: {fileID: 2656795568679788790}
   - component: {fileID: 2217634175344956814}
-  - component: {fileID: 1654939236}
+  - component: {fileID: 5024317649666958526}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -495,7 +495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a9136f324d4544d9b1acfc83521224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &1654939236
+--- !u!65 &5024317649666958526
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -506,8 +506,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 1.2, z: 0.8}
-  m_Center: {x: 0, y: 0.9, z: 0.05}
+  m_Size: {x: 0.5543226, y: 0.14739406, z: 0.43410268}
+  m_Center: {x: -0.0001604408, y: 0.08, z: 0.0064408034}
 --- !u!1 &5761108413642579456
 GameObject:
   m_ObjectHideFlags: 0

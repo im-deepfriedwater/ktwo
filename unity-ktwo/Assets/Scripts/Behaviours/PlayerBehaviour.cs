@@ -12,8 +12,6 @@ public class PlayerBehaviour : MonoBehaviour
     [Tooltip("UI for game screen. Should be in Canvas, called GameOverScreen")]
     public GameObject gameOverScreen;
     public float defaultSpeed;
-    [Range(0, 10)]
-    public float boostedSpeedFactor; // Goes from 0 - 1.
     public bool recentlyHit;
 
     vThirdPersonController playerController;
@@ -32,32 +30,22 @@ public class PlayerBehaviour : MonoBehaviour
         ResetSpeed();
     }
 
-    void Update()
+    public void AffectSpeed(float percent, bool buff)
     {
-        if (!lastCollided) // Continegency in case trigger is destroyed before OnExit is called
-        {
-            ResetSpeed();
-        }
+        var speedChange = defaultSpeed * percent;
+        playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
     }
 
-    private void OnTriggerEnter(Collider other)
+    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff, HashSet<GameObject> set = null) 
     {
-        if (other.gameObject.tag == "SpeedBoost")
-        {
-            lastCollided = other;
-            playerController.freeRunningSpeed = defaultSpeed * (1 + boostedSpeedFactor);
-        }
+        var speedChange = defaultSpeed * percent;
+        playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
+        yield return new WaitForSeconds(time);
+        if (set != null) set.Remove(gameObject);
+        ResetSpeed();
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "SpeedBoost")
-        {
-            ResetSpeed();
-        }
-    }
-
-    private void ResetSpeed()
+    public void ResetSpeed()
     {
         playerController.freeRunningSpeed = defaultSpeed;
     }

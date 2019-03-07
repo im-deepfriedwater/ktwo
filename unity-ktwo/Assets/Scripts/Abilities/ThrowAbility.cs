@@ -53,7 +53,7 @@ public class ThrowAbility : AbstractAbility
         }
 
         // I haven't done the calculation for the parabolitic projectile motion so i hardcoded height for now
-        var puddlePosition = new Vector3(Projectile.transform.position.x, 0.05f, Projectile.transform.position.z);
+        var puddlePosition = new Vector3(Projectile.transform.position.x, 0.01f, Projectile.transform.position.z);
         Instantiate(puddlePrefab, puddlePosition, Projectile.transform.rotation);
         Destroy(Projectile);
     }

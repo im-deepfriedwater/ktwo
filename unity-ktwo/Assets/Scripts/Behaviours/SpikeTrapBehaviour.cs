@@ -4,27 +4,30 @@ using UnityEngine;
 
 public class SpikeTrapBehaviour : MonoBehaviour
 {
-    public float damage;
+    public float attackFrequency;
+
+    private bool spikesActive = true;
+    private DPSModifier dpsMod;
     
-    void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.tag == "Zombie")
-        {
-            DealDamage(other);
-        }
+    void Awake()
+    {   
+        dpsMod = gameObject.GetComponent<DPSModifier>();
+        StartCoroutine(CycleSpikes());
     }
 
-    // void OnTriggerExit(Collider other) 
-    // {
-    //     if (other.gameObject.tag == "Zombie")
-    //     {
-    //         other.gameObject.GetComponent<DamagableEnemy>().isInvincible = false;
-    //     }
-    // }
-
-    void DealDamage (Collider other) 
+    void OnTriggerStay(Collider other)
     {
-        var zombie = other.gameObject.GetComponent<DamagableEnemy>();
-        zombie.Hit(damage, Vector3.zero);
+        if (other.gameObject.tag != "Zombie") return;
+        if (!spikesActive) return;
+        other.gameObject.GetComponent<DamagableEnemy>().Hit(dpsMod.damageAmount, Vector3.zero);
+    }
+
+    private IEnumerator CycleSpikes()
+    {
+        while (true)
+        {
+            spikesActive = !spikesActive;
+            yield return new WaitForSeconds(attackFrequency);
+        }
     }
 }

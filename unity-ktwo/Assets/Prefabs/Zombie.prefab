@@ -125,7 +125,7 @@ MonoBehaviour:
   lookRadius: 70
   damage: 30
   attackAnimationSpeed: 1
-  slowedSpeedFactor: 0.7
+  defaultSpeed: 2
   isAttackOnCooldown: 0
   isAttacking: 0
   hitboxActivated: 0
@@ -328,10 +328,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: fedcc045a4a98624781683d921a6019b, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 4dda0d416cf2a51408c69ca285acb16b, type: 2}
     - target: {fileID: 100004, guid: fedcc045a4a98624781683d921a6019b, type: 3}
       propertyPath: m_Layer
       value: 10
@@ -668,6 +664,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: fedcc045a4a98624781683d921a6019b, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4dda0d416cf2a51408c69ca285acb16b, type: 2}
     m_RemovedComponents:
     - {fileID: 9500000, guid: fedcc045a4a98624781683d921a6019b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: fedcc045a4a98624781683d921a6019b, type: 3}
