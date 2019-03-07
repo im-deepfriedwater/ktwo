@@ -34,6 +34,7 @@ public class PlayerConnectionObject : NetworkBehaviour
         {
             return; // This belongs to a different player.
         }
+        CmdSpawn();
     }
 
     // Update is called once per frame
