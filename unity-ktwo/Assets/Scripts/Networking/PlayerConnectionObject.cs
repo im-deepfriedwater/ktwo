@@ -21,7 +21,7 @@ public class PlayerConnectionObject : NetworkBehaviour
     [Command]
     void CmdSpawn()
     {
-        GameObject go = Instantiate(PlayerUnitPrefab, new Vector3(5, 5, 5), Quaternion.identity);
+        GameObject go = Instantiate(PlayerUnitPrefab, new Vector3(0, 0.5f, 0), Quaternion.identity);
         NetworkServer.SpawnWithClientAuthority(go, connectionToClient);
     }
     bool isPartyLeader = false;
