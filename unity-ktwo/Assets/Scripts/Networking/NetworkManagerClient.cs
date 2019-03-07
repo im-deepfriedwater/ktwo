@@ -9,6 +9,7 @@ public class NetworkManagerClient : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        manager = GetComponent<NetworkManager>();
         manager.StartClient();
     }
 }
