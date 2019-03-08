@@ -23,12 +23,28 @@ public class PlayerBehaviour : NetworkBehaviour
     
     void Start()
     {
+
+        // If this represents a different client's player,
+        // We will shut off a lot of components it doesn't
+        // need to compute and return.
+        if (!isLocalPlayer)
+        {
+            TurnOffComponentsForNonLocalClient();
+            return;
+        }
+    
         playerController = GetComponent<vThirdPersonController>();
         healthBar = GameObject.Find("HealthBarSlider").GetComponent<Slider>();
         input = GetComponent<vThirdPersonInput>();
         animator = GetComponentInChildren<Animator>();
         rbd = GetComponent<Rigidbody>();
+        InputManager.instance.Initialize(this.gameObject);
         ResetSpeed();
+    }
+
+    public void TurnOffComponentsForNonLocalClient()
+    {
+        Destroy(GetComponent<Rigidbody>());
     }
 
     public void AffectSpeed(float percent, bool buff)

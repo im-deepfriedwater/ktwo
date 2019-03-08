@@ -182,8 +182,6 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   health: 100
   isInvincible: 0
-  canBeHurt: 1
-  canHurt: 0
   invincibleMaterial: {fileID: 2100000, guid: 1040580661b403c42966896a13777758, type: 2}
 --- !u!114 &7444413066260199695
 MonoBehaviour:

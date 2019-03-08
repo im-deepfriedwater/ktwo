@@ -45,7 +45,7 @@ public class KtwoServer : NetworkManager
         var player = (GameObject)GameObject.Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
         // add to a hashmap of connections to players
         NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
-        player.GetComponent<PlayerConnectionObject>().RpcLoadScene("NetworkClientMapPrototype");
+        player.GetComponent<PlayerConnectionObject>().RpcLoadScene("ClientMapPrototype");
         Debug.Log("Client has requested to get his player added to the game");
     }
 
