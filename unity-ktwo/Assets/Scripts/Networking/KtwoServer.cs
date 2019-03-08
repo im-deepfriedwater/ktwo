@@ -3,7 +3,7 @@ using UnityEngine.Networking;
 using UnityEngine.Networking.Match;
 using System.Collections.Generic;
 
-public class NetworkManagerHost : NetworkManager
+public class KtwoServer : NetworkManager
 {
     public Dictionary<NetworkConnection, int> connections;
     int playerSpot = 0;

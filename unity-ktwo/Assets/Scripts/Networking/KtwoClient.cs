@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class NetworkManagerClient : MonoBehaviour
+public class KtwoClient : MonoBehaviour
 {
     NetworkManager manager;
     // Start is called before the first frame update

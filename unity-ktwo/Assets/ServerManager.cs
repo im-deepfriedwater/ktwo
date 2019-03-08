@@ -5,11 +5,11 @@ using UnityEngine.Networking;
 
 public class ServerManager : MonoBehaviour
 {
-    NetworkManagerHost managerHost;
+    KtwoServer server;
     // Start is called before the first frame update
     void Start()
     {
-        managerHost = GetComponent<NetworkManagerHost>();
-        managerHost.StartServer();
+        server = GetComponent<KtwoServer>();
+        server.StartServer();
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 
 public class TextUpdater : MonoBehaviour
 {
-    NetworkManagerHost manager;
+    KtwoServer manager;
     [SerializeField]
     GameObject text;
     [SerializeField]
@@ -16,7 +16,7 @@ public class TextUpdater : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        manager = GetComponent<NetworkManagerHost>();
+        manager = GetComponent<KtwoServer>();
         textGroup = GameObject.FindObjectOfType<VerticalLayoutGroup>().gameObject;
     }
 
