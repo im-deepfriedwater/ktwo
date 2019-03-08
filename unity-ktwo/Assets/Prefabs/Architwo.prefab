@@ -1478,9 +1478,9 @@ GameObject:
   - component: {fileID: 5811519447187877919}
   - component: {fileID: 7691833511529284967}
   - component: {fileID: 8392597935827816077}
+  - component: {fileID: 1348674881442869206}
   - component: {fileID: 4769670260124815494}
   - component: {fileID: 7026388811499396706}
-  - component: {fileID: 1348674881442869206}
   m_Layer: 0
   m_Name: Architwo
   m_TagString: Player
@@ -1808,6 +1808,26 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 1.2, z: 0.8}
   m_Center: {x: 0, y: 0.9, z: 0.05}
+--- !u!114 &1348674881442869206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5811519447175110489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1590678366, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Animator: {fileID: 5811519447184632327}
+  m_ParameterSendBits: 63
+  param0: 
+  param1: 
+  param2: 
+  param3: 
+  param4: 
+  param5: 
 --- !u!114 &4769670260124815494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1863,23 +1883,3 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
---- !u!114 &1348674881442869206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5811519447175110489}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1590678366, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Animator: {fileID: 5811519447184632327}
-  m_ParameterSendBits: 0
-  param0: 
-  param1: 
-  param2: 
-  param3: 
-  param4: 
-  param5: 
