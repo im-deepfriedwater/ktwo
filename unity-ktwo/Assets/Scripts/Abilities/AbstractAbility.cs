@@ -19,6 +19,8 @@ public abstract class AbstractAbility : MonoBehaviour
 
     protected Image abilityGroupImage; // Used as a border behind the ability icon.
 
+    protected PlayerBehaviour player;
+
     protected void Initialize()
     {
         abilityGroupImage = GameObject
@@ -34,6 +36,7 @@ public abstract class AbstractAbility : MonoBehaviour
     {
         Initialize();
         playerTransform = GetComponent<Transform>();
+        player = GetComponent<PlayerBehaviour>();
     }
 
     #region ability icon UI methods

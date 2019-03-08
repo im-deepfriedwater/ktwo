@@ -30,7 +30,7 @@ public class BuildAbility : AbstractAbility
         );
 
         newPosition += playerTransform.forward * distanceFactor;
-        Instantiate(buildPrefab, newPosition, playerTransform.rotation);
+        player.CmdBuildObject(buildPrefab, newPosition, playerTransform.rotation);
     }
 
 }

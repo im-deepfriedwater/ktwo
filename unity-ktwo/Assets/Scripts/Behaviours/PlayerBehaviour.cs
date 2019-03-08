@@ -84,4 +84,13 @@ public class PlayerBehaviour : NetworkBehaviour
         animator.SetBool("IsDead", true);
         rbd.isKinematic = true;
     }
+
+    [Command]
+    public void CmdBuildObject(GameObject prefab, Vector3 position, Quaternion rotation)
+    {
+        var go = Instantiate(prefab, position, rotation);
+        NetworkServer.Spawn(go);
+        go.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
+
+    }
 }
