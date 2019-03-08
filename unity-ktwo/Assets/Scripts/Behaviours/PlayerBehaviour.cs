@@ -27,7 +27,7 @@ public class PlayerBehaviour : NetworkBehaviour
         // If this represents a different client's player,
         // We will shut off a lot of components it doesn't
         // need to compute and return.
-        if (!isLocalPlayer)
+        if (!hasAuthority)
         {
             TurnOffComponentsForNonLocalClient();
             return;
