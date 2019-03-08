@@ -2581,7 +2581,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &944729160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2612,6 +2612,7 @@ MonoBehaviour:
     button: 7
     condition: 0
   playerInputState: {fileID: 0}
+  isInitialized: 0
 --- !u!4 &944729161
 Transform:
   m_ObjectHideFlags: 0
