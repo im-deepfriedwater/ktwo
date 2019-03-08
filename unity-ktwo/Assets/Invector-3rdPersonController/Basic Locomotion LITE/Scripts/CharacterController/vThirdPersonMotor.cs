@@ -376,6 +376,11 @@ namespace Invector.CharacterController
 
             _capsuleCollider.material = frictionPhysics;
 
+            if (GetComponent<PlayerBehaviour>().isServer)
+            {
+                return;
+            }
+
             var magVel = (float)System.Math.Round(new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z).magnitude, 2);
             magVel = Mathf.Clamp(magVel, 0, 1);
 
