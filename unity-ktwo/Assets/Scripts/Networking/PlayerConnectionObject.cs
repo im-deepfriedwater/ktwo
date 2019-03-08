@@ -21,8 +21,10 @@ public class PlayerConnectionObject : NetworkBehaviour
     [Command]
     void CmdSpawn()
     {
+        Debug.Log(connectionToClient);
         GameObject go = Instantiate(PlayerUnitPrefab, new Vector3(0, 0.5f, 0), Quaternion.identity);
-        NetworkServer.SpawnWithClientAuthority(go, connectionToClient);
+        NetworkServer.Spawn(go);
+        go.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
     }
     bool isPartyLeader = false;
 
@@ -34,11 +36,5 @@ public class PlayerConnectionObject : NetworkBehaviour
             return; // This belongs to a different player.
         }
         CmdSpawn();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
