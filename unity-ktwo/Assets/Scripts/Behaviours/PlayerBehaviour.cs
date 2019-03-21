@@ -27,11 +27,11 @@ public class PlayerBehaviour : NetworkBehaviour
         // If this represents a different client's player,
         // We will shut off a lot of components it doesn't
         // need to compute and return.
-        if (!hasAuthority)
-        {
-            TurnOffComponentsForNonLocalClient();
-            return;
-        }
+        // if (!hasAuthority)
+        // {
+        //     TurnOffComponentsForNonLocalClient();
+        //     return;
+        // }
     
         playerController = GetComponent<vThirdPersonController>();
         healthBar = GameObject.Find("HealthBarSlider").GetComponent<Slider>();
@@ -72,7 +72,7 @@ public class PlayerBehaviour : NetworkBehaviour
         healthBar.value = 1 - healthPercentage;
     }
 
-    public void Die ()
+    public void Die()
     {
         InitiateGameOver();
     }
@@ -88,7 +88,6 @@ public class PlayerBehaviour : NetworkBehaviour
     [Command]
     public void CmdBuildObject(GameObject prefab, Vector3 position, Quaternion rotation)
     {
-        Debug.Log("????????????");
         var go = Instantiate(prefab, position, rotation);
         NetworkServer.Spawn(go);
         go.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
