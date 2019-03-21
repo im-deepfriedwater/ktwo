@@ -21,7 +21,7 @@ public class PlayerBehaviour : NetworkBehaviour
     Animator animator;
     Rigidbody rbd;
     
-    void Awake()
+    void Start()
     {
 
         // If this represents a different client's player,
@@ -44,6 +44,7 @@ public class PlayerBehaviour : NetworkBehaviour
 
     public void TurnOffComponentsForNonLocalClient()
     {
+        Debug.Log("i am not local");
         Destroy(GetComponent<vThirdPersonController>());
         Destroy(GetComponent<vThirdPersonInput>());
     }
