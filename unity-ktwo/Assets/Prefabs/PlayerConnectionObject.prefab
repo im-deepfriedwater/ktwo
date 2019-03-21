@@ -46,6 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerUnitPrefab: {fileID: 5811519447175110489, guid: 1fe4e637a1ebae64297fba14798bf178,
     type: 3}
+  PlayerSystems: {fileID: 689009821001044227, guid: 180119d3049514d15be3a8fd8d7b0a73,
+    type: 3}
 --- !u!114 &5564166511206242847
 MonoBehaviour:
   m_ObjectHideFlags: 0
