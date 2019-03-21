@@ -42,7 +42,7 @@ public class KtwoServer : NetworkManager
 
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
-        var player = (GameObject)GameObject.Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
+        var player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
         // add to a hashmap of connections to players
         NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
         player.GetComponent<PlayerConnectionObject>().RpcLoadScene("ClientMapPrototype");
