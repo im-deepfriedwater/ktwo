@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class KtwoServer : NetworkManager
 {
+    public GameObject map;
     public Dictionary<NetworkConnection, int> connections;
     int playerSpot = 0;
     
@@ -45,7 +46,7 @@ public class KtwoServer : NetworkManager
         var player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
         // add to a hashmap of connections to players
         NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
-        player.GetComponent<PlayerConnectionObject>().RpcLoadScene("ClientMapPrototype");
+        StartEncounter();
         Debug.Log("Client has requested to get his player added to the game");
     }
 
@@ -126,6 +127,13 @@ public class KtwoServer : NetworkManager
     {
         base.OnClientSceneChanged(conn);
         Debug.Log("Server triggered scene change and we've done the same, do any extra work here for the client...");
+    }
+
+    public void StartEncounter()
+    {
+        Debug.Log("spawning..");
+        var go = Instantiate(map, Vector3.zero, Quaternion.identity);
+        NetworkServer.Spawn(go);
     }
 
 }
