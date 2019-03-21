@@ -11,6 +11,7 @@ public class PlayerConnectionObject : NetworkBehaviour
 {
 
     public GameObject PlayerUnitPrefab;
+    public GameObject PlayerSystems;
 
     [ClientRpc]
     public void RpcLoadScene(string sceneName)
@@ -35,6 +36,7 @@ public class PlayerConnectionObject : NetworkBehaviour
         {
             return; // This belongs to a different player.
         }
+        Instantiate(PlayerSystems, Vector3.zero, Quaternion.identity);
         CmdSpawn();
     }
 }
