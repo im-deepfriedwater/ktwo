@@ -85,6 +85,7 @@ namespace Invector.CharacterController
         [Tooltip("Apply extra gravity when the character is not grounded")]
         [SerializeField]
         protected float extraGravity = -10f;
+        
         protected float groundDistance;
         public RaycastHit groundHit;
 
@@ -263,24 +264,6 @@ namespace Invector.CharacterController
         protected void ControlSpeed(float velocity)
         {
             if (Time.deltaTime == 0) return;
-
-            // original third party invector code
-            // if (useRootMotion)
-            // {
-            //     Vector3 v = (animator.deltaPosition * (velocity > 0 ? velocity : 1f)) / Time.deltaTime;
-            //     v.y = _rigidbody.velocity.y;
-            //     _rigidbody.velocity = Vector3.Lerp(_rigidbody.velocity, v, 20f * Time.deltaTime);
-            // }
-            // else
-            // {
-            //     var velY = transform.forward * velocity * speed;
-            //     velY.y = _rigidbody.velocity.y;
-            //     var velX = transform.right * velocity * direction;
-            //     velX.x = _rigidbody.velocity.x;
-            //     _rigidbody.velocity = velY; // it's fricken this guy holyyyy
-            //     _rigidbody.AddForce(transform.forward * (velocity * speed) * Time.deltaTime, ForceMode.VelocityChange);
-            // }
-
             var velY = transform.forward * velocity * speed;
             velY.y = _rigidbody.velocity.y;
             var velX = transform.right * velocity * direction;
@@ -361,8 +344,8 @@ namespace Invector.CharacterController
 
         void CheckGround()
         {
-            CheckGroundDistance();
-
+            // CheckGroundDistance();
+            isGrounded = true;
             // change the physics material to very slip when not grounded or maxFriction when is
             // if (isGrounded && input == Vector2.zero)
             //     _capsuleCollider.material = maxFrictionPhysics;

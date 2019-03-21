@@ -21,17 +21,17 @@ public class PlayerBehaviour : NetworkBehaviour
     Animator animator;
     Rigidbody rbd;
     
-    void Start()
+    void Awake()
     {
 
         // If this represents a different client's player,
         // We will shut off a lot of components it doesn't
         // need to compute and return.
-        // if (!hasAuthority)
-        // {
-        //     TurnOffComponentsForNonLocalClient();
-        //     return;
-        // }
+        if (!hasAuthority)
+        {
+            TurnOffComponentsForNonLocalClient();
+            return;
+        }
     
         playerController = GetComponent<vThirdPersonController>();
         healthBar = GameObject.Find("HealthBarSlider").GetComponent<Slider>();
@@ -44,7 +44,8 @@ public class PlayerBehaviour : NetworkBehaviour
 
     public void TurnOffComponentsForNonLocalClient()
     {
-        Destroy(GetComponent<Rigidbody>());
+        Destroy(GetComponent<vThirdPersonController>());
+        Destroy(GetComponent<vThirdPersonInput>());
     }
 
     public void AffectSpeed(float percent, bool buff)
