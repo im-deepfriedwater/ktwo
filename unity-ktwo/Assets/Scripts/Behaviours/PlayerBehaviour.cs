@@ -91,6 +91,7 @@ public class PlayerBehaviour : NetworkBehaviour
     [Command]
     public void CmdBuildObject(GameObject prefab, Vector3 position, Quaternion rotation)
     {
+        Debug.Log (prefab);
         var go = Instantiate(prefab, position, rotation);
         NetworkServer.Spawn(go);
         go.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);

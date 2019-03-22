@@ -1630,7 +1630,7 @@ MonoBehaviour:
   abilityName: Cement Trap
   heightOffset: 0
   distanceFactor: 0
-  buildPrefab: {fileID: 2505295284718713562, guid: d4a5ca2ebe5903142a5d3a58e5ccded4,
+  buildPrefab: {fileID: 7386390471019074721, guid: 4e479a1066aab824c91d260a1b3d03b7,
     type: 3}
 --- !u!114 &6914883840576515507
 MonoBehaviour:
@@ -1650,7 +1650,7 @@ MonoBehaviour:
   abilityName: Spike Trap
   heightOffset: 0
   distanceFactor: 0
-  buildPrefab: {fileID: 545332260647542018, guid: 267f5691320c94340a441600cad0899a,
+  buildPrefab: {fileID: 729004048474331758, guid: 60086cea85bb95e43afda4f5b801275f,
     type: 3}
 --- !u!95 &5811519447184632327
 Animator:
