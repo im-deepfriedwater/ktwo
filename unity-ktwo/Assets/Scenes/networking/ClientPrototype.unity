@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_NetworkPort: 7777
   m_ServerBindToIP: 0
   m_ServerBindAddress: 
-  m_NetworkAddress: 10.0.1.195
+  m_NetworkAddress: localhost
   m_DontDestroyOnLoad: 1
   m_RunInBackground: 1
   m_ScriptCRCCheck: 1
@@ -187,6 +187,7 @@ MonoBehaviour:
   - {fileID: 5811519447175110489, guid: 1fe4e637a1ebae64297fba14798bf178, type: 3}
   - {fileID: 1115670171414198, guid: e2eed32957d2ed748acabd27461d1a8e, type: 3}
   - {fileID: 8302519491264890921, guid: 73d37dec34dfdec42adfb8d589a27c8b, type: 3}
+  - {fileID: 7086454018950713939, guid: 27df18849fea7834eacf23589b8fe0cb, type: 3}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:

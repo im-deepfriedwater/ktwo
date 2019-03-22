@@ -23,7 +23,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Networking/ClientMapPrototype.unity
     guid: d5d51d75b8988d747b0f1341a639fd4e
   - enabled: 0

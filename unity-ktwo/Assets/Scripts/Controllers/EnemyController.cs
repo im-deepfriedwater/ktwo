@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Networking;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : NetworkBehaviour
 {   
     public float attackCooldown;
     public float timeUntilDamageCalculation;
@@ -17,7 +18,7 @@ public class EnemyController : MonoBehaviour
     public bool isAttackOnCooldown = false;
     public bool isAttacking = false;
     public bool hitboxActivated = false;
-    public bool hasAttacked = false; // False on spawn, should be set true after first attack.
+    public bool hasAttacked = false;
 
     bool CountDownForAttackHitBoxCoroutineStarted = false;
     bool StartAttackCooldownCoroutineStarted = false;
@@ -43,7 +44,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if (target == null) FindNewTarget();
+        if (target == null) FindNewTarget();
 
         float distance = Vector3.Distance(target.transform.position, transform.position);
 
@@ -71,8 +72,10 @@ public class EnemyController : MonoBehaviour
         {
             var zombies = GameObject.FindGameObjectsWithTag("Zombie");
             target = zombies[Random.Range(0, zombies.Length)];
+        } else 
+        {
+            target = PlayerManager.instance.GetClosestPlayer(gameObject.transform.position);
         }
-        target = PlayerManager.instance.player;
     }
 
     void FaceTarget ()
