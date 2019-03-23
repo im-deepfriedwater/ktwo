@@ -16,10 +16,14 @@ public class DamagableEnemy: Damagable
     [Tooltip("These are populated at runtime")]
     public new UnityEventFloat OnHit; // `new` Overrides original OnHit field.
 
+    private GameObject fireEffect;
+
     InvinicibilityFlashModifier invinicibilityComponent;
     
     void Awake ()
     {
+        fireEffect = GameObject.Find("CFX4 Fire");
+        fireEffect.SetActive(false);
         rbd = GetComponent<Rigidbody>();
         if (OnHit == null)
         {
@@ -59,6 +63,21 @@ public class DamagableEnemy: Damagable
             elapsedTime++;
         }
         if (set != null) set.Remove(zombie);
+    }
+
+    public IEnumerator SetOnFire(float duration, HashSet<GameObject> set = null)
+    {
+        var zombie = gameObject;
+        var elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            fireEffect.SetActive(true);
+            yield return new WaitForSeconds(1.0f);
+            elapsedTime++;
+        }
+        fireEffect.SetActive(false);
+        if (set != null) set.Remove(zombie);
+
     }
 
     // A hit with knockback.
