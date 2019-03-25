@@ -22,7 +22,6 @@ public class SpawnManager : NetworkBehaviour
         foreach (Transform child in go.transform)
         {
             NetworkServer.Spawn(child.gameObject);
-            child.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
         }
     }
 }

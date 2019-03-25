@@ -35,6 +35,12 @@ public class PlayerBehaviour : NetworkBehaviour
             return;
         }
 
+        if (isServer)
+        {
+            Debug.Log("yuh");
+            PlayerManager.instance.players.Add(gameObject);
+        }
+
         Debug.Log("im on coach");
         playerController = GetComponent<vThirdPersonController>();
         healthBar = GameObject.Find("HealthBarSlider").GetComponent<Slider>();

@@ -12,7 +12,7 @@ public class PlayerManager : MonoBehaviour
     {
         // No longer valid when we have multiple players.
         // player = GameObject.Find("Player");
-        // instance = this;
+        instance = this;
     }
 
     #endregion
@@ -20,7 +20,7 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector]
     public GameObject player;
 
-    List<GameObject> players;
+    public List<GameObject> players;
     
 
     public GameObject TargetRandomPlayer()
