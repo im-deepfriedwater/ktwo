@@ -28,6 +28,10 @@ public class FlammablePuddleBehaviour : MonoBehaviour
             other.GetComponent<DamagableEnemy>()
                 .DamageOverTime(DPS, duration, affectedEntities)
         );
+        StartCoroutine(
+            other.GetComponent<DamagableEnemy>()
+                .SetOnFire(duration, affectedEntities)
+        );
         numberOfUses -= 1;
     }
 }
