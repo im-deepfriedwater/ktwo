@@ -12,6 +12,7 @@ public class PlayerBehaviour : NetworkBehaviour
     Slider healthBar;
     [Tooltip("UI for game screen. Should be in Canvas, called GameOverScreen")]
     public GameObject gameOverScreen;
+    public GameObject toSpawn;
     public float defaultSpeed;
     public bool recentlyHit;
 
@@ -89,10 +90,10 @@ public class PlayerBehaviour : NetworkBehaviour
     }
 
     [Command]
-    public void CmdBuildObject(GameObject prefab, Vector3 position, Quaternion rotation)
+    public void CmdBuildObject(Vector3 position, Quaternion rotation)
     {
-        Debug.Log (prefab);
-        var go = Instantiate(prefab, position, rotation);
+        Debug.Log(toSpawn);
+        var go = Instantiate(toSpawn, position, rotation);
         NetworkServer.Spawn(go);
         go.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
     }

@@ -1516,6 +1516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverScreen: {fileID: 0}
+  dummy: {fileID: 3408114909941805088, guid: cfcc9f612f8f9aa4195368323a65600e, type: 3}
   defaultSpeed: 3
   recentlyHit: 0
 --- !u!114 &6225105366931428131
