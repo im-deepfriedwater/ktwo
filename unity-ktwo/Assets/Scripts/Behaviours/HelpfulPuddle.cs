@@ -12,9 +12,9 @@ public class HelpfulPuddle : MonoBehaviour
     public float invincibilityDuration;
     public float DPSBuffPercent;
     public float DPSBuffDuration;
-
+    
     private HashSet<GameObject> affectedEntities = new HashSet<GameObject>();
-
+    
     void Update()
     {
         if (numberOfUses == 0 && affectedEntities.Count == 0) Destroy(gameObject);
@@ -30,10 +30,7 @@ public class HelpfulPuddle : MonoBehaviour
             affectedEntities.Add(other.gameObject);
             StartCoroutine(
                 other.GetComponent<PlayerBehaviour>()
-                    .TimedAffectSpeed(speedBoostPercent, buffDuration, true)
-            );
-            StartCoroutine(
-                RemoveFromHashSet(other.gameObject, buffDuration)
+                    .TimedAffectSpeed(speedBoostPercent, buffDuration, true, affectedEntities)
             );
             numberOfUses -= 1;
         }
@@ -57,10 +54,6 @@ public class HelpfulPuddle : MonoBehaviour
                     dpsMod.AffectDPS(DPSBuffPercent, DPSBuffDuration, true)
                 );
             }
-
-            StartCoroutine(
-                RemoveFromHashSet(other.gameObject, Mathf.Max(invincibilityDuration, DPSBuffDuration))
-            );
             numberOfUses -= 1;
         }
 
@@ -69,18 +62,9 @@ public class HelpfulPuddle : MonoBehaviour
             affectedEntities.Add(other.gameObject);
             StartCoroutine(
                 other.GetComponent<EnemyController>()
-                    .TimedAffectSpeed(speedDebuffPercent, debuffDuration, false)
-            );
-            StartCoroutine(
-                RemoveFromHashSet(other.gameObject, debuffDuration)
+                    .TimedAffectSpeed(speedDebuffPercent, debuffDuration, false, affectedEntities)
             );
             numberOfUses -= 1;
         }
-    }
-
-    IEnumerator RemoveFromHashSet(GameObject entity, float time)
-    {
-        yield return new WaitForSeconds(time);
-        affectedEntities.Remove(entity);
     }
 }

@@ -123,12 +123,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfUses: 2
-  speedBoostPercent: 0.15
+  speedBoostPercent: 0.4
   buffDuration: 8
-  speedDebuffPercent: 0.15
+  speedDebuffPercent: 0.4
   debuffDuration: 5
   invincibilityDuration: 2
-  DPSBuffPercent: 0.25
+  DPSPercentIncrease: 0.25
   DPSBuffDuration: 8
 --- !u!136 &3160449240614949933
 CapsuleCollider:

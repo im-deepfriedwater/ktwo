@@ -8,7 +8,7 @@ public class AggressionPuddleBehaviour : MonoBehaviour
     public int duration;
 
     private HashSet<GameObject> affectedEntities = new HashSet<GameObject>();
-
+        
     void Update()
     {
         if (numberOfUses == 0 && affectedEntities.Count == 0) Destroy(gameObject);
@@ -21,20 +21,11 @@ public class AggressionPuddleBehaviour : MonoBehaviour
 
         if (other.gameObject.tag != "Zombie") return;
         affectedEntities.Add(other.gameObject);
-
+        
         StartCoroutine(
             other.GetComponent<EnemyController>()
-                .TurnAgainstOwn(duration)
-        );
-        StartCoroutine(
-            RemoveFromHashSet(other.gameObject, duration)
+                .TurnAgainstOwn(duration, affectedEntities)
         );
         numberOfUses -= 1;
-    }
-
-    IEnumerator RemoveFromHashSet(GameObject entity, float time)
-    {
-        yield return new WaitForSeconds(time);
-        affectedEntities.Remove(entity);
     }
 }

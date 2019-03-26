@@ -122,11 +122,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 215ee02409d873645a207485458d2009, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedBoostPercent: 0.25
-  buffDuration: 10
+  speedBoostPercent: 0.7
+  buffDuration: 5
   healAmount: 10
-  speedDebuffPercent: 0.25
-  debuffDuration: 8
+  speedDebuffPercent: 0.7
+  debuffDuration: 5
   DPS: 5
   DOTDuration: 4
   DPSBuffPercent: 0.5

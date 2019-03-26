@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(InvinicibilityFlashModifier))]
-public class DamagablePlayer : Damagable
-{
-    [Range(1, 10)]
+public class DamagablePlayer: Damagable
+{   
+    [Range(1,10)]
     public int knockbackFactor; // There's not really any sense of units here sorry...
     private float calculatedKnockBackFactor;
     public float invincibilityDuration = 2; // 2 by default;
@@ -17,8 +17,8 @@ public class DamagablePlayer : Damagable
     public new UnityEventFloat OnHit; // `new` Overrides original OnHit field.
 
     InvinicibilityFlashModifier invinicibilityComponent;
-
-    void Awake()
+    
+    void Awake ()
     {
         rbd = GetComponent<Rigidbody>();
         if (OnHit == null)
@@ -28,7 +28,7 @@ public class DamagablePlayer : Damagable
         OnHit.AddListener(GetComponent<PlayerBehaviour>().UpdateHealthBar);
     }
 
-    new void Start()
+    new void Start ()
     {
         invinicibilityComponent = GetComponent<InvinicibilityFlashModifier>();
         base.Start();
@@ -40,7 +40,7 @@ public class DamagablePlayer : Damagable
         OnHit.Invoke(currentHealth / startingHealth);
     }
 
-    override public void Hit(float damage)
+    override public void Hit (float damage)
     {
         if (isInvincible)
         {
@@ -55,8 +55,9 @@ public class DamagablePlayer : Damagable
         }
     }
 
-    public IEnumerator DamageOverTime(float damageAmount, float duration)
+    public IEnumerator DamageOverTime(float damageAmount, float duration, HashSet<GameObject> set = null)
     {
+        var player = gameObject;
         var elapsedTime = 0f;
         while (elapsedTime < duration)
         {
@@ -64,10 +65,11 @@ public class DamagablePlayer : Damagable
             yield return new WaitForSeconds(1.0f);
             elapsedTime++;
         }
+        if (set != null) set.Remove(player);
     }
 
     // A hit with knockback.
-    public void Hit(float damage, Vector3 direction)
+    public void Hit (float damage, Vector3 direction)
     {
         if (isInvincible)
         {
@@ -85,14 +87,14 @@ public class DamagablePlayer : Damagable
         StartCoroutine("BeginInvincibility");
     }
 
-    void KnockbackPlayer(Vector3 direction)
+    void KnockbackPlayer (Vector3 direction)
     {
         calculatedKnockBackFactor = knockbackFactor * 10; // Adjusted from 1-10 -> 10 - 100
         rbd.AddForce(direction.normalized * calculatedKnockBackFactor, ForceMode.VelocityChange);
     }
 
-    IEnumerator BeginInvincibility()
-    {
+    IEnumerator BeginInvincibility ()
+    {   
         isInvincible = true;
         invinicibilityComponent.enabled = true;
         yield return new WaitForSeconds(invincibilityDuration);

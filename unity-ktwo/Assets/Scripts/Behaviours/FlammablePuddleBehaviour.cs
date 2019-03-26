@@ -10,7 +10,7 @@ public class FlammablePuddleBehaviour : MonoBehaviour
     public int duration;
 
     private HashSet<GameObject> affectedEntities = new HashSet<GameObject>();
-
+        
     void Update()
     {
         if (numberOfUses == 0 && affectedEntities.Count == 0) Destroy(gameObject);
@@ -26,21 +26,12 @@ public class FlammablePuddleBehaviour : MonoBehaviour
 
         StartCoroutine(
             other.GetComponent<DamagableEnemy>()
-                .DamageOverTime(DPS, duration)
+                .DamageOverTime(DPS, duration, affectedEntities)
         );
         StartCoroutine(
             other.GetComponent<DamagableEnemy>()
-                .SetOnFire(duration)
-        );
-        StartCoroutine(
-            RemoveFromHashSet(other.gameObject, duration)
+                .SetOnFire(duration, affectedEntities)
         );
         numberOfUses -= 1;
-    }
-
-    IEnumerator RemoveFromHashSet(GameObject entity, float time)
-    {
-        yield return new WaitForSeconds(time);
-        affectedEntities.Remove(entity);
     }
 }
