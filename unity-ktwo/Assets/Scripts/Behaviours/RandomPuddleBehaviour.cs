@@ -35,7 +35,7 @@ public class RandomPuddleBehaviour : MonoBehaviour
 
     private HashSet<GameObject> affectedEntities = new HashSet<GameObject>();
     private bool buff;
-        
+
     void Awake()
     {
         buff = (Random.Range(0, 2) == 0);
@@ -55,11 +55,11 @@ public class RandomPuddleBehaviour : MonoBehaviour
         if (buff)
         {
             Buff(other);
-        }    
+        }
         else
         {
             Debuff(other);
-        } 
+        }
     }
 
     private void Buff(Collider other)
@@ -69,21 +69,26 @@ public class RandomPuddleBehaviour : MonoBehaviour
             affectedEntities.Add(other.gameObject);
             StartCoroutine(
                 other.GetComponent<PlayerBehaviour>()
-                    .TimedAffectSpeed(speedBoostPercent, buffDuration, true, affectedEntities)
+                    .TimedAffectSpeed(speedBoostPercent, buffDuration, true)
             );
             other.GetComponent<DamagablePlayer>().Heal(healAmount);
+            StartCoroutine(
+                RemoveFromHashSet(other.gameObject, buffDuration)
+            );
             numberOfUses -= 1;
         }
 
         if (other.gameObject.tag == "Zombie")
         {
             affectedEntities.Add(other.gameObject);
-            // -15% run speed for 5 seconds
             StartCoroutine(
                 other.GetComponent<EnemyController>()
-                    .TimedAffectSpeed(speedBoostPercent, buffDuration, true, affectedEntities)
+                    .TimedAffectSpeed(speedBoostPercent, buffDuration, true)
             );
             other.GetComponent<DamagableEnemy>().Heal(healAmount);
+            StartCoroutine(
+                RemoveFromHashSet(other.gameObject, buffDuration)
+            );
             numberOfUses -= 1;
         }
 
@@ -107,6 +112,10 @@ public class RandomPuddleBehaviour : MonoBehaviour
                     dpsMod.AffectDPS(DPSBuffPercent, DPSBuffDuration, true)
                 );
             }
+
+            StartCoroutine(
+                RemoveFromHashSet(other.gameObject, Mathf.Max(invincibilityDuration, DPSBuffDuration))
+            );
             numberOfUses -= 1;
         }
     }
@@ -118,11 +127,14 @@ public class RandomPuddleBehaviour : MonoBehaviour
             affectedEntities.Add(other.gameObject);
             StartCoroutine(
                 other.GetComponent<PlayerBehaviour>()
-                    .TimedAffectSpeed(speedDebuffPercent, debuffDuration, false, affectedEntities)
+                    .TimedAffectSpeed(speedDebuffPercent, debuffDuration, false)
             );
             StartCoroutine(
                 other.GetComponent<DamagablePlayer>()
-                    .DamageOverTime(DPS, DOTDuration, affectedEntities)
+                    .DamageOverTime(DPS, DOTDuration)
+            );
+            StartCoroutine(
+                RemoveFromHashSet(other.gameObject, Mathf.Max(debuffDuration, DOTDuration))
             );
             numberOfUses -= 1;
         }
@@ -132,11 +144,14 @@ public class RandomPuddleBehaviour : MonoBehaviour
             affectedEntities.Add(other.gameObject);
             StartCoroutine(
                 other.GetComponent<EnemyController>()
-                    .TimedAffectSpeed(speedDebuffPercent, debuffDuration, false, affectedEntities)
+                    .TimedAffectSpeed(speedDebuffPercent, debuffDuration, false)
             );
             StartCoroutine(
                 other.GetComponent<DamagableEnemy>()
-                    .DamageOverTime(DPS, DOTDuration, affectedEntities)
+                    .DamageOverTime(DPS, DOTDuration)
+            );
+            StartCoroutine(
+                RemoveFromHashSet(other.gameObject, Mathf.Max(debuffDuration, DOTDuration))
             );
             numberOfUses -= 1;
         }
@@ -157,7 +172,17 @@ public class RandomPuddleBehaviour : MonoBehaviour
                     dpsMod.AffectDPS(DPSDebuffPercent, DPSDebuffDuration, false)
                 );
             }
+
+            StartCoroutine(
+                RemoveFromHashSet(other.gameObject, DPSDebuffDuration)
+            );
             numberOfUses -= 1;
         }
+    }
+
+    IEnumerator RemoveFromHashSet(GameObject entity, float time)
+    {
+        yield return new WaitForSeconds(time);
+        affectedEntities.Remove(entity);
     }
 }

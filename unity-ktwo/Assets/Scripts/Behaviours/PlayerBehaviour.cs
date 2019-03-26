@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 // For controlling the main behaviours of the player.
 public class PlayerBehaviour : MonoBehaviour
-{   
+{
     [HideInInspector]
     Slider healthBar;
     [Tooltip("UI for game screen. Should be in Canvas, called GameOverScreen")]
@@ -19,7 +19,7 @@ public class PlayerBehaviour : MonoBehaviour
     Collider lastCollided;
     Animator animator;
     Rigidbody rbd;
-    
+
     void Start()
     {
         playerController = GameObject.Find("Player").GetComponent<vThirdPersonController>();
@@ -36,12 +36,11 @@ public class PlayerBehaviour : MonoBehaviour
         playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
     }
 
-    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff, HashSet<GameObject> set = null) 
+    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff)
     {
         var speedChange = defaultSpeed * percent;
         playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
         yield return new WaitForSeconds(time);
-        if (set != null) set.Remove(gameObject);
         ResetSpeed();
     }
 
@@ -55,7 +54,7 @@ public class PlayerBehaviour : MonoBehaviour
         healthBar.value = 1 - healthPercentage;
     }
 
-    public void Die ()
+    public void Die()
     {
         InitiateGameOver();
     }
