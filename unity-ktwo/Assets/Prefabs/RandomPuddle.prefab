@@ -122,6 +122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 215ee02409d873645a207485458d2009, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberOfUses: 3
+  decayRate: 10
   speedBoostPercent: 0.25
   buffDuration: 10
   healAmount: 10
@@ -136,7 +138,6 @@ MonoBehaviour:
   DPSDebuffPercent: 1
   DPSDebuffDuration: 3
   structureDamageAmount: 25
-  numberOfUses: 3
   buffPuddle: {fileID: 2100000, guid: a27b7f8a42f70ef4f81f0a9d0e78cee3, type: 2}
   debuffPuddle: {fileID: 2100000, guid: 53481d1de80e4d14cb0248d402b316b6, type: 2}
 --- !u!136 &3160449240614949933

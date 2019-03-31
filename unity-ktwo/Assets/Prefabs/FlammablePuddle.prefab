@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfUses: 2
+  decayRate: 10
   DPS: 10
   duration: 5
 --- !u!136 &3160449240614949933

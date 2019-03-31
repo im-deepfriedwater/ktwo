@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomPuddleBehaviour : MonoBehaviour
+public class RandomPuddleBehaviour : BasePuddleBehaviour
 {
     [Header("Player/Zombie BUFF Settings")]
     public float speedBoostPercent;
@@ -26,31 +26,22 @@ public class RandomPuddleBehaviour : MonoBehaviour
     public float DPSDebuffDuration;
     public float structureDamageAmount;
 
-    [Header("Number of Uses")]
-    public int numberOfUses;
-
     [Header("Materials")]
     public Material buffPuddle;
     public Material debuffPuddle;
 
-    private HashSet<GameObject> affectedEntities = new HashSet<GameObject>();
     private bool buff;
 
-    void Awake()
+    new void Awake()
     {
         buff = (Random.Range(0, 2) == 0);
         gameObject.GetComponentInChildren<Renderer>().material = buff ? buffPuddle : debuffPuddle;
-    }
-
-    void Update()
-    {
-        if (numberOfUses == 0 && affectedEntities.Count == 0) Destroy(gameObject);
+        base.Awake();
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (numberOfUses == 0) return;
-        if (affectedEntities.Contains(other.gameObject)) return;
+        if (CannotBeUsed(other.gameObject)) return;
 
         if (buff)
         {
@@ -178,11 +169,5 @@ public class RandomPuddleBehaviour : MonoBehaviour
             );
             numberOfUses -= 1;
         }
-    }
-
-    IEnumerator RemoveFromHashSet(GameObject entity, float time)
-    {
-        yield return new WaitForSeconds(time);
-        affectedEntities.Remove(entity);
     }
 }

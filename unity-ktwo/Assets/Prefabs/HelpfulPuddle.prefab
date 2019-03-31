@@ -119,10 +119,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6777690292249990457}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce8315c29d0d0f441b3cf947961755fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 724518c1dc38c7a46aef2d35284df3c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfUses: 2
+  numberOfUses: 3
+  decayRate: 10
   speedBoostPercent: 0.15
   buffDuration: 8
   speedDebuffPercent: 0.15

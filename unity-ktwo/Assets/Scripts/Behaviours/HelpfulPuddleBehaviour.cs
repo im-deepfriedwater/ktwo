@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HelpfulPuddle : MonoBehaviour
+public class HelpfulPuddleBehaviour : BasePuddleBehaviour
 {
-    public int numberOfUses;
     public float speedBoostPercent;
     public float buffDuration;
     public float speedDebuffPercent;
@@ -13,17 +12,9 @@ public class HelpfulPuddle : MonoBehaviour
     public float DPSBuffPercent;
     public float DPSBuffDuration;
 
-    private HashSet<GameObject> affectedEntities = new HashSet<GameObject>();
-
-    void Update()
-    {
-        if (numberOfUses == 0 && affectedEntities.Count == 0) Destroy(gameObject);
-    }
-
     void OnTriggerStay(Collider other)
     {
-        if (numberOfUses == 0) return;
-        if (affectedEntities.Contains(other.gameObject)) return;
+        if (CannotBeUsed(other.gameObject)) return;
 
         if (other.gameObject.tag == "Player")
         {
@@ -76,11 +67,5 @@ public class HelpfulPuddle : MonoBehaviour
             );
             numberOfUses -= 1;
         }
-    }
-
-    IEnumerator RemoveFromHashSet(GameObject entity, float time)
-    {
-        yield return new WaitForSeconds(time);
-        affectedEntities.Remove(entity);
     }
 }
