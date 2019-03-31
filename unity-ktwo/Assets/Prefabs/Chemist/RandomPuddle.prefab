@@ -127,8 +127,8 @@ MonoBehaviour:
   speedBoostPercent: 0.25
   buffDuration: 10
   healAmount: 10
-  speedDebuffPercent: 0.25
-  debuffDuration: 8
+  speedDebuffPercent: 0.7
+  debuffDuration: 5
   DPS: 5
   DOTDuration: 4
   DPSBuffPercent: 0.5
