@@ -25,7 +25,7 @@ public class GameManager: MonoBehaviour
     IEnumerator BeginWave()
     {
         yield return new WaitForSeconds(WAVE_START_DELAY);
-        SpawnManager.instance.SpawnZombies();
+        SpawnManager.instance.SpawnZombieAtPoint(SpawnZone.South);
         waveBegun = true;
         Debug.Log("wave has begun");
     }

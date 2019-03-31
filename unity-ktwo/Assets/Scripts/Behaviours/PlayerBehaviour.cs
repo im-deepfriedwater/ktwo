@@ -46,6 +46,7 @@ public class PlayerBehaviour : NetworkBehaviour
         healthBar = GameObject.Find("HealthBarSlider").GetComponent<Slider>();
         input = GetComponent<vThirdPersonInput>();
         InputManager.instance.Initialize(this.gameObject);
+        PlayerManager.instance.players.Add(this.gameObject);
         ResetSpeed();
     }
 

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9155183223085722296}
+  - component: {fileID: 8124165491401835852}
   m_Layer: 0
   m_Name: ZombieGroup
   m_TagString: Untagged
@@ -27,12 +28,45 @@ Transform:
   m_LocalPosition: {x: -0.05488209, y: 0.8716759, z: -4.6308317}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5171702015693722231}
-  - {fileID: 6392897161211551610}
-  - {fileID: 404850532896014727}
+  - {fileID: 2710524824063230672}
+  - {fileID: 4242397972977700829}
+  - {fileID: 7477792910073090336}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8124165491401835852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7403458046232879353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!1001 &2710524824063229976
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -109,7 +143,7 @@ PrefabInstance:
         type: 3}
       propertyPath: rbd
       value: 
-      objectReference: {fileID: 3663785947108120085}
+      objectReference: {fileID: 2710524824063230848}
     - target: {fileID: 7086454019129455415, guid: 27df18849fea7834eacf23589b8fe0cb,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -1367,13 +1401,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27df18849fea7834eacf23589b8fe0cb, type: 3}
---- !u!4 &5171702015693722231 stripped
+--- !u!4 &2710524824063230672 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7086454018950713967, guid: 27df18849fea7834eacf23589b8fe0cb,
     type: 3}
   m_PrefabInstance: {fileID: 2710524824063229976}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &3663785947108120085 stripped
+--- !u!54 &2710524824063230848 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 1676981865624917517, guid: 27df18849fea7834eacf23589b8fe0cb,
     type: 3}
@@ -1455,7 +1489,7 @@ PrefabInstance:
         type: 3}
       propertyPath: rbd
       value: 
-      objectReference: {fileID: 3289264237296491288}
+      objectReference: {fileID: 4242397972977700493}
     - target: {fileID: 7086454019129455415, guid: 27df18849fea7834eacf23589b8fe0cb,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -2718,13 +2752,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27df18849fea7834eacf23589b8fe0cb, type: 3}
---- !u!4 &6392897161211551610 stripped
+--- !u!4 &4242397972977700829 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7086454018950713967, guid: 27df18849fea7834eacf23589b8fe0cb,
     type: 3}
   m_PrefabInstance: {fileID: 4242397972977700117}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &3289264237296491288 stripped
+--- !u!54 &4242397972977700493 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 1676981865624917517, guid: 27df18849fea7834eacf23589b8fe0cb,
     type: 3}
@@ -2806,7 +2840,7 @@ PrefabInstance:
         type: 3}
       propertyPath: rbd
       value: 
-      objectReference: {fileID: 8107503075382461925}
+      objectReference: {fileID: 7477792910073090160}
     - target: {fileID: 7086454019129455415, guid: 27df18849fea7834eacf23589b8fe0cb,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -4064,13 +4098,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27df18849fea7834eacf23589b8fe0cb, type: 3}
---- !u!4 &404850532896014727 stripped
+--- !u!4 &7477792910073090336 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7086454018950713967, guid: 27df18849fea7834eacf23589b8fe0cb,
     type: 3}
   m_PrefabInstance: {fileID: 7477792910073091048}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &8107503075382461925 stripped
+--- !u!54 &7477792910073090160 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 1676981865624917517, guid: 27df18849fea7834eacf23589b8fe0cb,
     type: 3}
