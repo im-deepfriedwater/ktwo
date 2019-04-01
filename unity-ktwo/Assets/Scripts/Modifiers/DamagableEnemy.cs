@@ -65,7 +65,6 @@ public class DamagableEnemy: Damagable
 
     public IEnumerator SetOnFire(float duration)
     {
-
         fireEffect.SetActive(true);
         yield return new WaitForSeconds(duration);
         fireEffect.SetActive(false);
