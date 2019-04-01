@@ -57,7 +57,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 53481d1de80e4d14cb0248d402b316b6, type: 2}
+  - {fileID: 2100000, guid: cc4900ae12737334d87f3c9fee637635, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -86,10 +86,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7061299352214789536}
-  - component: {fileID: 4509702076862190750}
+  - component: {fileID: 7102688449191365773}
   - component: {fileID: 3160449240614949933}
   m_Layer: 0
-  m_Name: RandomPuddle
+  m_Name: HelpfulPuddle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +110,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4509702076862190750
+--- !u!114 &7102688449191365773
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,26 +119,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 6777690292249990457}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 215ee02409d873645a207485458d2009, type: 3}
+  m_Script: {fileID: 11500000, guid: 724518c1dc38c7a46aef2d35284df3c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedBoostPercent: 0.7
-  buffDuration: 5
-  healAmount: 10
-  speedDebuffPercent: 0.7
-  debuffDuration: 5
-  DPS: 5
-  DOTDuration: 4
-  DPSBuffPercent: 0.5
-  DPSBuffDuration: 8
-  invincibilityDuration: 5
-  structureHealAmount: 25
-  DPSDebuffPercent: 1
-  DPSDebuffDuration: 3
-  structureDamageAmount: 25
   numberOfUses: 3
-  buffPuddle: {fileID: 2100000, guid: a27b7f8a42f70ef4f81f0a9d0e78cee3, type: 2}
-  debuffPuddle: {fileID: 2100000, guid: 53481d1de80e4d14cb0248d402b316b6, type: 2}
+  decayRate: 10
+  speedBoostPercent: 0.15
+  buffDuration: 8
+  speedDebuffPercent: 0.4
+  debuffDuration: 5
+  invincibilityDuration: 2
+  DPSPercentIncrease: 0.25
+  DPSBuffDuration: 8
 --- !u!136 &3160449240614949933
 CapsuleCollider:
   m_ObjectHideFlags: 0

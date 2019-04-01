@@ -36,12 +36,11 @@ public class PlayerBehaviour : MonoBehaviour
         playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
     }
 
-    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff, HashSet<GameObject> set = null) 
+    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff) 
     {
         var speedChange = defaultSpeed * percent;
         playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
         yield return new WaitForSeconds(time);
-        if (set != null) set.Remove(gameObject);
         ResetSpeed();
     }
 
@@ -55,7 +54,7 @@ public class PlayerBehaviour : MonoBehaviour
         healthBar.value = 1 - healthPercentage;
     }
 
-    public void Die ()
+    public void Die()
     {
         InitiateGameOver();
     }

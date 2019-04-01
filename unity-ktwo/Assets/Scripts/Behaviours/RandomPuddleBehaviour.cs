@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomPuddleBehaviour : MonoBehaviour
+public class RandomPuddleBehaviour : BasePuddleBehaviour
 {
     [Header("Player/Zombie BUFF Settings")]
     public float speedBoostPercent;
@@ -26,31 +26,22 @@ public class RandomPuddleBehaviour : MonoBehaviour
     public float DPSDebuffDuration;
     public float structureDamageAmount;
 
-    [Header("Number of Uses")]
-    public int numberOfUses;
-
     [Header("Materials")]
     public Material buffPuddle;
     public Material debuffPuddle;
 
-    private HashSet<GameObject> affectedEntities = new HashSet<GameObject>();
     private bool buff;
-        
-    void Awake()
+
+    new void Awake()
     {
         buff = (Random.Range(0, 2) == 0);
         gameObject.GetComponentInChildren<Renderer>().material = buff ? buffPuddle : debuffPuddle;
-    }
-
-    void Update()
-    {
-        if (numberOfUses == 0 && affectedEntities.Count == 0) Destroy(gameObject);
+        base.Awake();
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (numberOfUses == 0) return;
-        if (affectedEntities.Contains(other.gameObject)) return;
+        if (CannotBeUsed(other.gameObject)) return;
 
         if (buff)
         {
@@ -69,28 +60,34 @@ public class RandomPuddleBehaviour : MonoBehaviour
             affectedEntities.Add(other.gameObject);
             StartCoroutine(
                 other.GetComponent<PlayerBehaviour>()
-                    .TimedAffectSpeed(speedBoostPercent, buffDuration, true, affectedEntities)
+                    .TimedAffectSpeed(speedBoostPercent, buffDuration, true)
             );
             other.GetComponent<DamagablePlayer>().Heal(healAmount);
+            StartCoroutine(
+                RemoveFromHashSet(other.gameObject, buffDuration)
+            );
             numberOfUses -= 1;
         }
 
         if (other.gameObject.tag == "Zombie")
         {
             affectedEntities.Add(other.gameObject);
-            // -15% run speed for 5 seconds
             StartCoroutine(
                 other.GetComponent<EnemyController>()
-                    .TimedAffectSpeed(speedBoostPercent, buffDuration, true, affectedEntities)
+                    .TimedAffectSpeed(speedBoostPercent, buffDuration, true)
             );
             other.GetComponent<DamagableEnemy>().Heal(healAmount);
+            StartCoroutine(
+                RemoveFromHashSet(other.gameObject, buffDuration)
+            );
             numberOfUses -= 1;
         }
 
         if (other.gameObject.tag == "Structure")
         {
             affectedEntities.Add(other.gameObject);
-
+            
+            var overallDuration = 0f;
             var structureDamagable = other.gameObject.GetComponent<DamagableStructure>();
             if (structureDamagable != null)
             {
@@ -98,6 +95,7 @@ public class RandomPuddleBehaviour : MonoBehaviour
                 StartCoroutine(
                     structureDamagable.BeginInvincibility(invincibilityDuration)
                 );
+                overallDuration = invincibilityDuration;
             }
 
             var dpsMod = other.gameObject.GetComponent<DPSModifier>();
@@ -106,7 +104,12 @@ public class RandomPuddleBehaviour : MonoBehaviour
                 StartCoroutine(
                     dpsMod.AffectDPS(DPSBuffPercent, DPSBuffDuration, true)
                 );
+                overallDuration = (overallDuration < DPSBuffDuration) ? DPSBuffDuration : overallDuration;
             }
+
+            StartCoroutine(
+                RemoveFromHashSet(other.gameObject, overallDuration)
+            );
             numberOfUses -= 1;
         }
     }
@@ -118,11 +121,14 @@ public class RandomPuddleBehaviour : MonoBehaviour
             affectedEntities.Add(other.gameObject);
             StartCoroutine(
                 other.GetComponent<PlayerBehaviour>()
-                    .TimedAffectSpeed(speedDebuffPercent, debuffDuration, false, affectedEntities)
+                    .TimedAffectSpeed(speedDebuffPercent, debuffDuration, false)
             );
             StartCoroutine(
                 other.GetComponent<DamagablePlayer>()
-                    .DamageOverTime(DPS, DOTDuration, affectedEntities)
+                    .DamageOverTime(DPS, DOTDuration)
+            );
+            StartCoroutine(
+                RemoveFromHashSet(other.gameObject, Mathf.Max(debuffDuration, DOTDuration))
             );
             numberOfUses -= 1;
         }
@@ -132,18 +138,22 @@ public class RandomPuddleBehaviour : MonoBehaviour
             affectedEntities.Add(other.gameObject);
             StartCoroutine(
                 other.GetComponent<EnemyController>()
-                    .TimedAffectSpeed(speedDebuffPercent, debuffDuration, false, affectedEntities)
+                    .TimedAffectSpeed(speedDebuffPercent, debuffDuration, false)
             );
             StartCoroutine(
                 other.GetComponent<DamagableEnemy>()
-                    .DamageOverTime(DPS, DOTDuration, affectedEntities)
+                    .DamageOverTime(DPS, DOTDuration)
+            );
+            StartCoroutine(
+                RemoveFromHashSet(other.gameObject, Mathf.Max(debuffDuration, DOTDuration))
             );
             numberOfUses -= 1;
         }
         if (other.gameObject.tag == "Structure")
         {
             affectedEntities.Add(other.gameObject);
-
+            
+            var overallDuration = 0f;
             var structureDamagable = other.gameObject.GetComponent<DamagableStructure>();
             if (structureDamagable != null)
             {
@@ -156,7 +166,11 @@ public class RandomPuddleBehaviour : MonoBehaviour
                 StartCoroutine(
                     dpsMod.AffectDPS(DPSDebuffPercent, DPSDebuffDuration, false)
                 );
+                overallDuration = DPSDebuffDuration;
             }
+            StartCoroutine(
+                RemoveFromHashSet(other.gameObject, overallDuration)
+            );
             numberOfUses -= 1;
         }
     }
