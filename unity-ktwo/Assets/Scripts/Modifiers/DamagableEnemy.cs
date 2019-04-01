@@ -6,7 +6,7 @@ using UnityEngine;
 public class DamagableEnemy: Damagable
 {   
     public float health = 100; // 100 by default.
-    [Range(1,10)]
+    [Range(1, 10)]
     public int knockbackFactor; // There's not really any sense of units here sorry...
     private float calculatedKnockBackFactor;
     public float invincibilityDuration = 2; // 2 by default;
@@ -20,7 +20,7 @@ public class DamagableEnemy: Damagable
 
     InvinicibilityFlashModifier invinicibilityComponent;
     
-    void Awake ()
+    void Awake()
     {
         fireEffect = GameObject.Find("CFX4 Fire");
         fireEffect.SetActive(false);
@@ -31,13 +31,13 @@ public class DamagableEnemy: Damagable
         }
     }
 
-    new void Start ()
+    new void Start()
     {
         invinicibilityComponent = GetComponent<InvinicibilityFlashModifier>();
         base.Start();
     }
 
-    override public void Hit (float damage)
+    override public void Hit(float damage)
     {
         if (isInvincible)
         {
@@ -52,9 +52,8 @@ public class DamagableEnemy: Damagable
         }
     }
 
-    public IEnumerator DamageOverTime(float damageAmount, float duration, HashSet<GameObject> set = null)
+    public IEnumerator DamageOverTime(float damageAmount, float duration)
     {
-        var zombie = gameObject;
         var elapsedTime = 0f;
         while (elapsedTime < duration)
         {
@@ -62,26 +61,18 @@ public class DamagableEnemy: Damagable
             yield return new WaitForSeconds(1.0f);
             elapsedTime++;
         }
-        if (set != null) set.Remove(zombie);
     }
 
-    public IEnumerator SetOnFire(float duration, HashSet<GameObject> set = null)
+    public IEnumerator SetOnFire(float duration)
     {
-        var zombie = gameObject;
-        var elapsedTime = 0f;
-        while (elapsedTime < duration)
-        {
-            fireEffect.SetActive(true);
-            yield return new WaitForSeconds(1.0f);
-            elapsedTime++;
-        }
-        fireEffect.SetActive(false);
-        if (set != null) set.Remove(zombie);
 
+        fireEffect.SetActive(true);
+        yield return new WaitForSeconds(duration);
+        fireEffect.SetActive(false);
     }
 
     // A hit with knockback.
-    public void Hit (float damage, Vector3 direction)
+    public void Hit(float damage, Vector3 direction)
     {
         if (isInvincible)
         {
@@ -105,7 +96,7 @@ public class DamagableEnemy: Damagable
         rbd.AddForce(direction.normalized * calculatedKnockBackFactor, ForceMode.VelocityChange);
     }
 
-    IEnumerator BeginInvincibility ()
+    IEnumerator BeginInvincibility()
     {   
         isInvincible = true;
         invinicibilityComponent.enabled = true;

@@ -12,7 +12,7 @@ public class HelpfulPuddleBehaviour : BasePuddleBehaviour
     public float DPSBuffPercent;
     public float DPSBuffDuration;
 
-    void OnTriggerStay(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (CannotBeUsed(other.gameObject)) return;
 
@@ -21,7 +21,10 @@ public class HelpfulPuddleBehaviour : BasePuddleBehaviour
             affectedEntities.Add(other.gameObject);
             StartCoroutine(
                 other.GetComponent<PlayerBehaviour>()
-                    .TimedAffectSpeed(speedBoostPercent, buffDuration, true, affectedEntities)
+                    .TimedAffectSpeed(speedBoostPercent, buffDuration, true)
+            );
+            StartCoroutine(
+                RemoveFromHashSet(other.gameObject, buffDuration)
             );
             numberOfUses -= 1;
         }
@@ -29,13 +32,15 @@ public class HelpfulPuddleBehaviour : BasePuddleBehaviour
         if (other.gameObject.tag == "Structure")
         {
             affectedEntities.Add(other.gameObject);
-
+            
+            var overallDuration = 0f;
             var structureDamagable = other.gameObject.GetComponent<DamagableStructure>();
             if (structureDamagable != null)
             {
                 StartCoroutine(
                     structureDamagable.BeginInvincibility(invincibilityDuration)
                 );
+                overallDuration = invincibilityDuration;
             }
 
             var dpsMod = other.gameObject.GetComponent<DPSModifier>();
@@ -44,7 +49,12 @@ public class HelpfulPuddleBehaviour : BasePuddleBehaviour
                 StartCoroutine(
                     dpsMod.AffectDPS(DPSBuffPercent, DPSBuffDuration, true)
                 );
+                overallDuration = (overallDuration < DPSBuffDuration) ? DPSBuffDuration : overallDuration;
             }
+
+            StartCoroutine(
+                RemoveFromHashSet(other.gameObject, overallDuration)
+            );
             numberOfUses -= 1;
         }
 
@@ -53,7 +63,10 @@ public class HelpfulPuddleBehaviour : BasePuddleBehaviour
             affectedEntities.Add(other.gameObject);
             StartCoroutine(
                 other.GetComponent<EnemyController>()
-                    .TimedAffectSpeed(speedDebuffPercent, debuffDuration, false, affectedEntities)
+                    .TimedAffectSpeed(speedDebuffPercent, debuffDuration, false)
+            );
+            StartCoroutine(
+                RemoveFromHashSet(other.gameObject, debuffDuration)
             );
             numberOfUses -= 1;
         }

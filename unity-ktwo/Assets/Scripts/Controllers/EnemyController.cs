@@ -75,7 +75,7 @@ public class EnemyController : MonoBehaviour
         target = PlayerManager.instance.player;
     }
 
-    void FaceTarget ()
+    void FaceTarget()
     {
         Vector3 direction = (target.transform.position - transform.position).normalized;
         if (direction == Vector3.zero)
@@ -220,16 +220,14 @@ public class EnemyController : MonoBehaviour
     public void AffectSpeed(float percent, bool buff)
     {
         var speedChange = defaultSpeed * percent;
-        agent.speed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange) ;
+        agent.speed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
     }
 
-    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff, HashSet<GameObject> set = null) 
+    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff) 
     {
-        var zombie = gameObject;
         var speedChange = defaultSpeed * percent;
-        agent.speed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange) ;
+        agent.speed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
         yield return new WaitForSeconds(time);
-        if (set != null) set.Remove(zombie);
         ResetSpeed();
     }
 
@@ -238,9 +236,8 @@ public class EnemyController : MonoBehaviour
         agent.speed = defaultSpeed;
     }
 
-    public IEnumerator TurnAgainstOwn(float time, HashSet<GameObject> set = null)
+    public IEnumerator TurnAgainstOwn(float time)
     {
-        var zombie = gameObject;
         var oldTarget = target;
         var activeZombies = GameObject.FindGameObjectsWithTag("Zombie");
         target = activeZombies[Random.Range(0, activeZombies.Length)];
@@ -248,10 +245,9 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(time);
         turned = false;
         target = oldTarget;
-        if (set != null) set.Remove(zombie);
     }
 
-    public void ResumeMovement ()
+    public void ResumeMovement()
     {
         SetAttackAnimation(false);
         isAttackOnCooldown = false;
@@ -263,7 +259,7 @@ public class EnemyController : MonoBehaviour
         StopAllCoroutines();
     }
 
-    IEnumerator StartAttackCooldown ()
+    IEnumerator StartAttackCooldown()
     {
         StartAttackCooldownCoroutineStarted = true;
         yield return new WaitForSeconds(attackCooldown);
@@ -271,7 +267,7 @@ public class EnemyController : MonoBehaviour
         StartAttackCooldownCoroutineStarted = false;
     }
 
-    IEnumerator CountDownForAttackHitBox () 
+    IEnumerator CountDownForAttackHitBox() 
     {
         CountDownForAttackHitBoxCoroutineStarted = true;
         yield return new WaitForSeconds(timeUntilDamageCalculation);
@@ -279,12 +275,12 @@ public class EnemyController : MonoBehaviour
         CountDownForAttackHitBoxCoroutineStarted = false;
     }
 
-    void SetAttackAnimation (bool value)
+    void SetAttackAnimation(bool value)
     {
         animator.SetBool("IsAttacking", value);
     }
 
-    IEnumerator CalculateAttackCooldown ()
+    IEnumerator CalculateAttackCooldown()
     {   
         yield return new WaitForSeconds(attackCooldown);
         isAttackOnCooldown = true;

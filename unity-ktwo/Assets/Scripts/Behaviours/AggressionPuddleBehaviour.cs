@@ -15,7 +15,10 @@ public class AggressionPuddleBehaviour : BasePuddleBehaviour
         
         StartCoroutine(
             other.GetComponent<EnemyController>()
-                .TurnAgainstOwn(duration, affectedEntities)
+                .TurnAgainstOwn(duration)
+        );
+        StartCoroutine(
+            RemoveFromHashSet(other.gameObject, duration)
         );
         numberOfUses -= 1;
     }

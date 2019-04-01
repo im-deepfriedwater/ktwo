@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestroyAtEndOfLifeTime : MonoBehaviour {
+public class DestroyAtEndOfLifeTime : MonoBehaviour 
+{
     public float lifetime;
-    float currentTimePassed = 0f;
 
     // Use this for initialization
     void Start()
@@ -14,13 +14,7 @@ public class DestroyAtEndOfLifeTime : MonoBehaviour {
 
     IEnumerator BeginCountDown ()
     {
-        while (currentTimePassed < lifetime)
-        {
-            currentTimePassed += Time.deltaTime;
-            yield return null;
-        }
+        yield return new WaitForSeconds(lifetime);
         Destroy(gameObject);
     }
-
-
 }
