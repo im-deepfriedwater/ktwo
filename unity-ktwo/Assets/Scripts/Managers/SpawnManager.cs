@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public enum SpawnZone
 {
     North, South, East, West
 }
 
-public class SpawnManager : MonoBehaviour
+public class SpawnManager : NetworkBehaviour
 {
     public static SpawnManager instance;
     public GameObject zombie;
@@ -16,24 +17,17 @@ public class SpawnManager : MonoBehaviour
     public bool SpawnOnStartup;
     const float WAVE_DELAY = 10; // in seconds
 
-
     void Awake()
     {
         instance = this;
     }
 
-    void Start()
-    {
-        if (SpawnOnStartup)
-        {
-            SpawnZombieAtPoint(StartSpawnZone);
-        }
-    }
     
     // Returns a 
     public GameObject SpawnZombieAtPoint(SpawnZone sa)
     {
         var destination = GameObject.Find(string.Format("ZombieSpawnZone{0}", sa.ToString()));
+        Debug.Log(string.Format("ZombieSpawnZone{0}", sa.ToString()));
         var spawn = destination
             .GetComponentsInChildren<Transform>()
             [Random.Range(0, destination.transform.childCount)];
@@ -62,5 +56,11 @@ public class SpawnManager : MonoBehaviour
         }
 
         return Instantiate(zombie, destination.transform.position, destination.transform.rotation);
+    }
+
+    // TODO
+    public GameObject[] SpawnPlayers(GameObject[] players)
+    {
+        throw new System.NotImplementedException();
     }
 }

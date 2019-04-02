@@ -26,6 +26,12 @@ public class PlayerBehaviour : NetworkBehaviour
         animator = GetComponentInChildren<Animator>();
         rbd = GetComponent<Rigidbody>();
 
+        if (isServer)
+        {
+            Debug.Log("yuh");
+            PlayerManager.instance.players.Add(gameObject);
+        }
+
         // If this represents a different client's player,
         // We will shut off a lot of components it doesn't
         // need to compute and return.
@@ -33,12 +39,6 @@ public class PlayerBehaviour : NetworkBehaviour
         {
             TurnOffComponentsForNonLocalClient();
             return;
-        }
-
-        if (isServer)
-        {
-            Debug.Log("yuh");
-            PlayerManager.instance.players.Add(gameObject);
         }
 
         Debug.Log("im on coach");

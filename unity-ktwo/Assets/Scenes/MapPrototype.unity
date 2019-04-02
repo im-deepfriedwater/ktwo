@@ -883,25 +883,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6900272838244689202, guid: 180119d3049514d15be3a8fd8d7b0a73,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1954116143777015879, guid: 180119d3049514d15be3a8fd8d7b0a73,
         type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7808019105415422836, guid: 180119d3049514d15be3a8fd8d7b0a73,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1954116143777499255, guid: 180119d3049514d15be3a8fd8d7b0a73,
         type: 3}
       propertyPath: m_CullingMask.m_Bits
       value: 5431
       objectReference: {fileID: 0}
-    - target: {fileID: 7808019105415422836, guid: 180119d3049514d15be3a8fd8d7b0a73,
+    - target: {fileID: 6900272838244689202, guid: 180119d3049514d15be3a8fd8d7b0a73,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 180119d3049514d15be3a8fd8d7b0a73, type: 3}

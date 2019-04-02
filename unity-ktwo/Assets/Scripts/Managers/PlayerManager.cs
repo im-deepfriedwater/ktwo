@@ -10,8 +10,6 @@ public class PlayerManager : MonoBehaviour
 
     void Awake ()
     {
-        // No longer valid when we have multiple players.
-        // player = GameObject.Find("Player");
         instance = this;
     }
 
