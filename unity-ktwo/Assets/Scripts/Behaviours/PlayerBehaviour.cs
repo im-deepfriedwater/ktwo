@@ -54,6 +54,7 @@ public class PlayerBehaviour : NetworkBehaviour
     public void AffectSpeed(float percent, bool buff)
     {
         var speedChange = defaultSpeed * percent;
+        Debug.Log(playerController);
         playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
     }
 
@@ -90,10 +91,9 @@ public class PlayerBehaviour : NetworkBehaviour
     }
 
     [Command]
-    public void CmdBuildObject(Vector3 position, Quaternion rotation)
+    public void CmdBuildObject(string name, Vector3 position, Quaternion rotation)
     {
-        Debug.Log(toSpawn);
-        var go = Instantiate(toSpawn, position, rotation);
+        var go = (GameObject)Instantiate(Resources.Load(name, typeof(GameObject)), position, rotation);
         NetworkServer.Spawn(go);
         go.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
     }

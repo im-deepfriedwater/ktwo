@@ -28,11 +28,9 @@ public class BuildAbility : AbstractAbility
             playerTransform.position.y + heightOffset,
             playerTransform.position.z
         );
-        
-        player.toSpawn = buildPrefab;
-        Debug.Log(player.toSpawn);
+        Debug.Log(player.connectionToClient);
         newPosition += playerTransform.forward * distanceFactor;
-        player.CmdBuildObject(newPosition, playerTransform.rotation);
+        player.CmdBuildObject(buildPrefab.name, newPosition, playerTransform.rotation);
     }
 
 }
