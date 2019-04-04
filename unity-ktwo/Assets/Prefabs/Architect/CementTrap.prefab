@@ -1,5 +1,31 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!65 &1042081617146777130
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3644380556505311901}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.2088585, y: 2.208859, z: 0.012548057}
+  m_Center: {x: -0.007396221, y: 0.009378314, z: 0.0022384669}
+--- !u!65 &3941721942324142850
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3644380556505311901}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.8191214, y: 1.802177, z: 0.3132106}
+  m_Center: {x: 0.0010762215, y: 0.00090539455, z: 0.15256979}
 --- !u!114 &5680941422003269568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26,32 +52,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedSlowPercent: 0.7
---- !u!65 &3941721942324142850
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3644380556505311901}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.8191214, y: 1.802177, z: 0.3132106}
-  m_Center: {x: 0.0010762215, y: 0.00090539455, z: 0.15256979}
---- !u!65 &1042081617146777130
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3644380556505311901}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.2088585, y: 2.208859, z: 0.012548057}
-  m_Center: {x: -0.007396221, y: 0.009378314, z: 0.0022384669}
 --- !u!1 &3644380557226717840
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,6 +124,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 33fef816e523ff846b0dc53ddd116284, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 33fef816e523ff846b0dc53ddd116284, type: 3}
+      propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
