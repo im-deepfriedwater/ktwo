@@ -17,7 +17,7 @@ public class PlayerConnectionObject : NetworkBehaviour
     // 4 = Tinkerer
 
     [SyncVar]
-    public int chosenCharacter;
+    public int chosenCharacter = 0;
 
     [SyncVar]
     bool isPartyLeader = false; // is true for the first person to connect

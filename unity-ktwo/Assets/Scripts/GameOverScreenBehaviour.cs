@@ -19,7 +19,7 @@ public class GameOverScreenBehaviour : MonoBehaviour
         StartCoroutine("FadeIn");
     }
 
-    IEnumerator FadeIn () 
+    IEnumerator FadeIn() 
     {
         float currentTime = 0;
 
@@ -30,7 +30,7 @@ public class GameOverScreenBehaviour : MonoBehaviour
                 screen.color.r, 
                 screen.color.g,
                 screen.color.b, 
-                Mathf.Lerp(0, 1, currentTime/duration)
+                Mathf.Lerp(0, 1, currentTime / duration)
             );
 
             text.color = new Color(

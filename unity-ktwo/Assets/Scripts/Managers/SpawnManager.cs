@@ -14,19 +14,18 @@ public enum SpawnZone
 
 public class SpawnManager : NetworkBehaviour
 {
+    public static SpawnManager instance;
+
     public List<GameObject> playerSpawns;
     public List<GameObject> zombieSpawns;
-
-    public static SpawnManager instance;
+    
     public GameObject zombie;
-    public GameObject playerSystems;
     public SpawnZone StartSpawnZone;
+
     public bool SpawnOnStartup;
+
     const float SPAWN_DELAY = 1.5f;
     const float WAVE_DELAY = 10; // in seconds
-
-    public List<GameObject> characterMapping;
-
 
     void Awake()
     {
@@ -36,7 +35,6 @@ public class SpawnManager : NetworkBehaviour
     public void SpawnZombieAtPoint(SpawnZone sa)
     {
         var destination = GameObject.Find(string.Format("ZombieSpawnZone{0}", sa.ToString()));
-        Debug.Log(string.Format("ZombieSpawnZone{0}", sa.ToString()));
         var spawn = destination
             .GetComponentsInChildren<Transform>()
             [Random.Range(0, destination.transform.childCount)];
@@ -97,13 +95,6 @@ public class SpawnManager : NetworkBehaviour
 
             NetworkServer.Spawn(go);
             go.GetComponent<NetworkIdentity>().AssignClientAuthority(kvp.Key);
-            InstantiatePlayerSystems();
         }
     }
-
-    public void InstantiatePlayerSystems()
-    {
-        NetworkServer.Spawn(Instantiate(playerSystems, Vector3.zero, Quaternion.identity));
-    }
-
 }
