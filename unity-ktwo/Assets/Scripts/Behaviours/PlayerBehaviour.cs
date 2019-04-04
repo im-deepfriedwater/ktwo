@@ -46,7 +46,6 @@ public class PlayerBehaviour : NetworkBehaviour
 
     public void TurnOffComponentsForNonLocalClient()
     {
-        Debug.Log("i am not local");
         Destroy(GetComponent<vThirdPersonController>());
         Destroy(GetComponent<vThirdPersonInput>());
     }
