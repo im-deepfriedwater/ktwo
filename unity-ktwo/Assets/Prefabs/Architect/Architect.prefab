@@ -215,7 +215,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameOverScreen: {fileID: 0}
   defaultSpeed: 3
-  boostedSpeedFactor: 1.5
   recentlyHit: 0
 --- !u!114 &2457974746571506634
 MonoBehaviour:
@@ -252,7 +251,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  health: 100
   knockbackFactor: 2
   invincibilityDuration: 1.2
   rbd: {fileID: 0}
@@ -288,9 +286,9 @@ MonoBehaviour:
   cooldown: 3
   abilitySlot: 0
   abilityName: Build Wall
-  heightOffset: -1.7
+  heightOffset: -1.1
   distanceFactor: 3.5
-  buildPrefab: {fileID: 1115670171414198, guid: e2eed32957d2ed748acabd27461d1a8e,
+  buildPrefab: {fileID: 9078375342390889032, guid: dd4ddf30a2866de45b70b1c3774ac901,
     type: 3}
 --- !u!114 &8694314728623872770
 MonoBehaviour:
@@ -330,7 +328,7 @@ MonoBehaviour:
   abilityName: Cement Trap
   heightOffset: 0
   distanceFactor: 0
-  buildPrefab: {fileID: 2505295284718713562, guid: d4a5ca2ebe5903142a5d3a58e5ccded4,
+  buildPrefab: {fileID: 3644380557226717840, guid: 8f2639ac2d09599489a69d84ee31cc17,
     type: 3}
 --- !u!114 &3138698243780853082
 MonoBehaviour:
@@ -350,7 +348,7 @@ MonoBehaviour:
   abilityName: Spike Trap
   heightOffset: 0
   distanceFactor: 0
-  buildPrefab: {fileID: 545332260647542018, guid: 267f5691320c94340a441600cad0899a,
+  buildPrefab: {fileID: 3357900506762639724, guid: bed5a0dbdddc18042a4c8b8f07fc3dae,
     type: 3}
 --- !u!95 &2656795568673864430
 Animator:
