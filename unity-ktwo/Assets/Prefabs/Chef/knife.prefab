@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 845948797067624259}
   - component: {fileID: 3936274987932070193}
   - component: {fileID: 7629162657425185052}
+  - component: {fileID: 4693526546729470736}
   - component: {fileID: 2611067017198799249}
   m_Layer: 0
   m_Name: knife
@@ -78,6 +79,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &4693526546729470736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566125996027582309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d056b909a88992d46903abdecb1399d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 10
 --- !u!65 &2611067017198799249
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -86,8 +100,8 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 566125996027582309}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 3.5262992, y: 1.2749529, z: 0.20434363}
+  m_Center: {x: -0.00000043023965, y: 0.0023302466, z: -0.39782935}

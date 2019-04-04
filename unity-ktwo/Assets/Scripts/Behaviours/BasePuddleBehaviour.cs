@@ -33,7 +33,7 @@ public class BasePuddleBehaviour : MonoBehaviour
         }
     }
 
-    public IEnumerator RemoveFromHashSet(GameObject entity, float time)
+    public IEnumerator RemoveFromHashSet(GameObject entity, float time = 0f)
     {
         yield return new WaitForSeconds(time);
         affectedEntities.Remove(entity);

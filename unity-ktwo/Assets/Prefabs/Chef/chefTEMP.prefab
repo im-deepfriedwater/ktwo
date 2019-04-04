@@ -174,6 +174,7 @@ GameObject:
   - component: {fileID: 2393777542729870718}
   - component: {fileID: 2889896780455700416}
   - component: {fileID: 338889243124443598}
+  - component: {fileID: 4065790255769669018}
   - component: {fileID: 2656795568669542894}
   - component: {fileID: 2656795568679788790}
   - component: {fileID: 2217634175344956814}
@@ -383,7 +384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputButtons: 04000000
-  cooldown: 1
+  cooldown: 0.6
   abilitySlot: 0
   abilityName: Knife Throw
   heightOffset: 1
@@ -408,7 +409,7 @@ MonoBehaviour:
   abilitySlot: 1
   abilityName: Cook Food
   heightOffset: 0.35
-  distanceFactor: 0
+  distanceFactor: -1.5
   buildPrefab: {fileID: 5584266726988861228, guid: 74a7798b37dd68842ba8e84100f433d9,
     type: 3}
 --- !u!114 &338889243124443598
@@ -428,8 +429,28 @@ MonoBehaviour:
   abilitySlot: 2
   abilityName: Grease Spill
   heightOffset: 0
-  distanceFactor: 0
-  buildPrefab: {fileID: 6777690292249990457, guid: 0b7916e18908da7418a5445492ce1312,
+  distanceFactor: 1.5
+  buildPrefab: {fileID: 6753374559368431404, guid: 1ccdaa567115bed4693d48a1cc244434,
+    type: 3}
+--- !u!114 &4065790255769669018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2656795568666333104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f46cb6020aba09241b568a071637a3f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputButtons: 07000000
+  cooldown: 3
+  abilitySlot: 3
+  abilityName: Dish Wash
+  heightOffset: 1
+  distanceFactor: 1
+  buildPrefab: {fileID: 4806013720213129187, guid: 340cf00b7b274b64d95473568a6f523f,
     type: 3}
 --- !u!54 &2656795568669542894
 Rigidbody:

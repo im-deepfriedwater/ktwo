@@ -967,6 +967,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8609968017465638489}
+  - component: {fileID: 1715284742314445864}
   - component: {fileID: 5443921101226876468}
   m_Layer: 0
   m_Name: Food
@@ -998,6 +999,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1715284742314445864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5584266726988861228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dbfd35df4e80bd4290c432711b5963d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healAmount: 15
 --- !u!65 &5443921101226876468
 BoxCollider:
   m_ObjectHideFlags: 0
