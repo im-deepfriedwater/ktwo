@@ -35,7 +35,6 @@ public class EnemyController : NetworkBehaviour
     void Start()
     {   
         currentTransform = GetComponent<Transform>();
-        target = PlayerManager.instance.player;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         rbd = GetComponent<Rigidbody>();

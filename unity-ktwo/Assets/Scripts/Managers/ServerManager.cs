@@ -3,9 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ServerManager : MonoBehaviour
+public class ServerManager : NetworkBehaviour
 {
     KtwoServer server;
+    public static ServerManager instance;
+
+    void Awake()
+    {
+        instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

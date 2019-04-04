@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class GameManager: MonoBehaviour
+public class GameManager: NetworkBehaviour
 {
     public static GameManager instance;
 
@@ -25,11 +26,14 @@ public class GameManager: MonoBehaviour
     IEnumerator BeginWave()
     {
         yield return new WaitForSeconds(WAVE_START_DELAY);
-        SpawnManager.instance.SpawnZombies();
+        NetworkServer.Spawn(SpawnManager.instance.SpawnZombieAtPoint(SpawnZone.South));
+        NetworkServer.Spawn(SpawnManager.instance.SpawnZombieAtPoint(SpawnZone.North));
+        NetworkServer.Spawn(SpawnManager.instance.SpawnZombieAtPoint(SpawnZone.East));
+
         waveBegun = true;
         Debug.Log("wave has begun");
     }
-
+    
     void Update()
     {
         if (waveBegun)

@@ -136,6 +136,7 @@ public class KtwoServer : NetworkManager
 
     public void StartEncounter()
     {
+
         NetworkServer.Spawn(Instantiate(map, Vector3.zero, Quaternion.identity));
         GameManager.instance.StartEncounter();
         hasEncounterStarted = true;

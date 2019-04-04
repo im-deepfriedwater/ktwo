@@ -27,6 +27,12 @@ public class PlayerBehaviour : NetworkBehaviour
         animator = GetComponentInChildren<Animator>();
         rbd = GetComponent<Rigidbody>();
 
+        if (isServer)
+        {
+            Debug.Log("yuh");
+            PlayerManager.instance.players.Add(gameObject);
+        }
+
         // If this represents a different client's player,
         // We will shut off a lot of components it doesn't
         // need to compute and return.
@@ -41,6 +47,7 @@ public class PlayerBehaviour : NetworkBehaviour
         healthBar = GameObject.Find("HealthBarSlider").GetComponent<Slider>();
         input = GetComponent<vThirdPersonInput>();
         InputManager.instance.Initialize(this.gameObject);
+        PlayerManager.instance.players.Add(this.gameObject);
         ResetSpeed();
     }
 

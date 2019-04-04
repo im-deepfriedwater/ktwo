@@ -3,26 +3,64 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+public enum SpawnZone
+{
+    North, South, East, West
+}
+
 public class SpawnManager : NetworkBehaviour
 {
     public static SpawnManager instance;
-    public GameObject zombieGroup;
-    const float WAVE_DELAY = 15; // in seconds
+    public GameObject zombie;
+    public List<GameObject> spawns;
+    public SpawnZone StartSpawnZone;
+    public bool SpawnOnStartup;
+    const float WAVE_DELAY = 10; // in seconds
 
     void Awake()
     {
         instance = this;
     }
 
-    public void SpawnZombies()
-    {   // TODO:
-        // Filler code for now. Will be substituted with alejandro's solution later.
-        GameObject go = Instantiate(zombieGroup, new Vector3(0.054f, 0.87f, -12f), Quaternion.identity);
+    
+    // Returns a 
+    public GameObject SpawnZombieAtPoint(SpawnZone sa)
+    {
+        var destination = GameObject.Find(string.Format("ZombieSpawnZone{0}", sa.ToString()));
+        Debug.Log(string.Format("ZombieSpawnZone{0}", sa.ToString()));
+        var spawn = destination
+            .GetComponentsInChildren<Transform>()
+            [Random.Range(0, destination.transform.childCount)];
+        return Instantiate(zombie, spawn.transform.position, spawn.transform.rotation);
+    }
 
-        foreach (Transform child in go.transform)
+    public GameObject SpawnZombieAtRandomPoint()
+    {
+        var destination = spawns[Random.Range(0, spawns.Count)].transform;
+        return Instantiate(zombie, destination.position, destination.rotation);
+    }
+
+    public GameObject SpawnAtClosest(Transform t)
+    {
+        var shortest = Mathf.Infinity; 
+        GameObject destination = null;
+        foreach (GameObject go in spawns)
         {
-            NetworkServer.Spawn(child.gameObject);
-            child.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
+            var distance = Mathf.Abs(Vector3.Distance(t.transform.position, go.transform.position));
+
+            if (distance < shortest)
+            {
+                destination = go;
+                shortest = distance;
+            }
         }
+
+        return Instantiate(zombie, destination.transform.position, destination.transform.rotation);
+    }
+
+    // TODO
+    public GameObject[] SpawnPlayers(GameObject[] players)
+    {
+        throw new System.NotImplementedException();
     }
 }
