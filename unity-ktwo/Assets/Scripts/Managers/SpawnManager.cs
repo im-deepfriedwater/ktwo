@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+// Should exist primarily server-side.
+// Clients generally should not be
+// spawning entites through this.
 public enum SpawnZone
 {
     North, South, East, West
@@ -12,39 +15,58 @@ public class SpawnManager : NetworkBehaviour
 {
     public static SpawnManager instance;
     public GameObject zombie;
-    public List<GameObject> spawns;
+    public List<GameObject> playerSpawns;
+    public List<GameObject> zombieSpawns;
     public SpawnZone StartSpawnZone;
     public bool SpawnOnStartup;
+    const float SPAWN_DELAY = 1.5f;
     const float WAVE_DELAY = 10; // in seconds
+
+    public List<GameObject> characterMapping;
+
 
     void Awake()
     {
         instance = this;
     }
-
     
-    // Returns a 
-    public GameObject SpawnZombieAtPoint(SpawnZone sa)
+    public void SpawnZombieAtPoint(SpawnZone sa)
     {
         var destination = GameObject.Find(string.Format("ZombieSpawnZone{0}", sa.ToString()));
         Debug.Log(string.Format("ZombieSpawnZone{0}", sa.ToString()));
         var spawn = destination
             .GetComponentsInChildren<Transform>()
             [Random.Range(0, destination.transform.childCount)];
-        return Instantiate(zombie, spawn.transform.position, spawn.transform.rotation);
+        NetworkServer.Spawn(Instantiate(zombie, spawn.transform.position, spawn.transform.rotation));
     }
 
-    public GameObject SpawnZombieAtRandomPoint()
+    public void SpawnZombieAtRandomPoint()
     {
-        var destination = spawns[Random.Range(0, spawns.Count)].transform;
-        return Instantiate(zombie, destination.position, destination.rotation);
+        var destination = zombieSpawns[Random.Range(0, zombieSpawns.Count)].transform;
+        NetworkServer.Spawn(Instantiate(zombie, destination.position, destination.rotation));
     }
 
-    public GameObject SpawnAtClosest(Transform t)
+    public void SpawnMultipleZombiesAtRandomPoint(int numberOfZombies)
+    {
+        StartCoroutine(TimedSpawn(numberOfZombies));
+    }
+
+    public IEnumerator TimedSpawn(int numberOfZombies)
+    {
+        var counter = 0;
+        while(counter < numberOfZombies)
+        {
+            yield return new WaitForSeconds(SPAWN_DELAY);
+            SpawnZombieAtRandomPoint();
+            counter--;
+        }
+    }
+
+    public void SpawnAtClosest(Transform t)
     {
         var shortest = Mathf.Infinity; 
         GameObject destination = null;
-        foreach (GameObject go in spawns)
+        foreach (GameObject go in zombieSpawns)
         {
             var distance = Mathf.Abs(Vector3.Distance(t.transform.position, go.transform.position));
 
@@ -55,7 +77,7 @@ public class SpawnManager : NetworkBehaviour
             }
         }
 
-        return Instantiate(zombie, destination.transform.position, destination.transform.rotation);
+        NetworkServer.Spawn(Instantiate(zombie, destination.transform.position, destination.transform.rotation));
     }
 
     // TODO

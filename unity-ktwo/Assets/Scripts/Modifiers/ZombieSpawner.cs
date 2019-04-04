@@ -9,6 +9,6 @@ public class ZombieSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpawnManager.instance.spawns.Add(this.gameObject);
+        SpawnManager.instance.zombieSpawns.Add(this.gameObject);
     }
 }

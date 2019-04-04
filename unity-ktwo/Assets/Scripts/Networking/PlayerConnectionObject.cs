@@ -13,30 +13,38 @@ public class PlayerConnectionObject : NetworkBehaviour
     public GameObject PlayerUnitPrefab;
     public GameObject PlayerSystems;
 
+    // Chosen Character Mapping
+    // 0 = Arhictect
+    // 1 = Chemist
+    // 2 = Chef
+    // 3 = Dog
+    // 4 = Tinkerer
+
+    [SyncVar]
+    public int chosenCharacter;
+
+    [SyncVar]
+    bool isPartyLeader = false; // is true for the first person to connect
+
+    [SyncVar]
+    public int playerConnectionSpot; // Ascending order, 0 is first, 1 is second etc
+
     [ClientRpc]
     public void RpcLoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
-    [Command]
-    void CmdSpawn()
-    {
-        Debug.Log(connectionToClient);
-        GameObject go = Instantiate(PlayerUnitPrefab, new Vector3(0, 0.5f, 0), Quaternion.identity);
-        NetworkServer.Spawn(go);
-        go.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
-    }
-    bool isPartyLeader = false;
-
-    // Start is called before the first frame update
-    void Start()
+    public void SpawnPlayer() // Gets called by serverside when encounter starts.
     {
         if (!isLocalPlayer)
         {
             return; // This belongs to a different player.
         }
+
         Instantiate(PlayerSystems, Vector3.zero, Quaternion.identity);
-        CmdSpawn();
+        GameObject go = Instantiate(PlayerUnitPrefab, new Vector3(0, 0.5f, 0), Quaternion.identity);
+        NetworkServer.Spawn(go);
+        go.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
     }
 }

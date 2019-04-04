@@ -4,22 +4,22 @@ using UnityEngine.Networking.Match;
 using System.Collections.Generic;
 
 public class KtwoServer : NetworkManager
-{
-    public GameObject map;
-    public Dictionary<NetworkConnection, int> connections;
-    bool hasEncounterStarted = false;
-    int playerSpot = 0;
+{    
+
+    public static KtwoServer instance;
+    // We can use the count of connections to represent player ids.
+    public Dictionary<NetworkConnection, PlayerConnectionObject> connections;
     
     public void Start ()
     {
-        connections = new Dictionary<NetworkConnection, int>();
+        instance = this;
+        connections = new Dictionary<NetworkConnection, PlayerConnectionObject>();
     }
 
     // Server callbacks
     public override void OnServerConnect(NetworkConnection conn)
     {
         Debug.Log("A client connected to the server: " + conn);
-        connections.Add(conn, playerSpot++);
     }
 
     public override void OnServerDisconnect(NetworkConnection conn)
@@ -45,14 +45,10 @@ public class KtwoServer : NetworkManager
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
         var player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
-        // add to a hashmap of connections to players
         NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
+        var connectionObject = player.GetComponent<PlayerConnectionObject>();
         Debug.Log("Client has requested to get his player added to the game");
-
-        if (!hasEncounterStarted)
-        {
-            StartEncounter();
-        }
+        connections[conn] = player.GetComponent<PlayerConnectionObject>();
     }
 
     public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController player)
@@ -61,6 +57,8 @@ public class KtwoServer : NetworkManager
         {
             NetworkServer.Destroy(player.gameObject);
         }
+
+        connections.Remove(conn);
     }
 
     public override void OnServerError(NetworkConnection conn, int errorCode)
@@ -132,13 +130,5 @@ public class KtwoServer : NetworkManager
     {
         base.OnClientSceneChanged(conn);
         Debug.Log("Server triggered scene change and we've done the same, do any extra work here for the client...");
-    }
-
-    public void StartEncounter()
-    {
-
-        NetworkServer.Spawn(Instantiate(map, Vector3.zero, Quaternion.identity));
-        GameManager.instance.StartEncounter();
-        hasEncounterStarted = true;
     }
 }

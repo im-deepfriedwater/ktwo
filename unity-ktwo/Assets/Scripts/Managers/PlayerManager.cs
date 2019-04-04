@@ -15,9 +15,11 @@ public class PlayerManager : MonoBehaviour
 
     #endregion
 
+    // local player
     [HideInInspector]
     public GameObject player;
 
+    [HideInInspector]
     public List<GameObject> players;
     
 
