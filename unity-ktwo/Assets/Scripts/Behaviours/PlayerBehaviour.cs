@@ -67,12 +67,7 @@ public class PlayerBehaviour : NetworkBehaviour
     public void RpcAffectSpeed(float percent, bool buff)
     {
         var speedChange = defaultSpeed * percent;
-        Debug.Log(percent);
-        Debug.Log(speedChange);
-        Debug.Log(playerController);
-        Debug.Log(playerController.freeRunningSpeed);
         playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
-        Debug.Log(playerController.freeRunningSpeed);
     }
 
     public IEnumerator TimedAffectSpeed(float percent, float time, bool buff, HashSet<GameObject> set = null) 
@@ -99,7 +94,6 @@ public class PlayerBehaviour : NetworkBehaviour
     [ClientRpc]
     public void RpcResetSpeed()
     {
-        Debug.Log("RESETTING");
         playerController.freeRunningSpeed = defaultSpeed;
     }
 
