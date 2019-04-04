@@ -28,9 +28,8 @@ public class BuildAbility : AbstractAbility
             playerTransform.position.y + heightOffset,
             playerTransform.position.z
         );
-
         newPosition += playerTransform.forward * distanceFactor;
-        player.CmdBuildObject(buildPrefab, newPosition, playerTransform.rotation);
+        player.CmdBuildObject(buildPrefab.name, newPosition, playerTransform.rotation);
     }
 
 }

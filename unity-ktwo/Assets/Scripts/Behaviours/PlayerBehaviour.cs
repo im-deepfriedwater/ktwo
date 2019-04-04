@@ -12,6 +12,7 @@ public class PlayerBehaviour : NetworkBehaviour
     Slider healthBar;
     [Tooltip("UI for game screen. Should be in Canvas, called GameOverScreen")]
     public GameObject gameOverScreen;
+    public GameObject toSpawn;
     public float defaultSpeed;
     public bool recentlyHit;
 
@@ -52,12 +53,24 @@ public class PlayerBehaviour : NetworkBehaviour
 
     public void TurnOffComponentsForNonLocalClient()
     {
-        Debug.Log("i am not local");
         Destroy(GetComponent<vThirdPersonController>());
         Destroy(GetComponent<vThirdPersonInput>());
     }
 
     public void AffectSpeed(float percent, bool buff)
+    {
+        if(!hasAuthority)
+        {
+            RpcAffectSpeed(percent, buff);
+        }
+        else
+        {
+            var speedChange = defaultSpeed * percent;
+            playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
+        }
+    }
+    [ClientRpc]
+    public void RpcAffectSpeed(float percent, bool buff)
     {
         var speedChange = defaultSpeed * percent;
         playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
@@ -73,6 +86,19 @@ public class PlayerBehaviour : NetworkBehaviour
     }
 
     public void ResetSpeed()
+    {
+        if(!hasAuthority)
+        {
+            RpcResetSpeed();
+        }
+        else
+        {
+            playerController.freeRunningSpeed = defaultSpeed;
+        }
+    }
+
+    [ClientRpc]
+    public void RpcResetSpeed()
     {
         playerController.freeRunningSpeed = defaultSpeed;
     }
@@ -96,9 +122,9 @@ public class PlayerBehaviour : NetworkBehaviour
     }
 
     [Command]
-    public void CmdBuildObject(GameObject prefab, Vector3 position, Quaternion rotation)
+    public void CmdBuildObject(string name, Vector3 position, Quaternion rotation)
     {
-        var go = Instantiate(prefab, position, rotation);
+        var go = (GameObject)Instantiate(Resources.Load(name, typeof(GameObject)), position, rotation);
         NetworkServer.Spawn(go);
         go.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
     }
