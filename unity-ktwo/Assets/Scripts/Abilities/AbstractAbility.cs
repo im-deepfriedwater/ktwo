@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public abstract class AbstractAbility : MonoBehaviour
+public abstract class AbstractAbility : NetworkBehaviour
 {
     public Buttons[] inputButtons;
     public float cooldown;
@@ -23,6 +24,11 @@ public abstract class AbstractAbility : MonoBehaviour
 
     protected void Initialize()
     {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+
         abilityGroupImage = GameObject
             .Find(string.Format("AbilityGroup{0}", abilitySlot))
             .GetComponent<Image>();
@@ -59,6 +65,11 @@ public abstract class AbstractAbility : MonoBehaviour
 
     protected void UpdateAbilityUI() // This should be called at some point in the derived's update method
     {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+        
         if (cooldownOver)
         {
             MarkAbilityAsReady();

@@ -7,6 +7,7 @@ public class KtwoServer : NetworkManager
 {
     public GameObject map;
     public Dictionary<NetworkConnection, int> connections;
+    bool hasEncounterStarted = false;
     int playerSpot = 0;
     
     public void Start ()
@@ -46,8 +47,12 @@ public class KtwoServer : NetworkManager
         var player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
         // add to a hashmap of connections to players
         NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
-        StartEncounter();
         Debug.Log("Client has requested to get his player added to the game");
+
+        if (!hasEncounterStarted)
+        {
+            StartEncounter();
+        }
     }
 
     public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController player)
@@ -131,9 +136,9 @@ public class KtwoServer : NetworkManager
 
     public void StartEncounter()
     {
-        Debug.Log("spawning..");
-        var go = Instantiate(map, Vector3.zero, Quaternion.identity);
-        NetworkServer.Spawn(go);
-    }
 
+        NetworkServer.Spawn(Instantiate(map, Vector3.zero, Quaternion.identity));
+        GameManager.instance.StartEncounter();
+        hasEncounterStarted = true;
+    }
 }

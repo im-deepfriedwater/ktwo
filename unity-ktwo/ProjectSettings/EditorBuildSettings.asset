@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MapPrototype.unity
     guid: 2a9b8c61aa1fc5e4c8ba7ed8e4eff9fd
   - enabled: 1
-    path: Assets/Scenes/Networking/ClientPrototype.unity
+    path: Assets/Scenes/networking/ClientPrototype.unity
     guid: 7aa1d8bf7eb2d7d4c874eb2788a220f3
   - enabled: 0
     path: 
@@ -23,10 +23,10 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
-    path: Assets/Scenes/Networking/ClientMapPrototype.unity
+  - enabled: 0
+    path: Assets/Scenes/networking/ClientMapPrototype.unity
     guid: d5d51d75b8988d747b0f1341a639fd4e
   - enabled: 0
-    path: Assets/Scenes/Networking/ServerPrototype.unity
+    path: Assets/Scenes/networking/ServerPrototype.unity
     guid: 44de7ecf6d6180b46a26bca09509ba8d
   m_configObjects: {}
