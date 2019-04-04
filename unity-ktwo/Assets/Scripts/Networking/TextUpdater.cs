@@ -28,10 +28,10 @@ public class TextUpdater : MonoBehaviour
             DestroyImmediate(child.gameObject);
         }
 
-        foreach (KeyValuePair<NetworkConnection, int> entry in manager.connections)
+        foreach (KeyValuePair<NetworkConnection, PlayerConnectionObject> entry in manager.connections)
         {
             var x = Instantiate(text, textGroup.transform);
-            x.GetComponent<Text>().text = string.Format("Player {0} Connected", entry.Value);
+            x.GetComponent<Text>().text = string.Format("Player {0} Connected", entry.Value.playerConnectionSpot);
         }
     }
 }

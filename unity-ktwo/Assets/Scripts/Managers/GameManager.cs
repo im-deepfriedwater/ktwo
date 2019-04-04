@@ -25,16 +25,7 @@ public class GameManager: NetworkBehaviour
         Debug.Log("starting zombie wave counter");
         StartCoroutine("BeginWave");
         NetworkServer.Spawn(Instantiate(map, Vector3.zero, Quaternion.identity));
-        SpawnPlayers(KtwoServer.instance.connections);
-        StartEncounter();
-    }
-
-    public void SpawnPlayers(Dictionary<NetworkConnection, PlayerConnectionObject> connections)
-    {
-        foreach (KeyValuePair<NetworkConnection, PlayerConnectionObject> kvp in connections)
-        {
-            kvp.Value.SpawnPlayer();
-        }
+        SpawnManager.instance.SpawnPlayers(KtwoServer.instance.connections);
     }
 
     IEnumerator BeginWave()

@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-// Should exist primarily server-side.
-// Clients generally should not be
-// spawning entites through this.
+// Should exist primarily server-side
+// to spawn zombies and players.
+// Clients should not be spawning 
+// entites through this.
 public enum SpawnZone
 {
     North, South, East, West
@@ -13,10 +14,12 @@ public enum SpawnZone
 
 public class SpawnManager : NetworkBehaviour
 {
-    public static SpawnManager instance;
-    public GameObject zombie;
     public List<GameObject> playerSpawns;
     public List<GameObject> zombieSpawns;
+
+    public static SpawnManager instance;
+    public GameObject zombie;
+    public GameObject playerSystems;
     public SpawnZone StartSpawnZone;
     public bool SpawnOnStartup;
     const float SPAWN_DELAY = 1.5f;
@@ -80,9 +83,27 @@ public class SpawnManager : NetworkBehaviour
         NetworkServer.Spawn(Instantiate(zombie, destination.transform.position, destination.transform.rotation));
     }
 
-    // TODO
-    public GameObject[] SpawnPlayers(GameObject[] players)
+    public void SpawnPlayers(Dictionary<NetworkConnection, PlayerConnectionObject> connections)
     {
-        throw new System.NotImplementedException();
+        foreach (var kvp in connections)
+        {
+            var spawnDestination = GameObject.Find(string.Format("PlayerSpawnPoint {0}", kvp.Value.playerConnectionSpot));
+
+            GameObject go = Instantiate(
+                CharacterManager.instance.characters[kvp.Value.chosenCharacter], 
+                new Vector3(0, 0.5f, 0), 
+                Quaternion.identity
+            );
+
+            NetworkServer.Spawn(go);
+            go.GetComponent<NetworkIdentity>().AssignClientAuthority(kvp.Key);
+            InstantiatePlayerSystems();
+        }
     }
+
+    public void InstantiatePlayerSystems()
+    {
+        NetworkServer.Spawn(Instantiate(playerSystems, Vector3.zero, Quaternion.identity));
+    }
+
 }
