@@ -12,7 +12,7 @@ public enum SpawnZone
     North, South, East, West
 }
 
-public class SpawnManager : NetworkBehaviour
+public class SpawnManager : MonoBehaviour
 {
     public static SpawnManager instance;
 
@@ -29,6 +29,8 @@ public class SpawnManager : NetworkBehaviour
 
     void Awake()
     {
+        playerSpawns = new List<GameObject>(); 
+        zombieSpawns = new List<GameObject>();
         instance = this;
     }
     
@@ -83,14 +85,24 @@ public class SpawnManager : NetworkBehaviour
 
     public void SpawnPlayers(Dictionary<NetworkConnection, PlayerConnectionObject> connections)
     {
+        Debug.Log(connections.Count);
+        Debug.Log(KtwoServer.instance.playerSpot);
+
         foreach (var kvp in connections)
         {
-            var spawnDestination = GameObject.Find(string.Format("PlayerSpawnPoint {0}", kvp.Value.playerConnectionSpot));
+            var targetString = kvp.Value.playerConnectionSpot != 0 ? 
+                string.Format("PlayerSpawnPoint ({0})", kvp.Value.playerConnectionSpot):
+                "PlayerSpawnPoint"; 
+
+            Debug.Log(targetString);
+            var spawnDestination = GameObject.Find(targetString);
+
+            Debug.Log(CharacterManager.instance.characters);
 
             GameObject go = Instantiate(
-                CharacterManager.instance.characters[kvp.Value.chosenCharacter], 
-                new Vector3(0, 0.5f, 0), 
-                Quaternion.identity
+                CharacterManager.instance.characters[kvp.Value.chosenCharacter],
+                spawnDestination.transform.position,
+                spawnDestination.transform.rotation
             );
 
             NetworkServer.Spawn(go);

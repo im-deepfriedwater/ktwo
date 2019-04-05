@@ -3,17 +3,23 @@ using UnityEngine.Networking;
 using UnityEngine.Networking.Match;
 using System.Collections.Generic;
 
-public class KtwoServer : NetworkManager
+public class KtwoServer: NetworkManager
 {    
 
     public static KtwoServer instance;
+    public int playerSpot = 0;
     // We can use the count of connections to represent player ids.
     public Dictionary<NetworkConnection, PlayerConnectionObject> connections;
     
+    public void Awake ()
+    {
+        connections = new Dictionary<NetworkConnection, PlayerConnectionObject>();
+        instance = this;
+    }
+
     public void Start ()
     {
-        instance = this;
-        connections = new Dictionary<NetworkConnection, PlayerConnectionObject>();
+        StartServer();
     }
 
     // Server callbacks
@@ -44,11 +50,14 @@ public class KtwoServer : NetworkManager
 
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
+        Debug.Log("Client has requested to get his player added to the game");
         var player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
         NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
         var connectionObject = player.GetComponent<PlayerConnectionObject>();
-        Debug.Log("Client has requested to get his player added to the game");
-        connections[conn] = player.GetComponent<PlayerConnectionObject>();
+        connectionObject.playerConnectionSpot = playerSpot;
+        connections[conn] = connectionObject;
+        playerSpot++;
+        GameObject.Find("PlayerConnectionTextGroup").GetComponent<TextUpdater>().UpdateText();
     }
 
     public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController player)
@@ -84,51 +93,5 @@ public class KtwoServer : NetworkManager
     public override void OnStopHost()
     {
         Debug.Log("Host has stopped");
-    }
-
-    // Client callbacks
-    public override void OnClientConnect(NetworkConnection conn)
-    {
-        base.OnClientConnect(conn);
-        Debug.Log("Connected successfully to server, now to set up other stuff for the client...");
-    }
-
-    public override void OnClientDisconnect(NetworkConnection conn)
-    {
-        StopClient();
-        if (conn.lastError != NetworkError.Ok)
-        {
-            if (LogFilter.logError)
-            { 
-                Debug.LogError("ClientDisconnected due to error: " + conn.lastError);
-            }
-        }
-        Debug.Log("Client disconnected from server: " + conn);
-    }
-
-    public override void OnClientError(NetworkConnection conn, int errorCode)
-    {
-        Debug.Log("Client network error occurred: " + (NetworkError)errorCode);
-    }
-
-    public override void OnClientNotReady(NetworkConnection conn)
-    {
-        Debug.Log("Server has set client to be not-ready (stop getting state updates)");
-    }
-
-    public override void OnStartClient(NetworkClient client)
-    {
-        Debug.Log("Client has started");
-    }
-
-    public override void OnStopClient()
-    {
-        Debug.Log("Client has stopped");
-    }
-
-    public override void OnClientSceneChanged(NetworkConnection conn)
-    {
-        base.OnClientSceneChanged(conn);
-        Debug.Log("Server triggered scene change and we've done the same, do any extra work here for the client...");
     }
 }

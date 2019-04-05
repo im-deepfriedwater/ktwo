@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 
 
-public class TextUpdater : MonoBehaviour
+public class TextUpdater: MonoBehaviour
 {
     KtwoServer manager;
     [SerializeField]
@@ -21,7 +21,7 @@ public class TextUpdater : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+   public void UpdateText()
     {
         foreach (Transform child in textGroup.transform)
         {

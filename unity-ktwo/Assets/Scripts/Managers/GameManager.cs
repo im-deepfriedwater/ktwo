@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class GameManager: NetworkBehaviour
+public class GameManager: MonoBehaviour
 {
     public static GameManager instance;
 

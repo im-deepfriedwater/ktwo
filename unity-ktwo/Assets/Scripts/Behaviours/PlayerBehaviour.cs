@@ -42,7 +42,7 @@ public class PlayerBehaviour : NetworkBehaviour
             return;
         }
 
-        Debug.Log("im on coach");
+        PlayerManager.instance.player = this.gameObject;
         playerController = GetComponent<vThirdPersonController>();
         healthBar = GameObject.Find("HealthBarSlider").GetComponent<Slider>();
         input = GetComponent<vThirdPersonInput>();
