@@ -3,6 +3,8 @@
 using UnityEngine.SceneManagement;
 #endif
 
+using UnityEngine.Networking;
+
 namespace Invector.CharacterController
 {
     public class vThirdPersonInput : MonoBehaviour
@@ -38,6 +40,12 @@ namespace Invector.CharacterController
 
         protected virtual void Start()
         {
+            // This is to check if this object is owned by the local client.
+            if (!this.gameObject.GetComponent<PlayerBehaviour>().hasAuthority)
+            {
+                return;
+            }
+
             CharacterInit();
         }
 
