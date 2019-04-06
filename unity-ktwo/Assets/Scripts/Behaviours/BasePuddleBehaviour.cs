@@ -6,7 +6,7 @@ public class BasePuddleBehaviour : MonoBehaviour
 {
     [Header("Puddle Settings")]
     public int numberOfUses;
-    public int decayRate;
+    public float decayRate;
 
     public HashSet<GameObject> affectedEntities = new HashSet<GameObject>();
 
@@ -14,6 +14,7 @@ public class BasePuddleBehaviour : MonoBehaviour
     {
         StartCoroutine(PuddleLifetime(decayRate));
     }
+
     void Update()
     {
         if (numberOfUses <= 0 && affectedEntities.Count == 0) Destroy(gameObject);
@@ -33,7 +34,7 @@ public class BasePuddleBehaviour : MonoBehaviour
         }
     }
 
-    public IEnumerator RemoveFromHashSet(GameObject entity, float time)
+    public IEnumerator RemoveFromHashSet(GameObject entity, float time = 0f)
     {
         yield return new WaitForSeconds(time);
         affectedEntities.Remove(entity);
