@@ -24,23 +24,23 @@ public class HorizontalThrowAbility : AbstractAbility
     IEnumerator ThrowProjectileFromPlayer()
     {
 
-        var Projectile = Instantiate(projectilePrefab, playerTransform.position + playerTransform.forward + new Vector3(0, heightOffset, 0), playerTransform.rotation);
-        var projectileTransform = Projectile.transform;
+        var projectile = Instantiate(projectilePrefab, playerTransform.position + playerTransform.forward + new Vector3(0, heightOffset, 0), playerTransform.rotation);
+        var projectileTransform = projectile.transform;
 
-        float Vx = Mathf.Sqrt(projectileVelocity);
+        float vx = Mathf.Sqrt(projectileVelocity);
 
-        float flightDuration = throwDistance / Vx;
+        float flightDuration = throwDistance / vx;
 
         float elapse_time = 0;
 
         while (elapse_time < flightDuration)
         {
-            projectileTransform.Translate(0, 0, Vx * Time.deltaTime);
+            projectileTransform.Translate(0, 0, vx * Time.deltaTime);
             elapse_time += Time.deltaTime;
 
             yield return null;
         }
 
-        Destroy(Projectile);
+        Destroy(projectile);
     }
 }
