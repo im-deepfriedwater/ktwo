@@ -14,7 +14,7 @@ public class DishWashBehaviour : MonoBehaviour
     private bool active = true;
     private HashSet<GameObject> affectedEntities = new HashSet<GameObject>();
 
-    void Awake()
+    void Start()
     {
         player = PlayerManager.instance.player;
         transform.parent = player.transform;
