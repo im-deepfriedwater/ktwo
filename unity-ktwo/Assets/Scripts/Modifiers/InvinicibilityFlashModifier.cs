@@ -6,11 +6,11 @@ using UnityEngine;
 // want the flashing effect on deactivate it when you want it off.
 public class InvinicibilityFlashModifier : MonoBehaviour
 {
-    [Tooltip("The object that has the mesh renderer should be named 'Graphics'. Gets filled in at runtime.")]
+    // The mesh renderer should be named 'Graphics'. Gets filled in at runtime.
+    [HideInInspector]
     public GameObject mesh; // The graphics object to activate / deactivate in and out rapidly.
     [Range(0, 1)]
-    public float rateOfFlash = 0.1f; // Time in seconds it oscillates between off and on.
-
+    public float rateOfFlash = 0.1f;
     float currentTimeInState;
     bool graphicsOn = false;
 

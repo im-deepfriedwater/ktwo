@@ -47,6 +47,11 @@ public class EnemyController : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!isServer)
+        {
+            return;
+        }
+
         if (isAttacking)
         {
             agent.isStopped = true;
