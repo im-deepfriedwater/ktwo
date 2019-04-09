@@ -32,4 +32,4 @@ public class BuildAbility : AbstractAbility
         player.CmdBuildObject(buildPrefab.name, newPosition, playerTransform.rotation);
     }
 
-}
+} 

@@ -69,12 +69,6 @@ public class PlayerBehaviour : NetworkBehaviour
             playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
         }
     }
-    [ClientRpc]
-    public void RpcAffectSpeed(float percent, bool buff)
-    {
-        var speedChange = defaultSpeed * percent;
-        playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
-    }
 
     public IEnumerator TimedAffectSpeed(float percent, float time, bool buff, HashSet<GameObject> set = null) 
     {
@@ -97,14 +91,12 @@ public class PlayerBehaviour : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
-    public void RpcResetSpeed()
-    {
-        playerController.freeRunningSpeed = defaultSpeed;
-    }
-
     public void UpdateHealthBar(float healthPercentage)
     {
+        if (isServer)
+        {
+            return;
+        }
         healthBar.value = 1 - healthPercentage;
     }
 
@@ -127,5 +119,18 @@ public class PlayerBehaviour : NetworkBehaviour
         var go = (GameObject)Instantiate(Resources.Load(name, typeof(GameObject)), position, rotation);
         NetworkServer.Spawn(go);
         go.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
+    }
+
+    [ClientRpc]
+    public void RpcAffectSpeed(float percent, bool buff)
+    {
+        var speedChange = defaultSpeed * percent;
+        playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
+    }
+
+    [ClientRpc]
+    public void RpcResetSpeed()
+    {
+        playerController.freeRunningSpeed = defaultSpeed;
     }
 }

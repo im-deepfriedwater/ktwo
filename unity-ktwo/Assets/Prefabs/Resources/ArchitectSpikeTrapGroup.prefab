@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3129550905970810071}
   - component: {fileID: 3248973174420825349}
   m_Layer: 0
-  m_Name: SpikeTrapGroup
+  m_Name: ArchitectSpikeTrapGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2597247857161766848}
+  - {fileID: 7066252801299851026}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -132,9 +132,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3240287401811302067, guid: 267f5691320c94340a441600cad0899a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 267f5691320c94340a441600cad0899a, type: 3}
---- !u!4 &2597247857161766848 stripped
+--- !u!4 &7066252801299851026 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5051658146373935770, guid: 267f5691320c94340a441600cad0899a,
     type: 3}

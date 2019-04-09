@@ -49,4 +49,10 @@ public class PlayerManager : MonoBehaviour
         return closestPlayer;
     }
 
+    public GameObject GetRandomPlayer()
+    {
+        var chosenRIP = Random.Range(0, players.Count);
+        Debug.Log(Random.Range(0, players.Count));
+        return players[chosenRIP];
+    }
 }

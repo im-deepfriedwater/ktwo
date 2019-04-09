@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2928186816846019912}
   - component: {fileID: 2714439360126083391}
   m_Layer: 0
-  m_Name: CementTrapGroup
+  m_Name: ArchitectCementTrapGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 3568971489306606474}
+  - {fileID: 8566900963538140224}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -132,9 +132,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4477114147599198102, guid: d4a5ca2ebe5903142a5d3a58e5ccded4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d4a5ca2ebe5903142a5d3a58e5ccded4, type: 3}
---- !u!4 &3568971489306606474 stripped
+--- !u!4 &8566900963538140224 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5144297836782388608, guid: d4a5ca2ebe5903142a5d3a58e5ccded4,
     type: 3}

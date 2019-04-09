@@ -1611,7 +1611,7 @@ MonoBehaviour:
   abilityName: Build Paved Road
   heightOffset: 0.025
   distanceFactor: 7
-  buildPrefab: {fileID: 1665861210242492, guid: fad5ded93bf476a47a721f0788dde652,
+  buildPrefab: {fileID: 1665861210242492, guid: bb5e59cdf6ff65944be9c0100c7d86e3,
     type: 3}
 --- !u!114 &3075031018555010343
 MonoBehaviour:
@@ -1631,7 +1631,7 @@ MonoBehaviour:
   abilityName: Cement Trap
   heightOffset: 0
   distanceFactor: 0
-  buildPrefab: {fileID: 7386390471019074721, guid: 4e479a1066aab824c91d260a1b3d03b7,
+  buildPrefab: {fileID: 7386390471019074721, guid: 66d3a3b75756a7f4ebb5a549edac62e5,
     type: 3}
 --- !u!114 &6914883840576515507
 MonoBehaviour:
@@ -1651,7 +1651,7 @@ MonoBehaviour:
   abilityName: Spike Trap
   heightOffset: 0
   distanceFactor: 0
-  buildPrefab: {fileID: 729004048474331758, guid: 60086cea85bb95e43afda4f5b801275f,
+  buildPrefab: {fileID: 729004048474331758, guid: 3ff10dd0cdcf3f146b9946d5ca782fb4,
     type: 3}
 --- !u!95 &5811519447184632327
 Animator:

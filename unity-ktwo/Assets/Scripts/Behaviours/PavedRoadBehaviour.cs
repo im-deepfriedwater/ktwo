@@ -9,7 +9,8 @@ public class PavedRoadBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag != "Player") return;
+        if (other.gameObject.tag != "Player" ) return;
+        Debug.Log("Fast boi collided");
         lastCollided = other;
         other.GetComponent<PlayerBehaviour>().AffectSpeed(speedBoostPercent, true);
     }

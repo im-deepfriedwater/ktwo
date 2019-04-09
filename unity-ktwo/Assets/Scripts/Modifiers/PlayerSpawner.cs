@@ -1,14 +1,13 @@
-﻿using UnityEngine.Networking;
+﻿using UnityEngine;
 
-public class PlayerSpawner : NetworkBehaviour
+public class PlayerSpawner : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
-        if (!isServer)
+        if (SpawnManager.instance)
         {
-            return;
+            SpawnManager.instance.playerSpawns.Add(this.gameObject);
         }
-        SpawnManager.instance.playerSpawns.Add(this.gameObject);
     }
 }

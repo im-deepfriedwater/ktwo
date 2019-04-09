@@ -8,12 +8,13 @@ public class GameManager: MonoBehaviour
     public static GameManager instance;
 
     public GameObject map;
+    public GameObject test;
     public float currentWaveTime = 0;
     public bool encounterStarted = false;
 
     bool waveBegun = false;
 
-    const float WAVE_START_DELAY = 15; // in seconds
+    const float WAVE_START_DELAY = 5; // in seconds
 
     void Awake()
     {
@@ -31,6 +32,7 @@ public class GameManager: MonoBehaviour
     IEnumerator BeginWave()
     {
         yield return new WaitForSeconds(WAVE_START_DELAY);
+        NetworkServer.Spawn(Instantiate(test, Vector3.zero, Quaternion.identity));
         SpawnManager.instance.SpawnZombieAtPoint(SpawnZone.South);
         SpawnManager.instance.SpawnZombieAtPoint(SpawnZone.North);
         SpawnManager.instance.SpawnZombieAtPoint(SpawnZone.East);

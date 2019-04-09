@@ -20,6 +20,9 @@ public class EnemyController : NetworkBehaviour
     public bool hitboxActivated = false;
     public bool hasAttacked = false;
 
+    [SyncVar]
+    public int playerTarget = -1;
+
     bool CountDownForAttackHitBoxCoroutineStarted = false;
     bool StartAttackCooldownCoroutineStarted = false;
     
@@ -34,38 +37,54 @@ public class EnemyController : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {   
+        
         currentTransform = GetComponent<Transform>();
-        agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         rbd = GetComponent<Rigidbody>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (target == null) FindNewTarget();
-
-        float distance = Vector3.Distance(target.transform.position, transform.position);
-
-        if (!isAttacking && distance <= lookRadius)
-        {
-            agent.isStopped = false;
-            agent.SetDestination(target.transform.position);
-            if (distance <= agent.stoppingDistance)
-            {
-                FaceTarget();
-            }
-        }
-
         if (isAttacking)
         {
             agent.isStopped = true;
             rbd.velocity = Vector3.zero;
         }
+
+ 
+        // if (target == null) FindNewTarget();
+        if (target == null) target = PlayerManager.instance.GetClosestPlayer(transform.position);
+
+
+        if (!isAttacking)
+        {
+            agent.isStopped = false;
+
+            if (isServer)
+            {
+                float distance = Vector3.Distance(target.transform.position, transform.position);
+                agent.SetDestination(target.transform.position);
+                if (distance <= agent.stoppingDistance)
+                {
+                    FaceTarget();
+                }
+            } 
+
+        }
     }
 
     void FindNewTarget()
     {
+        if (!isServer)
+        {
+            return;
+        }
+
+        target = PlayerManager.instance.GetClosestPlayer(transform.position);
+        return;
+
         // this might all break when we have more than one player
         if (turned)
         {
@@ -73,11 +92,11 @@ public class EnemyController : NetworkBehaviour
             target = zombies[Random.Range(0, zombies.Length)];
         } else 
         {
-            target = PlayerManager.instance.GetClosestPlayer(gameObject.transform.position);
+            target = PlayerManager.instance.GetRandomPlayer();
         }
     }
 
-    void FaceTarget ()
+    void FaceTarget()
     {
         Vector3 direction = (target.transform.position - transform.position).normalized;
         if (direction == Vector3.zero)
@@ -86,12 +105,6 @@ public class EnemyController : NetworkBehaviour
         }
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, lookRadius);
     }
 
     void OnTriggerStay(Collider other)
@@ -253,16 +266,21 @@ public class EnemyController : NetworkBehaviour
         if (set != null) set.Remove(zombie);
     }
 
-    public void ResumeMovement ()
+    public void ResumeMovement()
     {
+        return;
+        StopAllCoroutines();
         SetAttackAnimation(false);
         isAttackOnCooldown = false;
         isAttacking = false;
         hitboxActivated = false;
         CountDownForAttackHitBoxCoroutineStarted = false;
         StartAttackCooldownCoroutineStarted = false;
-        agent.SetDestination(target.transform.position);
-        StopAllCoroutines();
+
+        if (isServer)
+        {
+            agent.SetDestination(target.transform.position);
+        }
     }
 
     IEnumerator StartAttackCooldown ()

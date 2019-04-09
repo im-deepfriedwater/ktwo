@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class DestroyAtEndOfLifeTime : MonoBehaviour {
     public float lifetime;
@@ -19,7 +20,7 @@ public class DestroyAtEndOfLifeTime : MonoBehaviour {
             currentTimePassed += Time.deltaTime;
             yield return null;
         }
-        Destroy(gameObject);
+        NetworkServer.Destroy(gameObject.transform.parent.gameObject);
     }
 
 

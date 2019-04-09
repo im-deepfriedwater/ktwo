@@ -451,7 +451,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpawns: []
   zombieSpawns: []
-  zombie: {fileID: 7086454018950713939, guid: 27df18849fea7834eacf23589b8fe0cb, type: 3}
+  zombie: {fileID: 2903651316215239539, guid: befaa5947ad0ff446a51c13fc6133113, type: 3}
   StartSpawnZone: 0
   SpawnOnStartup: 0
 --- !u!4 &769971190
@@ -512,6 +512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 442, guid: 73d37dec34dfdec42adfb8d589a27c8b, type: 3}
+  test: {fileID: 3351977188180325463, guid: f0028dc8cb5b3ae4c9619b924877f7f9, type: 3}
   currentWaveTime: 0
   encounterStarted: 0
 --- !u!1 &1387971568
@@ -590,7 +591,14 @@ MonoBehaviour:
   m_SpawnPrefabs:
   - {fileID: 442, guid: 73d37dec34dfdec42adfb8d589a27c8b, type: 3}
   - {fileID: 7086454018950713939, guid: 27df18849fea7834eacf23589b8fe0cb, type: 3}
-  - {fileID: 7403458046232879353, guid: d5afb21505f5f4d499cfff7a404faa24, type: 3}
+  - {fileID: 5811519447175110489, guid: 1fe4e637a1ebae64297fba14798bf178, type: 3}
+  - {fileID: 1115670171414198, guid: e2eed32957d2ed748acabd27461d1a8e, type: 3}
+  - {fileID: 1665861210242492, guid: bb5e59cdf6ff65944be9c0100c7d86e3, type: 3}
+  - {fileID: 729004048474331758, guid: 3ff10dd0cdcf3f146b9946d5ca782fb4, type: 3}
+  - {fileID: 7386390471019074721, guid: 66d3a3b75756a7f4ebb5a549edac62e5, type: 3}
+  - {fileID: 3351977188180325463, guid: f0028dc8cb5b3ae4c9619b924877f7f9, type: 3}
+  - {fileID: 2903651316215239539, guid: befaa5947ad0ff446a51c13fc6133113, type: 3}
+  - {fileID: 0}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -804,6 +812,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1770931099}
   - component: {fileID: 1770931100}
+  - component: {fileID: 1770931101}
   m_Layer: 5
   m_Name: PlayerConnectionTextGroup
   m_TagString: Untagged
@@ -853,6 +862,20 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
+--- !u!114 &1770931101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1770931098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bc975c3a9a1ced4f8338f395939435c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 1705204712}
+  textGroup: {fileID: 1770931098}
 --- !u!1 &2022698314
 GameObject:
   m_ObjectHideFlags: 0
