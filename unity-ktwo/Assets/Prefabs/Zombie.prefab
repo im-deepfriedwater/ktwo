@@ -54,6 +54,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7086454018950713967}
+  - component: {fileID: 2112353429000349817}
   - component: {fileID: 7086454018950713966}
   - component: {fileID: 7086454018950713964}
   - component: {fileID: 2828533351946198158}
@@ -65,8 +66,6 @@ GameObject:
   - component: {fileID: 6710541984586501939}
   - component: {fileID: 8079878228128885662}
   - component: {fileID: 4159405303755788552}
-  - component: {fileID: 8782120463796337997}
-  - component: {fileID: 2112353429000349817}
   m_Layer: 10
   m_Name: Zombie
   m_TagString: Zombie
@@ -90,6 +89,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2112353429000349817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7086454018950713939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.033333335
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!195 &7086454018950713966
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -97,7 +118,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7086454018950713939}
-  m_Enabled: 0
+  m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
   m_Speed: 2
@@ -119,7 +140,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7086454018950713939}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b80f861e9b259049a635e496d99a188, type: 3}
   m_Name: 
@@ -198,7 +219,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7086454018950713939}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d19a9df93d7613e40a8fc9d501b24dea, type: 3}
   m_Name: 
@@ -212,7 +233,7 @@ BoxCollider:
   m_GameObject: {fileID: 7086454018950713939}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.7, z: 0.5}
@@ -225,7 +246,7 @@ BoxCollider:
   m_GameObject: {fileID: 7086454018950713939}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.7699888, y: 0.14572309, z: 0.6972294}
   m_Center: {x: 0.050963283, y: 0.03, z: 0.1513853}
@@ -251,7 +272,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7086454018950713939}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: fedcc045a4a98624781683d921a6019b, type: 3}
   m_Controller: {fileID: 9100000, guid: 4dda0d416cf2a51408c69ca285acb16b, type: 2}
   m_CullingMode: 1
@@ -315,40 +336,6 @@ MonoBehaviour:
   param3: 
   param4: 
   param5: 
---- !u!114 &8782120463796337997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7086454018950713939}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60af0e4cfbfdaf343bfa12cda5c97409, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2112353429000349817
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7086454018950713939}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 1
-  m_SendInterval: 0.033333335
-  m_SyncRotationAxis: 7
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: 0.001
-  m_VelocityThreshold: 0.0001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
 --- !u!1001 &7086454019129846195
 PrefabInstance:
   m_ObjectHideFlags: 0
