@@ -1,12 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Networking;
 
-public class Damagable : MonoBehaviour
+public class Damagable : NetworkBehaviour
 {
-    public float startingHealth = 100;
+    [SyncVar]
+    public float startingHealth;
+    [SyncVar]
     public float currentHealth;
+
     public UnityEvent OnZeroHealth; // Death animations, or functions to call on death go here.
     public UnityEvent OnHit;
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// For clients to load up characters at runtime.
 public class CharacterManager : MonoBehaviour
 {   
     public static CharacterManager instance;

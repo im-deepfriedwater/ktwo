@@ -62,7 +62,7 @@ public class DamagableEnemy: Damagable
     }
 
     // A hit with knockback.
-    public void Hit (float damage, Vector3 direction)
+    public void Hit(float damage, Vector3 direction)
     {
         if (isInvincible)
         {
@@ -80,13 +80,13 @@ public class DamagableEnemy: Damagable
         StartCoroutine("BeginInvincibility");
     }
 
-    void KnockbackPlayer (Vector3 direction)
+    void KnockbackPlayer(Vector3 direction)
     {
         calculatedKnockBackFactor = knockbackFactor * 10; // Adjusted from 1-10 -> 10 - 100
         rbd.AddForce(direction.normalized * calculatedKnockBackFactor, ForceMode.VelocityChange);
     }
 
-    IEnumerator BeginInvincibility ()
+    IEnumerator BeginInvincibility()
     {   
         isInvincible = true;
         invinicibilityComponent.enabled = true;
@@ -97,6 +97,7 @@ public class DamagableEnemy: Damagable
 
     public void Die()
     {
+        EnemyManager.instance.zombies.Remove(gameObject);
         Destroy(gameObject);
     }
 }

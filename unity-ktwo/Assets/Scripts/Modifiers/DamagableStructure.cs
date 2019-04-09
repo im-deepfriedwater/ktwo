@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Networking;
 
 public class DamagableStructure : Damagable
 {
@@ -43,6 +44,6 @@ public class DamagableStructure : Damagable
 
     public void Die()
     {
-        Destroy(gameObject);
+        NetworkServer.Destroy(transform.parent.gameObject);
     }
 }

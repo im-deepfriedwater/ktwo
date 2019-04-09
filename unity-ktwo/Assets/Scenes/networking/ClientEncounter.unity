@@ -229,21 +229,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7286447768888118586, guid: cb5383f8135cd4a1f92ff377664f8e61,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.1033334
-      objectReference: {fileID: 0}
-    - target: {fileID: 7286447768888118586, guid: cb5383f8135cd4a1f92ff377664f8e61,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.1033334
-      objectReference: {fileID: 0}
-    - target: {fileID: 7286447768888118586, guid: cb5383f8135cd4a1f92ff377664f8e61,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.1033334
-      objectReference: {fileID: 0}
     - target: {fileID: 4110527459977938924, guid: cb5383f8135cd4a1f92ff377664f8e61,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -855,7 +840,7 @@ PrefabInstance:
     - target: {fileID: 2919140216272899469, guid: 00594b7cb3503c64c8866cd2d20a3903,
         type: 3}
       propertyPath: m_NetworkAddress
-      value: 192.168.1.130
+      value: 10.27.247.196
       objectReference: {fileID: 0}
     - target: {fileID: 2919140216272899469, guid: 00594b7cb3503c64c8866cd2d20a3903,
         type: 3}

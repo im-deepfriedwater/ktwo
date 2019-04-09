@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    #region Singleton
+    // local player
+    [HideInInspector]
+    public GameObject player;
+
+    [HideInInspector]
+    public List<GameObject> players;
 
     public static PlayerManager instance;
 
@@ -13,15 +18,6 @@ public class PlayerManager : MonoBehaviour
         instance = this;
     }
 
-    #endregion
-
-    // local player
-    [HideInInspector]
-    public GameObject player;
-
-    [HideInInspector]
-    public List<GameObject> players;
-    
 
     public GameObject TargetRandomPlayer()
     {

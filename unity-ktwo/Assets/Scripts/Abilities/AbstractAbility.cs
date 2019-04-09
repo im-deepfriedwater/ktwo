@@ -12,7 +12,6 @@ public abstract class AbstractAbility : NetworkBehaviour
     [Range(0, 3)]
     public int abilitySlot;
 
-    protected Transform playerTransform;
     protected InputState inputState;
     protected Image abilityIcon;
     protected bool cooldownOver = true;
@@ -41,7 +40,6 @@ public abstract class AbstractAbility : NetworkBehaviour
     void Start() // Will get called automatically on startup.
     {
         Initialize();
-        playerTransform = GetComponent<Transform>();
         player = GetComponent<PlayerBehaviour>();
     }
 

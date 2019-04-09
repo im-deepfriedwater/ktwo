@@ -5,8 +5,6 @@ using UnityEngine.Networking;
 
 // Should exist primarily server-side
 // to spawn zombies and players.
-// Clients should not be spawning 
-// entites through this.
 public enum SpawnZone
 {
     North, South, East, West
@@ -40,13 +38,13 @@ public class SpawnManager : MonoBehaviour
         var spawn = destination
             .GetComponentsInChildren<Transform>()
             [Random.Range(0, destination.transform.childCount)];
-        NetworkServer.Spawn(Instantiate(zombie, spawn.transform.position, spawn.transform.rotation));
+        SpawnEnemy(zombie, spawn.position, spawn.rotation);
     }
 
     public void SpawnZombieAtRandomPoint()
     {
         var destination = zombieSpawns[Random.Range(0, zombieSpawns.Count)].transform;
-        NetworkServer.Spawn(Instantiate(zombie, destination.position, destination.rotation));
+        SpawnEnemy(zombie, destination.position, destination.rotation);
     }
 
     public void SpawnMultipleZombiesAtRandomPoint(int numberOfZombies)
@@ -80,7 +78,14 @@ public class SpawnManager : MonoBehaviour
             }
         }
 
-        NetworkServer.Spawn(Instantiate(zombie, destination.transform.position, destination.transform.rotation));
+        SpawnEnemy(zombie, destination.transform.position, destination.transform.rotation);
+    }
+
+    void SpawnEnemy(GameObject enemy, Vector3 position, Quaternion rotation)
+    {
+        var go = Instantiate(enemy, position, rotation);
+        NetworkServer.Spawn(go);
+        EnemyManager.instance.zombies.Add(go);
     }
 
     public void SpawnPlayers(Dictionary<NetworkConnection, PlayerConnectionObject> connections)

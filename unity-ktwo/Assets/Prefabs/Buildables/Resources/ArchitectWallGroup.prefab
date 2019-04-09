@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4435379868929064}
   - component: {fileID: 138229895782614363}
   m_Layer: 0
-  m_Name: ArchitectWallContainer
+  m_Name: ArchitectWallGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ MonoBehaviour:
     i14: 0
     i15: 0
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
+  m_LocalPlayerAuthority: 0
 --- !u!1 &1692240931094456
 GameObject:
   m_ObjectHideFlags: 0
@@ -79,7 +79,6 @@ GameObject:
   - component: {fileID: 65961016805337060}
   - component: {fileID: 95236908362832648}
   - component: {fileID: 3664958320725262459}
-  - component: {fileID: 7444413066260199695}
   - component: {fileID: 6025500435998042357}
   m_Layer: 0
   m_Name: ArchitectWall
@@ -217,18 +216,6 @@ MonoBehaviour:
   health: 100
   isInvincible: 0
   invincibleMaterial: {fileID: 2100000, guid: 1040580661b403c42966896a13777758, type: 2}
---- !u!114 &7444413066260199695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1692240931094456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 810bccf1b6f624c499abb6e9d6526f6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &6025500435998042357
 Rigidbody:
   m_ObjectHideFlags: 0

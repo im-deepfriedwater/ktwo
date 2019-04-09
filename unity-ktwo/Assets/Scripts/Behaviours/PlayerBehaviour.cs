@@ -12,7 +12,6 @@ public class PlayerBehaviour : NetworkBehaviour
     Slider healthBar;
     [Tooltip("UI for game screen. Should be in Canvas, called GameOverScreen")]
     public GameObject gameOverScreen;
-    public GameObject toSpawn;
     public float defaultSpeed;
     public bool recentlyHit;
 
@@ -29,7 +28,6 @@ public class PlayerBehaviour : NetworkBehaviour
 
         if (isServer)
         {
-            Debug.Log("yuh");
             PlayerManager.instance.players.Add(gameObject);
         }
 
@@ -42,12 +40,12 @@ public class PlayerBehaviour : NetworkBehaviour
             return;
         }
 
-        PlayerManager.instance.player = this.gameObject;
+        PlayerManager.instance.player = gameObject;
         playerController = GetComponent<vThirdPersonController>();
         healthBar = GameObject.Find("HealthBarSlider").GetComponent<Slider>();
         input = GetComponent<vThirdPersonInput>();
-        InputManager.instance.Initialize(this.gameObject);
-        PlayerManager.instance.players.Add(this.gameObject);
+        InputManager.instance.Initialize(gameObject);
+        PlayerManager.instance.players.Add(gameObject);
         ResetSpeed();
     }
 
@@ -59,15 +57,13 @@ public class PlayerBehaviour : NetworkBehaviour
 
     public void AffectSpeed(float percent, bool buff)
     {
-        if(!hasAuthority)
+        if (!hasAuthority)
         {
-            RpcAffectSpeed(percent, buff);
-        }
-        else
-        {
-            var speedChange = defaultSpeed * percent;
-            playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
-        }
+            return;
+        } 
+
+        var speedChange = defaultSpeed * percent;
+        playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
     }
 
     public IEnumerator TimedAffectSpeed(float percent, float time, bool buff, HashSet<GameObject> set = null) 
@@ -81,19 +77,13 @@ public class PlayerBehaviour : NetworkBehaviour
 
     public void ResetSpeed()
     {
-        if(!hasAuthority)
-        {
-            RpcResetSpeed();
-        }
-        else
-        {
-            playerController.freeRunningSpeed = defaultSpeed;
-        }
+        if (!hasAuthority) return;
+        playerController.freeRunningSpeed = defaultSpeed;
     }
 
     public void UpdateHealthBar(float healthPercentage)
     {
-        if (isServer)
+        if (!hasAuthority)
         {
             return;
         }
@@ -107,30 +97,10 @@ public class PlayerBehaviour : NetworkBehaviour
 
     public void InitiateGameOver()
     {
+        if (!hasAuthority) return;
         gameOverScreen.SetActive(true);
         input.enabled = false;
         animator.SetBool("IsDead", true);
         rbd.isKinematic = true;
-    }
-
-    [Command]
-    public void CmdBuildObject(string name, Vector3 position, Quaternion rotation)
-    {
-        var go = (GameObject)Instantiate(Resources.Load(name, typeof(GameObject)), position, rotation);
-        NetworkServer.Spawn(go);
-        go.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
-    }
-
-    [ClientRpc]
-    public void RpcAffectSpeed(float percent, bool buff)
-    {
-        var speedChange = defaultSpeed * percent;
-        playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
-    }
-
-    [ClientRpc]
-    public void RpcResetSpeed()
-    {
-        playerController.freeRunningSpeed = defaultSpeed;
     }
 }

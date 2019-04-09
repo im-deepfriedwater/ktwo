@@ -20,9 +20,6 @@ public class EnemyController : NetworkBehaviour
     public bool hitboxActivated = false;
     public bool hasAttacked = false;
 
-    [SyncVar]
-    public int playerTarget = -1;
-
     bool CountDownForAttackHitBoxCoroutineStarted = false;
     bool StartAttackCooldownCoroutineStarted = false;
     
@@ -37,7 +34,6 @@ public class EnemyController : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {   
-        
         currentTransform = GetComponent<Transform>();
         animator = GetComponentInChildren<Animator>();
         rbd = GetComponent<Rigidbody>();
@@ -47,62 +43,39 @@ public class EnemyController : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isServer)
-        {
-            return;
-        }
-
         if (isAttacking)
         {
             agent.isStopped = true;
             rbd.velocity = Vector3.zero;
-        }
-
- 
-        // if (target == null) FindNewTarget();
-        if (target == null) target = PlayerManager.instance.GetClosestPlayer(transform.position);
-
-
-        if (!isAttacking)
+        } else 
         {
-            agent.isStopped = false;
-
-            if (isServer)
+            if (target == null)
+            {
+                FindNewTarget();
+            } else 
             {
                 float distance = Vector3.Distance(target.transform.position, transform.position);
                 agent.SetDestination(target.transform.position);
-                if (distance <= agent.stoppingDistance)
-                {
-                    FaceTarget();
-                }
-            } 
-
+                agent.isStopped = false;
+                FaceTarget();
+            }
         }
+
     }
 
     void FindNewTarget()
     {
-        if (!isServer)
-        {
-            return;
-        }
-
-        target = PlayerManager.instance.GetClosestPlayer(transform.position);
-        return;
-
-        // this might all break when we have more than one player
-        if (turned)
-        {
-            var zombies = GameObject.FindGameObjectsWithTag("Zombie");
-            target = zombies[Random.Range(0, zombies.Length)];
-        } else 
-        {
-            target = PlayerManager.instance.GetRandomPlayer();
-        }
+        if (!isServer) return;
+        var target = turned ? EnemyManager.instance.GetRandomZombie()
+            : PlayerManager.instance.GetRandomPlayer();
+        this.target = target;
+        RpcSetTarget(target.GetComponent<NetworkIdentity>());
     }
 
     void FaceTarget()
     {
+        if (target == null) return; // Wait for server to 
+
         Vector3 direction = (target.transform.position - transform.position).normalized;
         if (direction == Vector3.zero)
         {
@@ -115,9 +88,7 @@ public class EnemyController : NetworkBehaviour
     void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Structure") AttackStructure(other);
-
         if (other.gameObject.tag == "Player" && !turned) AttackPlayer(other);
-
         if (other.gameObject.tag == "Zombie" && turned) AttackZombie(other);
     }
 
@@ -193,7 +164,7 @@ public class EnemyController : NetworkBehaviour
 
         if (player.currentHealth <= 0) 
         {
-            // FindNewTarget(); may need this in the future
+            FindNewTarget();
             ResumeMovement();
             return;
         }
@@ -261,19 +232,17 @@ public class EnemyController : NetworkBehaviour
     public IEnumerator TurnAgainstOwn(float time, HashSet<GameObject> set = null)
     {
         var zombie = gameObject;
-        var oldTarget = target;
         var activeZombies = GameObject.FindGameObjectsWithTag("Zombie");
         target = activeZombies[Random.Range(0, activeZombies.Length)];
         turned = true;
         yield return new WaitForSeconds(time);
         turned = false;
-        target = oldTarget;
+        FindNewTarget();
         if (set != null) set.Remove(zombie);
     }
 
     public void ResumeMovement()
     {
-        return;
         StopAllCoroutines();
         SetAttackAnimation(false);
         isAttackOnCooldown = false;
@@ -313,5 +282,17 @@ public class EnemyController : NetworkBehaviour
     {   
         yield return new WaitForSeconds(attackCooldown);
         isAttackOnCooldown = true;
+    }
+
+    [ClientRpc]
+    void RpcSetTarget(NetworkIdentity target) 
+    {
+        if (target == null) 
+        {
+            Debug.LogWarning("Tried setting enemy target to an entity that does not exist on the client!");
+            return;
+        }
+
+        this.target = target.gameObject;
     }
 }
