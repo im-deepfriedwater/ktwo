@@ -19,6 +19,8 @@ public class EnemyController : NetworkBehaviour
     public bool isAttacking = false;
     public bool hitboxActivated = false;
     public bool hasAttacked = false;
+    
+    public GameObject target;
 
     bool CountDownForAttackHitBoxCoroutineStarted = false;
     bool StartAttackCooldownCoroutineStarted = false;
@@ -26,7 +28,6 @@ public class EnemyController : NetworkBehaviour
     private bool turned = false;
 
     Transform currentTransform;
-    GameObject target;
     NavMeshAgent agent;
     Animator animator;
     Rigidbody rbd;
@@ -60,14 +61,13 @@ public class EnemyController : NetworkBehaviour
                 FaceTarget();
             }
         }
-
     }
 
     void FindNewTarget()
     {
         if (!isServer) return;
         var target = turned ? EnemyManager.instance.GetRandomZombie()
-            : PlayerManager.instance.GetRandomPlayer();
+            : PlayerManager.instance.TargetRandomPlayer();
         this.target = target;
         RpcSetTarget(target.GetComponent<NetworkIdentity>());
     }
@@ -145,10 +145,9 @@ public class EnemyController : NetworkBehaviour
         {
             if (!CountDownForAttackHitBoxCoroutineStarted)
             {
-                StartCoroutine("CountDownForAttackHitBox");
+                StartCoroutine(CountDownForAttackHitBox());
             }
-        }
-        else if (isAttacking && !isAttackOnCooldown && hitboxActivated)
+        } else if (isAttacking && !isAttackOnCooldown && hitboxActivated)
         {
             hasAttacked = true;
             Vector3 direction = currentTransform.forward;
@@ -159,7 +158,7 @@ public class EnemyController : NetworkBehaviour
             {
                 return;
             }
-            StartCoroutine("StartAttackCooldown");
+            StartCoroutine(StartAttackCooldown());
         }
 
         if (player.currentHealth <= 0) 
@@ -185,8 +184,7 @@ public class EnemyController : NetworkBehaviour
             {
                 StartCoroutine("CountDownForAttackHitBox");
             }
-        }
-        else if (isAttacking && !isAttackOnCooldown && hitboxActivated)
+        } else if (isAttacking && !isAttackOnCooldown && hitboxActivated)
         {
             hasAttacked = true;
             Vector3 direction = currentTransform.forward;
@@ -257,7 +255,7 @@ public class EnemyController : NetworkBehaviour
         }
     }
 
-    IEnumerator StartAttackCooldown ()
+    IEnumerator StartAttackCooldown()
     {
         StartAttackCooldownCoroutineStarted = true;
         yield return new WaitForSeconds(attackCooldown);
@@ -265,15 +263,16 @@ public class EnemyController : NetworkBehaviour
         StartAttackCooldownCoroutineStarted = false;
     }
 
-    IEnumerator CountDownForAttackHitBox () 
+    IEnumerator CountDownForAttackHitBox() 
     {
+        Debug.Log("IENumerator Started CHUmP");
         CountDownForAttackHitBoxCoroutineStarted = true;
         yield return new WaitForSeconds(timeUntilDamageCalculation);
         hitboxActivated = true;
         CountDownForAttackHitBoxCoroutineStarted = false;
     }
 
-    void SetAttackAnimation (bool value)
+    void SetAttackAnimation(bool value)
     {
         animator.SetBool("IsAttacking", value);
     }

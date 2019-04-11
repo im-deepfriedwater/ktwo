@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 [RequireComponent(typeof(InvinicibilityFlashModifier))]
 public class DamagablePlayer: Damagable
@@ -18,7 +19,7 @@ public class DamagablePlayer: Damagable
 
     InvinicibilityFlashModifier invinicibilityComponent;
     
-    void Awake ()
+    void Awake()
     {
         rbd = GetComponent<Rigidbody>();
         if (OnHit == null)
@@ -40,19 +41,36 @@ public class DamagablePlayer: Damagable
         OnHit.Invoke(currentHealth / startingHealth);
     }
 
-    override public void Hit (float damage)
+
+    // A hit with knockback.
+    public void Hit(float damage, Vector3 direction)
     {
-        if (isInvincible)
+        Hit(damage);
+        KnockbackPlayer(direction);
+        StartCoroutine(BeginInvincibility());
+    }
+
+    public override void Hit(float damage)
+    {
+        if (isInvincible || !hasAuthority)
         {
             return;
         }
 
+        if (!isServer)
+        {
+            CmdServerRegisterHit(damage);
+        }
+
         currentHealth -= damage;
-        OnHit.Invoke(currentHealth / startingHealth);
+
         if (currentHealth <= 0)
         {
-            OnZeroHealth.Invoke();
+            Debug.Log("she's supposed to be dead");
+            GetComponent<PlayerBehaviour>().Die();
         }
+
+        OnHit.Invoke(currentHealth / startingHealth);
     }
 
     public IEnumerator DamageOverTime(float damageAmount, float duration, HashSet<GameObject> set = null)
@@ -68,37 +86,42 @@ public class DamagablePlayer: Damagable
         if (set != null) set.Remove(player);
     }
 
-    // A hit with knockback.
-    public void Hit (float damage, Vector3 direction)
+    void KnockbackPlayer(Vector3 direction)
     {
-        if (isInvincible)
-        {
-            return;
-        }
-
-        currentHealth -= damage;
-        OnHit.Invoke(currentHealth / startingHealth);
-        KnockbackPlayer(direction);
-        if (currentHealth <= 0)
-        {
-            OnZeroHealth.Invoke();
-        }
-
-        StartCoroutine("BeginInvincibility");
-    }
-
-    void KnockbackPlayer (Vector3 direction)
-    {
-        calculatedKnockBackFactor = knockbackFactor * 10; // Adjusted from 1-10 -> 10 - 100
+        calculatedKnockBackFactor = knockbackFactor * 10; // Adjusted from 1 - 10 -> 10 - 100
         rbd.AddForce(direction.normalized * calculatedKnockBackFactor, ForceMode.VelocityChange);
     }
 
-    IEnumerator BeginInvincibility ()
+    IEnumerator BeginInvincibility()
     {   
         isInvincible = true;
         invinicibilityComponent.enabled = true;
         yield return new WaitForSeconds(invincibilityDuration);
         isInvincible = false;
         invinicibilityComponent.enabled = false;
+    }
+
+    [Command]
+    void CmdServerRegisterHit(float damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            RpcPlayerOutOfHealth();
+        }
+        RpcTriggerClientInvincibility();
+    }
+
+    [ClientRpc]
+    void RpcPlayerOutOfHealth()
+    {
+        if (GetComponent<Animator>().GetBool("IsDead")) return;
+        GetComponent<PlayerBehaviour>().Die();
+    }
+
+    [ClientRpc]
+    void RpcTriggerClientInvincibility() 
+    {
+        StartCoroutine(BeginInvincibility());
     }
 }

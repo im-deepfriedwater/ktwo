@@ -35,7 +35,7 @@ public class BuildAbility : AbstractAbility
 
     [Command]
     public void CmdBuildObject(string name, Vector3 position, Quaternion rotation)    
-    {       
+    {      
         var go = (GameObject)Instantiate(Resources.Load(name, typeof(GameObject)), position, rotation);
         NetworkServer.Spawn(go);
         go.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);

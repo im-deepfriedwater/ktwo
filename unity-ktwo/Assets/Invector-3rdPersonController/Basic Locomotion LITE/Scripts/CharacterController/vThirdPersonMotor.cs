@@ -344,25 +344,8 @@ namespace Invector.CharacterController
 
         void CheckGround()
         {
-            // CheckGroundDistance();
-            isGrounded = true;
-            // change the physics material to very slip when not grounded or maxFriction when is
-            // if (isGrounded && input == Vector2.zero)
-            //     _capsuleCollider.material = maxFrictionPhysics;
-            // else if (isGrounded && input != Vector2.zero)
-            //     _capsuleCollider.material = frictionPhysics;
-            // else
-            //     _capsuleCollider.material = slippyPhysics;
-            
-            // the code above came originally with the 3rd person controller.
-            // we instead will default to a general frictionPhysics material.
-
+            CheckGroundDistance();
             _capsuleCollider.material = frictionPhysics;
-
-            if (GetComponent<PlayerBehaviour>().isServer)
-            {
-                return;
-            }
 
             var magVel = (float)System.Math.Round(new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z).magnitude, 2);
             magVel = Mathf.Clamp(magVel, 0, 1);

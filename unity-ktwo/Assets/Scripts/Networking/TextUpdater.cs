@@ -7,7 +7,6 @@ using UnityEngine.Networking;
 
 public class TextUpdater: MonoBehaviour
 {
-    KtwoServer manager;
     [SerializeField]
     GameObject text;
     [SerializeField]
@@ -16,7 +15,6 @@ public class TextUpdater: MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        manager = GetComponent<KtwoServer>();
         textGroup = GameObject.FindObjectOfType<VerticalLayoutGroup>().gameObject;
     }
 
@@ -28,7 +26,7 @@ public class TextUpdater: MonoBehaviour
             DestroyImmediate(child.gameObject);
         }
 
-        foreach (KeyValuePair<NetworkConnection, PlayerConnectionObject> entry in manager.connections)
+        foreach (KeyValuePair<NetworkConnection, PlayerConnectionObject> entry in KtwoServer.instance.connections)
         {
             var x = Instantiate(text, textGroup.transform);
             x.GetComponent<Text>().text = string.Format("Player {0} Connected", entry.Value.playerConnectionSpot);

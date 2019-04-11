@@ -18,7 +18,7 @@ public class DamagableStructure : Damagable
         base.Start();
     }
 
-    override public void Hit (float damage)
+    override public void Hit(float damage)
     {
         if (isInvincible)
         {

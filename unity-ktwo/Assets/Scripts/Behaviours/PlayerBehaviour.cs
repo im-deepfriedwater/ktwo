@@ -93,14 +93,26 @@ public class PlayerBehaviour : NetworkBehaviour
     public void Die()
     {
         InitiateGameOver();
+        animator.SetBool("IsDead", true);
+        input.enabled = false;
+    
+        if (!hasAuthority) 
+        {
+            Debug.Log("ima skip for authority reason get rekt");
+            return;
+        }
+
+        rbd.isKinematic = true;
+
+        if (isServer)
+        {
+            PlayerManager.instance.players.Remove(gameObject);
+        }
     }
 
     public void InitiateGameOver()
     {
         if (!hasAuthority) return;
-        gameOverScreen.SetActive(true);
-        input.enabled = false;
-        animator.SetBool("IsDead", true);
-        rbd.isKinematic = true;
+        // gameOverScreen.SetActive(true);
     }
 }

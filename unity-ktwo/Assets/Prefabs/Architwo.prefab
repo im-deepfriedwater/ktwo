@@ -1538,7 +1538,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverScreen: {fileID: 0}
-  toSpawn: {fileID: 0}
   defaultSpeed: 3
   recentlyHit: 0
 --- !u!114 &6225105366931428131
@@ -1554,7 +1553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 100
-  currentHealth: 0
+  currentHealth: 100
   OnZeroHealth:
     m_PersistentCalls:
       m_Calls:
@@ -1708,7 +1707,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 4096
   groundMinDistance: 0.2
   groundMaxDistance: 0.5
   locomotionType: 2
@@ -1731,7 +1730,7 @@ MonoBehaviour:
   stepOffsetStart: 0.05
   stepSmooth: 4
   slopeLimit: 45
-  extraGravity: -10
+  extraGravity: -30
   isGrounded: 0
   isStrafing: 0
   isSprinting: 0
@@ -1784,7 +1783,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5811519447175110489}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 100
   m_Drag: 5
   m_AngularDrag: 0.05
   m_UseGravity: 0
