@@ -66,7 +66,6 @@ public class DamagablePlayer: Damagable
 
         if (currentHealth <= 0)
         {
-            Debug.Log("she's supposed to be dead");
             GetComponent<PlayerBehaviour>().Die();
         }
 

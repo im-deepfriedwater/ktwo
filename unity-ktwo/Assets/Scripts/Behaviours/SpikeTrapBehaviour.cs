@@ -8,6 +8,7 @@ public class SpikeTrapBehaviour : MonoBehaviour
 
     private bool spikesActive = true;
     private DPSModifier dpsMod;
+    private NetworkStructure network;
     
     void Awake()
     {   
@@ -19,7 +20,7 @@ public class SpikeTrapBehaviour : MonoBehaviour
     {
         if (other.gameObject.tag != "Zombie") return;
         if (!spikesActive) return;
-        other.gameObject.GetComponent<DamagableEnemy>().Hit(dpsMod.damageAmount, Vector3.zero);
+        other.gameObject.GetComponent<DamagableEnemy>().ServerSideHit(dpsMod.damageAmount, Vector3.zero);
     }
 
     private IEnumerator CycleSpikes()

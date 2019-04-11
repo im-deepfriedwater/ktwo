@@ -1540,6 +1540,7 @@ MonoBehaviour:
   gameOverScreen: {fileID: 0}
   defaultSpeed: 3
   recentlyHit: 0
+  isDead: 0
 --- !u!114 &6225105366931428131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1729,8 +1730,8 @@ MonoBehaviour:
   stepOffsetEnd: 0.45
   stepOffsetStart: 0.05
   stepSmooth: 4
-  slopeLimit: 45
-  extraGravity: -30
+  slopeLimit: 30
+  extraGravity: -40
   isGrounded: 0
   isStrafing: 0
   isSprinting: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 [RequireComponent(typeof(InvinicibilityFlashModifier))]
 public class DamagableEnemy: Damagable
@@ -33,19 +34,18 @@ public class DamagableEnemy: Damagable
         base.Start();
     }
 
-    override public void Hit (float damage)
+    override public void Hit(float damage)
     {
-        if (isInvincible)
-        {
-            return;
-        }
+        if (isInvincible) return;
 
         currentHealth -= damage;
         OnHit.Invoke(currentHealth / health);
+        StartCoroutine("BeginInvincibility");
         if (currentHealth <= 0)
         {
-            OnZeroHealth.Invoke();
+            Die();
         }
+
     }
 
     public IEnumerator DamageOverTime(float damageAmount, float duration, HashSet<GameObject> set = null)
@@ -61,26 +61,25 @@ public class DamagableEnemy: Damagable
         if (set != null) set.Remove(zombie);
     }
 
-    // A hit with knockback.
-    public void Hit(float damage, Vector3 direction)
+    public void ClientSideHit(float damage, Vector3 direction)
     {
-        if (isInvincible)
-        {
-            return;
-        }
-
-        currentHealth -= damage;
-        OnHit.Invoke(currentHealth / health);
-        KnockbackPlayer(direction);
-        if (currentHealth <= 0)
-        {
-            OnZeroHealth.Invoke();
-        }
-
+        if (isServer) return;
+        CmdReportEnemyHit(damage);
+        Hit(damage);
+        KnockbackEnemy(direction);
         StartCoroutine("BeginInvincibility");
     }
 
-    void KnockbackPlayer(Vector3 direction)
+    public void ServerSideHit(float damage, Vector3 direction)
+    {
+        if (!isServer) return;
+        RpcTellEnemyHit(damage);
+        Hit(damage);
+        KnockbackEnemy(direction);
+        StartCoroutine("BeginInvincibility");
+    }
+
+    void KnockbackEnemy(Vector3 direction)
     {
         calculatedKnockBackFactor = knockbackFactor * 10; // Adjusted from 1-10 -> 10 - 100
         rbd.AddForce(direction.normalized * calculatedKnockBackFactor, ForceMode.VelocityChange);
@@ -97,7 +96,26 @@ public class DamagableEnemy: Damagable
 
     public void Die()
     {
-        EnemyManager.instance.zombies.Remove(gameObject);
-        Destroy(gameObject);
+        if (isServer) 
+        {
+            EnemyManager.instance.zombies.Remove(gameObject);
+            NetworkServer.Destroy(gameObject);
+        }
+    }
+
+    [Command]
+    public void CmdReportEnemyHit(float damage)
+    {
+        health -= damage;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    [ClientRpc]
+    public void RpcTellEnemyHit(float damage)
+    {
+        Hit(damage);
     }
 }

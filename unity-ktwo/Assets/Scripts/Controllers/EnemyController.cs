@@ -177,6 +177,7 @@ public class EnemyController : NetworkBehaviour
 
     void AttackZombie(Collider other)
     {
+        if (!isServer) return;
         var zombie = other.gameObject.GetComponent<DamagableEnemy>();
         if (zombie == null) return;
 
@@ -194,7 +195,7 @@ public class EnemyController : NetworkBehaviour
         {
             hasAttacked = true;
             Vector3 direction = currentTransform.forward;
-            zombie.Hit(damage, direction);
+            zombie.ServerSideHit(damage, direction);
             hitboxActivated = false;
             isAttackOnCooldown = true;
             if (StartAttackCooldownCoroutineStarted)
