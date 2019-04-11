@@ -57,7 +57,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 615afa307e4a949459d32faf5ab78734, type: 2}
+  - {fileID: 2100000, guid: e923c6f4eeb9d3f4fb2628e446d5caec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -86,10 +86,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7061299352214789536}
-  - component: {fileID: 5482569671518517322}
+  - component: {fileID: 2722725365534840475}
   - component: {fileID: 3160449240614949933}
   m_Layer: 0
-  m_Name: AggressionPuddle
+  m_Name: FlammablePuddle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +110,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5482569671518517322
+--- !u!114 &2722725365534840475
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,11 +119,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6777690292249990457}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eac55145f52fc934888a994b98870b79, type: 3}
+  m_Script: {fileID: 11500000, guid: 22c5b841cfd358f4c82b6256d176a1f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfUses: 3
-  duration: 6
+  numberOfUses: 2
+  decayRate: 10
+  DPS: 10
+  duration: 5
 --- !u!136 &3160449240614949933
 CapsuleCollider:
   m_ObjectHideFlags: 0

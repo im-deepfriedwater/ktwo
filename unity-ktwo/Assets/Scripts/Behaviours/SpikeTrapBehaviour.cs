@@ -6,12 +6,17 @@ public class SpikeTrapBehaviour : MonoBehaviour
 {
     public float attackFrequency;
 
-    private bool spikesActive = true;
+    private bool spikesActive = false;
     private DPSModifier dpsMod;
     private NetworkStructure network;
     
+    private Transform spikes;
+    private Animator spikeAnimator;
+
     void Awake()
     {   
+        spikes = transform.Find("Spikes");
+        spikeAnimator = spikes.GetComponent<Animator>();
         dpsMod = gameObject.GetComponent<DPSModifier>();
         StartCoroutine(CycleSpikes());
     }
@@ -27,8 +32,9 @@ public class SpikeTrapBehaviour : MonoBehaviour
     {
         while (true)
         {
-            spikesActive = !spikesActive;
+            spikeAnimator.SetBool("spikesActive", spikesActive);
             yield return new WaitForSeconds(attackFrequency);
+            spikesActive = !spikesActive;
         }
     }
 }

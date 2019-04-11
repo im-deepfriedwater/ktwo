@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 public class DamagableEnemy: Damagable
 {   
     public float health = 100; // 100 by default.
-    [Range(1,10)]
+    [Range(1, 10)]
     public int knockbackFactor; // There's not really any sense of units here sorry...
     private float calculatedKnockBackFactor;
     public float invincibilityDuration = 2; // 2 by default;
@@ -17,10 +17,14 @@ public class DamagableEnemy: Damagable
     [Tooltip("These are populated at runtime")]
     public new UnityEventFloat OnHit; // `new` Overrides original OnHit field.
 
+    private GameObject fireEffect;
+
     InvinicibilityFlashModifier invinicibilityComponent;
     
-    void Awake ()
+    void Awake()
     {
+        fireEffect = GameObject.Find("CFX4 Fire");
+        fireEffect.SetActive(false);
         rbd = GetComponent<Rigidbody>();
         if (OnHit == null)
         {
@@ -28,7 +32,7 @@ public class DamagableEnemy: Damagable
         }
     }
 
-    new void Start ()
+    new void Start()
     {
         invinicibilityComponent = GetComponent<InvinicibilityFlashModifier>();
         base.Start();
@@ -48,9 +52,8 @@ public class DamagableEnemy: Damagable
 
     }
 
-    public IEnumerator DamageOverTime(float damageAmount, float duration, HashSet<GameObject> set = null)
+    public IEnumerator DamageOverTime(float damageAmount, float duration)
     {
-        var zombie = gameObject;
         var elapsedTime = 0f;
         while (elapsedTime < duration)
         {
@@ -58,7 +61,13 @@ public class DamagableEnemy: Damagable
             yield return new WaitForSeconds(1.0f);
             elapsedTime++;
         }
-        if (set != null) set.Remove(zombie);
+    }
+
+    public IEnumerator SetOnFire(float duration)
+    {
+        fireEffect.SetActive(true);
+        yield return new WaitForSeconds(duration);
+        fireEffect.SetActive(false);
     }
 
     public void ClientSideHit(float damage, Vector3 direction)
@@ -81,7 +90,7 @@ public class DamagableEnemy: Damagable
 
     void KnockbackEnemy(Vector3 direction)
     {
-        calculatedKnockBackFactor = knockbackFactor * 10; // Adjusted from 1-10 -> 10 - 100
+        calculatedKnockBackFactor = knockbackFactor * 10; // Adjusted from 1 - 10 -> 10 - 100
         rbd.AddForce(direction.normalized * calculatedKnockBackFactor, ForceMode.VelocityChange);
     }
 

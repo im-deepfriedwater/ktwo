@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AggressionPuddleBehaviour : BasePuddleBehaviour
+public class GreasePuddleBehaviour : BasePuddleBehaviour
 {
-    public int duration;
 
     void OnTriggerEnter(Collider other)
     {
@@ -12,13 +11,12 @@ public class AggressionPuddleBehaviour : BasePuddleBehaviour
 
         if (other.gameObject.tag != "Zombie") return;
         affectedEntities.Add(other.gameObject);
-        
+
+        Vector3 direction = Quaternion.Euler(0, Random.Range(0, 360), 0) * gameObject.transform.forward;
+        other.gameObject.GetComponent<DamagableEnemy>().Hit(0f, direction);
+
         StartCoroutine(
-            other.GetComponent<EnemyController>()
-                .TurnAgainstOwn(duration)
-        );
-        StartCoroutine(
-            RemoveFromHashSet(other.gameObject, duration)
+            RemoveFromHashSet(other.gameObject)
         );
         numberOfUses -= 1;
     }

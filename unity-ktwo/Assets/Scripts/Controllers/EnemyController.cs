@@ -216,16 +216,14 @@ public class EnemyController : NetworkBehaviour
     public void AffectSpeed(float percent, bool buff)
     {
         var speedChange = defaultSpeed * percent;
-        agent.speed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange) ;
+        agent.speed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
     }
 
-    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff, HashSet<GameObject> set = null) 
+    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff) 
     {
-        var zombie = gameObject;
         var speedChange = defaultSpeed * percent;
-        agent.speed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange) ;
+        agent.speed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
         yield return new WaitForSeconds(time);
-        if (set != null) set.Remove(zombie);
         ResetSpeed();
     }
 
@@ -234,20 +232,13 @@ public class EnemyController : NetworkBehaviour
         agent.speed = defaultSpeed;
     }
 
-    public IEnumerator TurnAgainstOwn(float time, HashSet<GameObject> set = null)
+    public IEnumerator TurnAgainstOwn(float time)
     {
         var zombie = gameObject;
-        var activeZombies = GameObject.FindGameObjectsWithTag("Zombie");
-        target = activeZombies[Random.Range(0, activeZombies.Length)];
+        target = EnemyManager.instance.GetRandomZombie();
         turned = true;
         yield return new WaitForSeconds(time);
         turned = false;
-        FindNewTarget();
-        if (set != null) set.Remove(zombie);
-    }
-
-    public void ResumeMovement()
-    {
         StopAllCoroutines();
         SetAttackAnimation(false);
         isAttackOnCooldown = false;
@@ -283,7 +274,7 @@ public class EnemyController : NetworkBehaviour
         animator.SetBool("IsAttacking", value);
     }
 
-    IEnumerator CalculateAttackCooldown ()
+    IEnumerator CalculateAttackCooldown()
     {   
         yield return new WaitForSeconds(attackCooldown);
         isAttackOnCooldown = true;

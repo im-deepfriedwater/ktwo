@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 [RequireComponent(typeof(InvinicibilityFlashModifier))]
 public class DamagablePlayer: Damagable
 {   
-    [Range(1,10)]
+    [Range(1, 10)]
     public int knockbackFactor; // There's not really any sense of units here sorry...
     private float calculatedKnockBackFactor;
     public float invincibilityDuration = 2; // 2 by default;
@@ -29,7 +29,7 @@ public class DamagablePlayer: Damagable
         OnHit.AddListener(GetComponent<PlayerBehaviour>().UpdateHealthBar);
     }
 
-    new void Start ()
+    new void Start()
     {
         invinicibilityComponent = GetComponent<InvinicibilityFlashModifier>();
         base.Start();
@@ -52,29 +52,19 @@ public class DamagablePlayer: Damagable
 
     public override void Hit(float damage)
     {
-        if (isInvincible || !hasAuthority)
-        {
-            return;
-        }
+        if (isInvincible || !hasAuthority) return;
 
-        if (!isServer)
-        {
-            CmdServerRegisterHit(damage);
-        }
+        if (!isServer) CmdServerRegisterHit(damage);
 
         currentHealth -= damage;
 
-        if (currentHealth <= 0)
-        {
-            GetComponent<PlayerBehaviour>().Die();
-        }
+        if (currentHealth <= 0) GetComponent<PlayerBehaviour>().Die();
 
         OnHit.Invoke(currentHealth / startingHealth);
     }
 
-    public IEnumerator DamageOverTime(float damageAmount, float duration, HashSet<GameObject> set = null)
+    public IEnumerator DamageOverTime(float damageAmount, float duration)
     {
-        var player = gameObject;
         var elapsedTime = 0f;
         while (elapsedTime < duration)
         {
@@ -82,7 +72,6 @@ public class DamagablePlayer: Damagable
             yield return new WaitForSeconds(1.0f);
             elapsedTime++;
         }
-        if (set != null) set.Remove(player);
     }
 
     void KnockbackPlayer(Vector3 direction)
