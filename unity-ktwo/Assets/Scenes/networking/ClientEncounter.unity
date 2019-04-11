@@ -162,7 +162,7 @@ PrefabInstance:
     - target: {fileID: 7286447768888118586, guid: cb5383f8135cd4a1f92ff377664f8e61,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7286447768888118586, guid: cb5383f8135cd4a1f92ff377664f8e61,
         type: 3}
@@ -800,7 +800,7 @@ PrefabInstance:
     - target: {fileID: 2919140216272899469, guid: 00594b7cb3503c64c8866cd2d20a3903,
         type: 3}
       propertyPath: m_SpawnPrefabs.Array.size
-      value: 9
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2919140216272899469, guid: 00594b7cb3503c64c8866cd2d20a3903,
         type: 3}
@@ -846,8 +846,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SpawnPrefabs.Array.data[7]
       value: 
-      objectReference: {fileID: 3351977188180325463, guid: f0028dc8cb5b3ae4c9619b924877f7f9,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 2919140216272899469, guid: 00594b7cb3503c64c8866cd2d20a3903,
         type: 3}
       propertyPath: m_SpawnPrefabs.Array.data[8]

@@ -53,6 +53,12 @@ public class EnemyController : NetworkBehaviour
             if (target == null)
             {
                 FindNewTarget();
+                // if target is STILL null there must not
+                // be anymore so do nothing.
+                if (target == null)
+                {
+                    return;
+                }
             } else 
             {
                 float distance = Vector3.Distance(target.transform.position, transform.position);
@@ -74,7 +80,7 @@ public class EnemyController : NetworkBehaviour
 
     void FaceTarget()
     {
-        if (target == null) return; // Wait for server to 
+        if (target == null) return;
 
         Vector3 direction = (target.transform.position - transform.position).normalized;
         if (direction == Vector3.zero)
@@ -135,7 +141,7 @@ public class EnemyController : NetworkBehaviour
     void AttackPlayer(Collider other)
     {
         var player = other.gameObject.GetComponent<DamagablePlayer>();
-        if (player == null) return;
+        if (player == null || other.gameObject.GetComponent<PlayerBehaviour>().isDead) return;
 
         SetAttackAnimation(true);
         isAttacking = true;
@@ -265,7 +271,6 @@ public class EnemyController : NetworkBehaviour
 
     IEnumerator CountDownForAttackHitBox() 
     {
-        Debug.Log("IENumerator Started CHUmP");
         CountDownForAttackHitBoxCoroutineStarted = true;
         yield return new WaitForSeconds(timeUntilDamageCalculation);
         hitboxActivated = true;

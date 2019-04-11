@@ -18,6 +18,8 @@ public class ThrowAbility : AbstractAbility
     // Update is called once per frame
     protected virtual void Update()
     {
+        if (player.isDead) return;
+
         if (inputState.GetButtonValue(inputButtons[0]) && cooldownOver)
         {
             cooldownOver = false;

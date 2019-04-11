@@ -14,6 +14,7 @@ public class PlayerBehaviour : NetworkBehaviour
     public GameObject gameOverScreen;
     public float defaultSpeed;
     public bool recentlyHit;
+    public bool isDead;
 
     vThirdPersonController playerController;
     vThirdPersonInput input;
@@ -34,7 +35,7 @@ public class PlayerBehaviour : NetworkBehaviour
         // If this represents a different client's player,
         // We will shut off a lot of components it doesn't
         // need to compute and return.
-        if (!hasAuthority && !isLocalPlayer)
+        if (!hasAuthority)
         {
             TurnOffComponentsForNonLocalClient();
             return;
@@ -92,22 +93,22 @@ public class PlayerBehaviour : NetworkBehaviour
 
     public void Die()
     {
-        InitiateGameOver();
         animator.SetBool("IsDead", true);
-        input.enabled = false;
     
         if (!hasAuthority) 
         {
-            Debug.Log("ima skip for authority reason get rekt");
             return;
         }
 
+        input.enabled = false;
         rbd.isKinematic = true;
+        isDead = true;
 
         if (isServer)
         {
-            PlayerManager.instance.players.Remove(gameObject);
+            Debug.Log(PlayerManager.instance.players.Remove(gameObject) == false);
         }
+        InitiateGameOver();
     }
 
     public void InitiateGameOver()

@@ -23,7 +23,7 @@ public abstract class AbstractAbility : NetworkBehaviour
 
     protected void Initialize()
     {
-        if (!isLocalPlayer)
+        if (!hasAuthority)
         {
             return;
         }
@@ -35,6 +35,8 @@ public abstract class AbstractAbility : NetworkBehaviour
         abilityIcon = GameObject
             .Find(string.Format("AbilityIcon{0}", abilitySlot))
             .GetComponent<Image>();
+        
+        Debug.Log(abilityGroupImage == null);
     }
 
     void Start() // Will get called automatically on startup.
@@ -63,7 +65,7 @@ public abstract class AbstractAbility : NetworkBehaviour
 
     protected void UpdateAbilityUI() // This should be called at some point in the derived's update method
     {
-        if (!isLocalPlayer)
+        if (!hasAuthority)
         {
             return;
         }

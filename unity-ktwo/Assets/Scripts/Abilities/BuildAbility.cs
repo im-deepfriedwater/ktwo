@@ -13,6 +13,8 @@ public class BuildAbility : AbstractAbility
     // Update is called once per frame
     protected virtual void Update()
     {
+        if (player.isDead) return;
+
         if (inputState.GetButtonValue(inputButtons[0]) && cooldownOver)
         {
             cooldownOver = false;
@@ -38,6 +40,5 @@ public class BuildAbility : AbstractAbility
     {      
         var go = (GameObject)Instantiate(Resources.Load(name, typeof(GameObject)), position, rotation);
         NetworkServer.Spawn(go);
-        go.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
     }
 } 

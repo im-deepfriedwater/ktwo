@@ -64,7 +64,7 @@ MonoBehaviour:
     i14: 0
     i15: 0
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
+  m_LocalPlayerAuthority: 0
 --- !u!1001 &2597247857161766280
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -132,8 +132,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 3240287401811302067, guid: 267f5691320c94340a441600cad0899a, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 267f5691320c94340a441600cad0899a, type: 3}
 --- !u!4 &7066252801299851026 stripped
 Transform:
