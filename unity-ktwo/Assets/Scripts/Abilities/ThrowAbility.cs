@@ -25,24 +25,20 @@ public class ThrowAbility : AbstractAbility
         {
             cooldownOver = false;
             StartCoroutine("WaitForCooldown");
-            var Projectile = Instantiate(
-            projectilePrefab,
-            transform.position + transform.forward + new Vector3(0, heightOffset, 0),
-            transform.rotation
-        );
-            StartCoroutine(ThrowProjectileFromPlayer(Projectile));
+            CmdServerCommandClientThrow();
         }
         UpdateAbilityUI();
     }
 
-    IEnumerator ThrowProjectileFromPlayer(GameObject projectile)
+    IEnumerator ThrowProjectileFromPlayer()
     {
-        CmdBuildObject(projectile.name,
-        transform.position + transform.forward + new Vector3(0, heightOffset, 0),
-        transform.rotation
+        var Projectile = Instantiate(
+            projectilePrefab,
+            transform.position + transform.forward + new Vector3(0, heightOffset, 0),
+            transform.rotation
         );
 
-        projectileTransform = projectile.transform;
+        projectileTransform = Projectile.transform;
 
         var newThrowDistance = throwDistance + Mathf.Tan((90 - firingAngle) * Mathf.Deg2Rad) * heightOffset;
 
@@ -64,8 +60,20 @@ public class ThrowAbility : AbstractAbility
         }
 
         // I haven't done the calculation for the parabolitic projectile motion so i hardcoded height for now
-        var puddlePosition = new Vector3(projectile.transform.position.x, player.transform.position.y, projectile.transform.position.z);
-        CmdBuildObject(projectileRemnantPrefab.name, puddlePosition, projectile.transform.rotation);
-        NetworkServer.Destroy(projectile);
+        var puddlePosition = new Vector3(Projectile.transform.position.x, player.transform.position.y, Projectile.transform.position.z);
+        Instantiate(projectileRemnantPrefab, puddlePosition, Projectile.transform.rotation);
+        Destroy(Projectile);
+    }
+
+    [ClientRpc]
+    void RpcClientThrowProjectile()
+    {
+        StartCoroutine(ThrowProjectileFromPlayer());
+    }
+
+    [Command]
+    void CmdServerCommandClientThrow()
+    {
+        RpcClientThrowProjectile();
     }
 }
