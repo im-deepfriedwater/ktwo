@@ -1,12 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Networking;
 
-public class Damagable : MonoBehaviour
+public class Damagable : NetworkBehaviour
 {
-    public float startingHealth = 100;
+    public float startingHealth;
+    
     public float currentHealth;
+
     public UnityEvent OnZeroHealth; // Death animations, or functions to call on death go here.
     public UnityEvent OnHit;
 
@@ -25,7 +26,7 @@ public class Damagable : MonoBehaviour
         currentHealth = Mathf.Min(currentHealth + healAmount, startingHealth);
     }
 
-    virtual public void Hit (float damage) 
+    virtual public void Hit(float damage) 
     {
         currentHealth -= damage;
         OnHit.Invoke();

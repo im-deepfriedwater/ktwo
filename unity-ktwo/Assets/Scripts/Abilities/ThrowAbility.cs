@@ -18,6 +18,8 @@ public class ThrowAbility : AbstractAbility
     // Update is called once per frame
     protected virtual void Update()
     {
+        if (player.isDead) return;
+
         if (inputState.GetButtonValue(inputButtons[0]) && cooldownOver)
         {
             cooldownOver = false;
@@ -28,9 +30,13 @@ public class ThrowAbility : AbstractAbility
     }
 
     IEnumerator ThrowProjectileFromPlayer()
-    {
+    {   
+        var Projectile = Instantiate(
+            projectilePrefab, 
+            transform.position + transform.forward + new Vector3(0, heightOffset, 0), 
+            transform.rotation
+        );
 
-        var Projectile = Instantiate(projectilePrefab, playerTransform.position + playerTransform.forward + new Vector3(0, heightOffset, 0), playerTransform.rotation);
         projectileTransform = Projectile.transform;
 
         var newThrowDistance = throwDistance + Mathf.Tan((90 - firingAngle) * Mathf.Deg2Rad) * heightOffset;

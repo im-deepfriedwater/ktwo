@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class BuildAbility : AbstractAbility
 {
@@ -12,6 +13,8 @@ public class BuildAbility : AbstractAbility
     // Update is called once per frame
     protected virtual void Update()
     {
+        if (player.isDead) return;
+
         if (inputState.GetButtonValue(inputButtons[0]) && cooldownOver)
         {
             cooldownOver = false;
@@ -24,13 +27,18 @@ public class BuildAbility : AbstractAbility
     protected virtual void SpawnInFrontOfPlayer()
     {
         var newPosition = new Vector3(
-            playerTransform.position.x,
-            playerTransform.position.y + heightOffset,
-            playerTransform.position.z
+            transform.position.x,
+            transform.position.y + heightOffset,
+            transform.position.z
         );
-
-        newPosition += playerTransform.forward * distanceFactor;
-        Instantiate(buildPrefab, newPosition, playerTransform.rotation);
+        newPosition += transform.forward * distanceFactor;
+        CmdBuildObject(buildPrefab.name, newPosition, transform.rotation);
     }
 
-}
+    [Command]
+    public void CmdBuildObject(string name, Vector3 position, Quaternion rotation)    
+    {      
+        var go = (GameObject)Instantiate(Resources.Load(name, typeof(GameObject)), position, rotation);
+        NetworkServer.Spawn(go);
+    }
+} 

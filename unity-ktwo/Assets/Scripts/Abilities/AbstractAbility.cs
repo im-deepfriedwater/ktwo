@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public abstract class AbstractAbility : MonoBehaviour
+public abstract class AbstractAbility : NetworkBehaviour
 {
     public Buttons[] inputButtons;
     public float cooldown;
@@ -11,7 +12,6 @@ public abstract class AbstractAbility : MonoBehaviour
     [Range(0, 3)]
     public int abilitySlot;
 
-    protected Transform playerTransform;
     protected InputState inputState;
     protected Image abilityIcon;
     protected bool cooldownOver = true;
@@ -19,8 +19,12 @@ public abstract class AbstractAbility : MonoBehaviour
 
     protected Image abilityGroupImage; // Used as a border behind the ability icon.
 
+    protected PlayerBehaviour player;
+
     protected void Initialize()
     {
+        if (!hasAuthority) return;
+
         abilityGroupImage = GameObject
             .Find(string.Format("AbilityGroup{0}", abilitySlot))
             .GetComponent<Image>();
@@ -33,7 +37,7 @@ public abstract class AbstractAbility : MonoBehaviour
     void Start() // Will get called automatically on startup.
     {
         Initialize();
-        playerTransform = GetComponent<Transform>();
+        player = GetComponent<PlayerBehaviour>();
     }
 
     #region ability icon UI methods
@@ -46,7 +50,6 @@ public abstract class AbstractAbility : MonoBehaviour
     private void MarkAbilityAsUsed()
     {
         abilityGroupImage.enabled = false;
-
     }
 
     private void UpdateCooldownMask()
@@ -56,6 +59,8 @@ public abstract class AbstractAbility : MonoBehaviour
 
     protected void UpdateAbilityUI() // This should be called at some point in the derived's update method
     {
+        if (!hasAuthority)  return;
+        
         if (cooldownOver)
         {
             MarkAbilityAsReady();

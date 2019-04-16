@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 [RequireComponent(typeof(InvinicibilityFlashModifier))]
 public class DamagableEnemy: Damagable
@@ -19,37 +20,29 @@ public class DamagableEnemy: Damagable
     private GameObject fireEffect;
 
     InvinicibilityFlashModifier invinicibilityComponent;
-    
-    void Awake()
-    {
-        fireEffect = GameObject.Find("CFX4 Fire");
-        fireEffect.SetActive(false);
-        rbd = GetComponent<Rigidbody>();
-        if (OnHit == null)
-        {
-            OnHit = new UnityEventFloat();
-        }
-    }
 
     new void Start()
     {
+        if (OnHit == null) OnHit = new UnityEventFloat();
+        fireEffect = GameObject.Find("CFX4 Fire");
+        fireEffect.SetActive(false);
+        rbd = GetComponent<Rigidbody>();
         invinicibilityComponent = GetComponent<InvinicibilityFlashModifier>();
         base.Start();
     }
 
     override public void Hit(float damage)
     {
-        if (isInvincible)
-        {
-            return;
-        }
+        if (isInvincible) return;
 
         currentHealth -= damage;
         OnHit.Invoke(currentHealth / health);
+        StartCoroutine(BeginInvincibility());
         if (currentHealth <= 0)
         {
-            OnZeroHealth.Invoke();
+            Die();
         }
+
     }
 
     public IEnumerator DamageOverTime(float damageAmount, float duration)
@@ -70,28 +63,27 @@ public class DamagableEnemy: Damagable
         fireEffect.SetActive(false);
     }
 
-    // A hit with knockback.
-    public void Hit(float damage, Vector3 direction)
+    public void ClientSideHit(float damage, Vector3 direction)
     {
-        if (isInvincible)
-        {
-            return;
-        }
-
-        currentHealth -= damage;
-        OnHit.Invoke(currentHealth / health);
-        KnockbackPlayer(direction);
-        if (currentHealth <= 0)
-        {
-            OnZeroHealth.Invoke();
-        }
-
-        StartCoroutine("BeginInvincibility");
+        if (isServer) return;
+        CmdReportEnemyHit(damage);
+        Hit(damage);
+        KnockbackEnemy(direction);
+        StartCoroutine(BeginInvincibility());
     }
 
-    void KnockbackPlayer (Vector3 direction)
+    public void ServerSideHit(float damage, Vector3 direction)
     {
-        calculatedKnockBackFactor = knockbackFactor * 10; // Adjusted from 1-10 -> 10 - 100
+        if (!isServer) return;
+        RpcTellEnemyHit(damage);
+        Hit(damage);
+        KnockbackEnemy(direction);
+        StartCoroutine(BeginInvincibility());
+    }
+
+    void KnockbackEnemy(Vector3 direction)
+    {
+        calculatedKnockBackFactor = knockbackFactor * 10; // Adjusted from 1 - 10 -> 10 - 100
         rbd.AddForce(direction.normalized * calculatedKnockBackFactor, ForceMode.VelocityChange);
     }
 
@@ -106,6 +98,26 @@ public class DamagableEnemy: Damagable
 
     public void Die()
     {
-        Destroy(gameObject);
+        if (isServer) 
+        {
+            EnemyManager.instance.zombies.Remove(gameObject);
+            NetworkServer.Destroy(gameObject);
+        }
+    }
+
+    [Command]
+    public void CmdReportEnemyHit(float damage)
+    {
+        health -= damage;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    [ClientRpc]
+    public void RpcTellEnemyHit(float damage)
+    {
+        Hit(damage);
     }
 }

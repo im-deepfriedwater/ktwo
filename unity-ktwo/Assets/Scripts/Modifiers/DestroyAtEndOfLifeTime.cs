@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class DestroyAtEndOfLifeTime : MonoBehaviour 
 {
@@ -15,6 +16,6 @@ public class DestroyAtEndOfLifeTime : MonoBehaviour
     IEnumerator BeginCountDown ()
     {
         yield return new WaitForSeconds(lifetime);
-        Destroy(gameObject);
+        NetworkServer.Destroy(gameObject.transform.parent.gameObject);
     }
 }

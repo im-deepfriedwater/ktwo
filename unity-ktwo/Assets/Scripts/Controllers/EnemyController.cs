@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Networking;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : NetworkBehaviour
 {   
     public float attackCooldown;
     public float timeUntilDamageCalculation;
@@ -17,7 +18,9 @@ public class EnemyController : MonoBehaviour
     public bool isAttackOnCooldown = false;
     public bool isAttacking = false;
     public bool hitboxActivated = false;
-    public bool hasAttacked = false; // False on spawn, should be set true after first attack.
+    public bool hasAttacked = false;
+    
+    public GameObject target;
 
     bool CountDownForAttackHitBoxCoroutineStarted = false;
     bool StartAttackCooldownCoroutineStarted = false;
@@ -25,7 +28,6 @@ public class EnemyController : MonoBehaviour
     private bool turned = false;
 
     Transform currentTransform;
-    GameObject target;
     NavMeshAgent agent;
     Animator animator;
     Rigidbody rbd;
@@ -34,49 +36,62 @@ public class EnemyController : MonoBehaviour
     void Start()
     {   
         currentTransform = GetComponent<Transform>();
-        target = PlayerManager.instance.player;
-        agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         rbd = GetComponent<Rigidbody>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // if (target == null) FindNewTarget();
-
-        float distance = Vector3.Distance(target.transform.position, transform.position);
-
-        if (!isAttacking && distance <= lookRadius)
-        {
-            agent.isStopped = false;
-            agent.SetDestination(target.transform.position);
-            if (distance <= agent.stoppingDistance)
-            {
-                FaceTarget();
-            }
-        }
-
         if (isAttacking)
         {
             agent.isStopped = true;
             rbd.velocity = Vector3.zero;
+            // the checks for OnTriggerStay execute sequentially 
+            // after the isAttacking. so if it is still false on next
+            // frame there must not be anyone to attack.
+            // this is a little logic hack that really encourages
+            // a rewrite of the enemy controller post-presentation...
+            isAttacking = false;
+        }
+        else 
+        {
+            SetAttackAnimation(false);
+
+            if (target == null)
+            {
+                FindNewTarget();
+                // if target is STILL null there must not
+                // be anyone so do nothing.
+                if (target == null)
+                {
+                    return;
+                }
+            } 
+            else 
+            {
+                float distance = Vector3.Distance(target.transform.position, transform.position);
+                agent.SetDestination(target.transform.position);
+                agent.isStopped = false;
+                FaceTarget();
+            }
         }
     }
 
     void FindNewTarget()
     {
-        // this might all break when we have more than one player
-        if (turned)
-        {
-            var zombies = GameObject.FindGameObjectsWithTag("Zombie");
-            target = zombies[Random.Range(0, zombies.Length)];
-        }
-        target = PlayerManager.instance.player;
+        if (!isServer) return;
+        var target = turned ? EnemyManager.instance.GetRandomZombie()
+            : PlayerManager.instance.TargetRandomPlayer();
+        this.target = target;
+        RpcSetTarget(target.GetComponent<NetworkIdentity>());
     }
 
     void FaceTarget()
     {
+        if (target == null) return;
+
         Vector3 direction = (target.transform.position - transform.position).normalized;
         if (direction == Vector3.zero)
         {
@@ -86,24 +101,16 @@ public class EnemyController : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, lookRadius);
-    }
-
     void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Structure") AttackStructure(other);
-
         if (other.gameObject.tag == "Player" && !turned) AttackPlayer(other);
-
         if (other.gameObject.tag == "Zombie" && turned) AttackZombie(other);
     }
 
     void OnTriggerExit(Collider other)
-    {
-        ResumeMovement();
+    {   
+        isAttacking = false;
     }
 
     void AttackStructure(Collider other)
@@ -119,7 +126,7 @@ public class EnemyController : MonoBehaviour
         {
             if (!CountDownForAttackHitBoxCoroutineStarted)
             {
-                StartCoroutine("CountDownForAttackHitBox");
+                StartCoroutine(CountDownForAttackHitBox());
             }
         }
         else if (isAttacking && !isAttackOnCooldown && hitboxActivated)
@@ -133,18 +140,12 @@ public class EnemyController : MonoBehaviour
             }
             StartCoroutine("StartAttackCooldown");
         }
-
-        if (structure.currentHealth <= 0) 
-        {
-            ResumeMovement();
-            return;
-        }
     }
 
     void AttackPlayer(Collider other)
     {
         var player = other.gameObject.GetComponent<DamagablePlayer>();
-        if (player == null) return;
+        if (player == null || other.gameObject.GetComponent<PlayerBehaviour>().isDead) return;
 
         SetAttackAnimation(true);
         isAttacking = true;
@@ -154,9 +155,9 @@ public class EnemyController : MonoBehaviour
         {
             if (!CountDownForAttackHitBoxCoroutineStarted)
             {
-                StartCoroutine("CountDownForAttackHitBox");
+                StartCoroutine(CountDownForAttackHitBox());
             }
-        }
+        } 
         else if (isAttacking && !isAttackOnCooldown && hitboxActivated)
         {
             hasAttacked = true;
@@ -168,19 +169,18 @@ public class EnemyController : MonoBehaviour
             {
                 return;
             }
-            StartCoroutine("StartAttackCooldown");
+            StartCoroutine(StartAttackCooldown());
         }
 
         if (player.currentHealth <= 0) 
         {
-            // FindNewTarget(); may need this in the future
-            ResumeMovement();
-            return;
+            FindNewTarget();
         }
     }
 
     void AttackZombie(Collider other)
     {
+        if (!isServer) return;
         var zombie = other.gameObject.GetComponent<DamagableEnemy>();
         if (zombie == null) return;
 
@@ -192,28 +192,30 @@ public class EnemyController : MonoBehaviour
         {
             if (!CountDownForAttackHitBoxCoroutineStarted)
             {
-                StartCoroutine("CountDownForAttackHitBox");
+                StartCoroutine(CountDownForAttackHitBox());
             }
-        }
+        } 
         else if (isAttacking && !isAttackOnCooldown && hitboxActivated)
         {
             hasAttacked = true;
             Vector3 direction = currentTransform.forward;
-            zombie.Hit(damage, direction);
+            zombie.ServerSideHit(damage, direction);
             hitboxActivated = false;
             isAttackOnCooldown = true;
-            if (StartAttackCooldownCoroutineStarted)
-            {
-                return;
-            }
-            StartCoroutine("StartAttackCooldown");
+            if (StartAttackCooldownCoroutineStarted) return;
+            StartCoroutine(StartAttackCooldown());
         }
 
         if (zombie.currentHealth <= 0) 
         {
             FindNewTarget();
-            ResumeMovement();
-            return;
+        }
+
+        // if we have attacked, attempt to reset state so the zombie
+        // does not stay in place attacking. 
+        if (hasAttacked) 
+        {
+            isAttacking = false;
         }
     }
 
@@ -238,25 +240,23 @@ public class EnemyController : MonoBehaviour
 
     public IEnumerator TurnAgainstOwn(float time)
     {
-        var oldTarget = target;
-        var activeZombies = GameObject.FindGameObjectsWithTag("Zombie");
-        target = activeZombies[Random.Range(0, activeZombies.Length)];
+        var zombie = gameObject;
+        target = EnemyManager.instance.GetRandomZombie();
         turned = true;
         yield return new WaitForSeconds(time);
         turned = false;
-        target = oldTarget;
-    }
-
-    public void ResumeMovement()
-    {
+        StopAllCoroutines();
         SetAttackAnimation(false);
         isAttackOnCooldown = false;
         isAttacking = false;
         hitboxActivated = false;
         CountDownForAttackHitBoxCoroutineStarted = false;
         StartAttackCooldownCoroutineStarted = false;
-        agent.SetDestination(target.transform.position);
-        StopAllCoroutines();
+
+        if (isServer)
+        {
+            agent.SetDestination(target.transform.position);
+        }
     }
 
     IEnumerator StartAttackCooldown()
@@ -284,5 +284,17 @@ public class EnemyController : MonoBehaviour
     {   
         yield return new WaitForSeconds(attackCooldown);
         isAttackOnCooldown = true;
+    }
+
+    [ClientRpc]
+    void RpcSetTarget(NetworkIdentity target) 
+    {
+        if (target == null) 
+        {
+            Debug.LogWarning("Tried setting enemy target to an entity that does not exist on the client!");
+            return;
+        }
+
+        this.target = target.gameObject;
     }
 }

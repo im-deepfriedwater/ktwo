@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 [RequireComponent(typeof(InvinicibilityFlashModifier))]
 public class DamagablePlayer: Damagable
@@ -40,19 +41,26 @@ public class DamagablePlayer: Damagable
         OnHit.Invoke(currentHealth / startingHealth);
     }
 
-    override public void Hit(float damage)
+
+    // A hit with knockback.
+    public void Hit(float damage, Vector3 direction)
     {
-        if (isInvincible)
-        {
-            return;
-        }
+        Hit(damage);
+        KnockbackPlayer(direction);
+        StartCoroutine(BeginInvincibility());
+    }
+
+    public override void Hit(float damage)
+    {
+        if (isInvincible || !hasAuthority) return;
+
+        if (!isServer) CmdServerRegisterHit(damage);
 
         currentHealth -= damage;
+
+        if (currentHealth <= 0) GetComponent<PlayerBehaviour>().Die();
+
         OnHit.Invoke(currentHealth / startingHealth);
-        if (currentHealth <= 0)
-        {
-            OnZeroHealth.Invoke();
-        }
     }
 
     public IEnumerator DamageOverTime(float damageAmount, float duration)
@@ -66,28 +74,9 @@ public class DamagablePlayer: Damagable
         }
     }
 
-    // A hit with knockback.
-    public void Hit(float damage, Vector3 direction)
-    {
-        if (isInvincible)
-        {
-            return;
-        }
-
-        currentHealth -= damage;
-        OnHit.Invoke(currentHealth / startingHealth);
-        KnockbackPlayer(direction);
-        if (currentHealth <= 0)
-        {
-            OnZeroHealth.Invoke();
-        }
-
-        StartCoroutine("BeginInvincibility");
-    }
-
     void KnockbackPlayer(Vector3 direction)
     {
-        calculatedKnockBackFactor = knockbackFactor * 10; // Adjusted from 1-10 -> 10 - 100
+        calculatedKnockBackFactor = knockbackFactor * 10; // Adjusted from 1 - 10 -> 10 - 100
         rbd.AddForce(direction.normalized * calculatedKnockBackFactor, ForceMode.VelocityChange);
     }
 
@@ -98,5 +87,29 @@ public class DamagablePlayer: Damagable
         yield return new WaitForSeconds(invincibilityDuration);
         isInvincible = false;
         invinicibilityComponent.enabled = false;
+    }
+
+    [Command]
+    void CmdServerRegisterHit(float damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            RpcPlayerOutOfHealth();
+        }
+        RpcTriggerClientInvincibility();
+    }
+
+    [ClientRpc]
+    void RpcPlayerOutOfHealth()
+    {
+        if (GetComponent<Animator>().GetBool("IsDead")) return;
+        GetComponent<PlayerBehaviour>().Die();
+    }
+
+    [ClientRpc]
+    void RpcTriggerClientInvincibility() 
+    {
+        StartCoroutine(BeginInvincibility());
     }
 }

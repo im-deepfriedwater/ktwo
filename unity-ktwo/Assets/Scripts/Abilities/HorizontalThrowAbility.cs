@@ -24,7 +24,7 @@ public class HorizontalThrowAbility : AbstractAbility
     IEnumerator ThrowProjectileFromPlayer()
     {
 
-        var projectile = Instantiate(projectilePrefab, playerTransform.position + playerTransform.forward + new Vector3(0, heightOffset, 0), playerTransform.rotation);
+        var projectile = Instantiate(projectilePrefab, transform.position + transform.forward + new Vector3(0, heightOffset, 0), transform.rotation);
         var projectileTransform = projectile.transform;
 
         float vx = Mathf.Sqrt(projectileVelocity);

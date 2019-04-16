@@ -46,22 +46,35 @@ public class InputAxisState
 		}
 	}
 }
-
 public class InputManager : MonoBehaviour
 {
+	public static InputManager instance; // Singleton
 	public InputAxisState[] inputs;
 	[HideInInspector]
-	public InputState playerInputState;
+	public InputState playerInputState; // Set at runtime.
+	public bool isInitialized = false;
 
-
-	void Awake()
+	void Awake ()
 	{
-		playerInputState = GameObject.Find("Player").GetComponent<InputState>();
+		if (instance == null)
+		{
+			instance = this;
+		}
+	}
+
+	// This must be called after the client connects by the client.
+	// Should get called in PlayerBehaviour.Start
+	public void Initialize (GameObject player)
+	{
+		playerInputState = player.GetComponent<InputState>();
+		isInitialized = true;
 	}
 
 	// Update is called once per frame
 	void Update ()
     {
+		if (!isInitialized) return;
+
 		foreach (var input in inputs)
         {
 			playerInputState.SetButtonValue(input.button, input.value);
