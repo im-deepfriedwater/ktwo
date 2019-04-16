@@ -8,9 +8,7 @@ public class AggressionPuddleBehaviour : BasePuddleBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("before");
         if (!isServer) return;
-        Debug.Log("after");
         if (CannotBeUsed(other.gameObject)) return;
 
         if (other.gameObject.tag != "Zombie") return;

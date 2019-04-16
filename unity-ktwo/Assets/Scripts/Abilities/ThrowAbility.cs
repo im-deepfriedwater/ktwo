@@ -37,7 +37,10 @@ public class ThrowAbility : AbstractAbility
             transform.position + transform.forward + new Vector3(0, heightOffset, 0),
             transform.rotation
         );
-        CmdBuildObjectWithPrefab(Projectile);
+        CmdBuildObject(Projectile.name,
+        transform.position + transform.forward + new Vector3(0, heightOffset, 0),
+        transform.rotation
+        );
 
         projectileTransform = Projectile.transform;
 
