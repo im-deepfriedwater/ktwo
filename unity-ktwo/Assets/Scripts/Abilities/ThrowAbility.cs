@@ -25,12 +25,12 @@ public class ThrowAbility : AbstractAbility
         {
             cooldownOver = false;
             StartCoroutine("WaitForCooldown");
-            CmdServerCommandClientThrow();
+            CmdServerCommandClientThrow(projectileRemnantPrefab.name);
         }
         UpdateAbilityUI();
     }
 
-    IEnumerator ThrowProjectileFromPlayer()
+    IEnumerator ThrowProjectileFromPlayer(string toSpawn)
     {
         var Projectile = Instantiate(
             projectilePrefab,
@@ -61,19 +61,19 @@ public class ThrowAbility : AbstractAbility
 
         // I haven't done the calculation for the parabolitic projectile motion so i hardcoded height for now
         var puddlePosition = new Vector3(Projectile.transform.position.x, player.transform.position.y, Projectile.transform.position.z);
-        Instantiate(projectileRemnantPrefab, puddlePosition, Projectile.transform.rotation);
+        CmdBuildObject(toSpawn, puddlePosition, Projectile.transform.rotation);
         Destroy(Projectile);
     }
 
     [ClientRpc]
-    void RpcClientThrowProjectile()
+    void RpcClientThrowProjectile(string toSpawn)
     {
-        StartCoroutine(ThrowProjectileFromPlayer());
+        StartCoroutine(ThrowProjectileFromPlayer(toSpawn));
     }
 
     [Command]
-    void CmdServerCommandClientThrow()
+    void CmdServerCommandClientThrow(string toSpawn)
     {
-        RpcClientThrowProjectile();
+        RpcClientThrowProjectile(toSpawn);
     }
 }
