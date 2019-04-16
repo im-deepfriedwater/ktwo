@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class ThrowAbility : AbstractAbility
 {
@@ -59,8 +60,8 @@ public class ThrowAbility : AbstractAbility
         }
 
         // I haven't done the calculation for the parabolitic projectile motion so i hardcoded height for now
-        var puddlePosition = new Vector3(Projectile.transform.position.x, 0.05f, Projectile.transform.position.z);
-        Instantiate(projectileRemnantPrefab, puddlePosition, Projectile.transform.rotation);
-        Destroy(Projectile);
+        var puddlePosition = new Vector3(Projectile.transform.position.x, player.transform.position.y, Projectile.transform.position.z);
+        CmdBuildObject(projectileRemnantPrefab.name, puddlePosition, Projectile.transform.rotation);
+        NetworkServer.Destroy(Projectile);
     }
 }

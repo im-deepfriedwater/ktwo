@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class BasePuddleBehaviour : MonoBehaviour
+public class BasePuddleBehaviour : NetworkBehaviour
 {
     [Header("Puddle Settings")]
     public int numberOfUses;

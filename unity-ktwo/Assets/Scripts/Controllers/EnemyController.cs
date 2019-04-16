@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using UnityEngine.Networking;
 
 public class EnemyController : NetworkBehaviour
-{   
+{
     public float attackCooldown;
     public float timeUntilDamageCalculation;
     public float lookRadius = 10f;
@@ -19,12 +19,12 @@ public class EnemyController : NetworkBehaviour
     public bool isAttacking = false;
     public bool hitboxActivated = false;
     public bool hasAttacked = false;
-    
+
     public GameObject target;
 
     bool CountDownForAttackHitBoxCoroutineStarted = false;
     bool StartAttackCooldownCoroutineStarted = false;
-    
+
     private bool turned = false;
 
     Transform currentTransform;
@@ -34,7 +34,7 @@ public class EnemyController : NetworkBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {   
+    {
         currentTransform = GetComponent<Transform>();
         animator = GetComponentInChildren<Animator>();
         rbd = GetComponent<Rigidbody>();
@@ -55,7 +55,7 @@ public class EnemyController : NetworkBehaviour
             // a rewrite of the enemy controller post-presentation...
             isAttacking = false;
         }
-        else 
+        else
         {
             SetAttackAnimation(false);
 
@@ -68,8 +68,8 @@ public class EnemyController : NetworkBehaviour
                 {
                     return;
                 }
-            } 
-            else 
+            }
+            else
             {
                 float distance = Vector3.Distance(target.transform.position, transform.position);
                 agent.SetDestination(target.transform.position);
@@ -109,7 +109,7 @@ public class EnemyController : NetworkBehaviour
     }
 
     void OnTriggerExit(Collider other)
-    {   
+    {
         isAttacking = false;
     }
 
@@ -157,7 +157,7 @@ public class EnemyController : NetworkBehaviour
             {
                 StartCoroutine(CountDownForAttackHitBox());
             }
-        } 
+        }
         else if (isAttacking && !isAttackOnCooldown && hitboxActivated)
         {
             hasAttacked = true;
@@ -172,7 +172,7 @@ public class EnemyController : NetworkBehaviour
             StartCoroutine(StartAttackCooldown());
         }
 
-        if (player.currentHealth <= 0) 
+        if (player.currentHealth <= 0)
         {
             FindNewTarget();
         }
@@ -194,7 +194,7 @@ public class EnemyController : NetworkBehaviour
             {
                 StartCoroutine(CountDownForAttackHitBox());
             }
-        } 
+        }
         else if (isAttacking && !isAttackOnCooldown && hitboxActivated)
         {
             hasAttacked = true;
@@ -206,14 +206,14 @@ public class EnemyController : NetworkBehaviour
             StartCoroutine(StartAttackCooldown());
         }
 
-        if (zombie.currentHealth <= 0) 
+        if (zombie.currentHealth <= 0)
         {
             FindNewTarget();
         }
 
         // if we have attacked, attempt to reset state so the zombie
         // does not stay in place attacking. 
-        if (hasAttacked) 
+        if (hasAttacked)
         {
             isAttacking = false;
         }
@@ -225,7 +225,7 @@ public class EnemyController : NetworkBehaviour
         agent.speed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
     }
 
-    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff) 
+    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff)
     {
         var speedChange = defaultSpeed * percent;
         agent.speed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
@@ -267,7 +267,7 @@ public class EnemyController : NetworkBehaviour
         StartAttackCooldownCoroutineStarted = false;
     }
 
-    IEnumerator CountDownForAttackHitBox() 
+    IEnumerator CountDownForAttackHitBox()
     {
         CountDownForAttackHitBoxCoroutineStarted = true;
         yield return new WaitForSeconds(timeUntilDamageCalculation);
@@ -281,15 +281,15 @@ public class EnemyController : NetworkBehaviour
     }
 
     IEnumerator CalculateAttackCooldown()
-    {   
+    {
         yield return new WaitForSeconds(attackCooldown);
         isAttackOnCooldown = true;
     }
 
     [ClientRpc]
-    void RpcSetTarget(NetworkIdentity target) 
+    void RpcSetTarget(NetworkIdentity target)
     {
-        if (target == null) 
+        if (target == null)
         {
             Debug.LogWarning("Tried setting enemy target to an entity that does not exist on the client!");
             return;
