@@ -25,24 +25,24 @@ public class ThrowAbility : AbstractAbility
         {
             cooldownOver = false;
             StartCoroutine("WaitForCooldown");
-            StartCoroutine(ThrowProjectileFromPlayer());
-        }
-        UpdateAbilityUI();
-    }
-
-    IEnumerator ThrowProjectileFromPlayer()
-    {
-        var Projectile = Instantiate(
+            var Projectile = Instantiate(
             projectilePrefab,
             transform.position + transform.forward + new Vector3(0, heightOffset, 0),
             transform.rotation
         );
-        CmdBuildObject(Projectile.name,
+            StartCoroutine(ThrowProjectileFromPlayer(Projectile));
+        }
+        UpdateAbilityUI();
+    }
+
+    IEnumerator ThrowProjectileFromPlayer(GameObject projectile)
+    {
+        CmdBuildObject(projectile.name,
         transform.position + transform.forward + new Vector3(0, heightOffset, 0),
         transform.rotation
         );
 
-        projectileTransform = Projectile.transform;
+        projectileTransform = projectile.transform;
 
         var newThrowDistance = throwDistance + Mathf.Tan((90 - firingAngle) * Mathf.Deg2Rad) * heightOffset;
 
@@ -64,8 +64,8 @@ public class ThrowAbility : AbstractAbility
         }
 
         // I haven't done the calculation for the parabolitic projectile motion so i hardcoded height for now
-        var puddlePosition = new Vector3(Projectile.transform.position.x, player.transform.position.y, Projectile.transform.position.z);
-        CmdBuildObject(projectileRemnantPrefab.name, puddlePosition, Projectile.transform.rotation);
-        NetworkServer.Destroy(Projectile);
+        var puddlePosition = new Vector3(projectile.transform.position.x, player.transform.position.y, projectile.transform.position.z);
+        CmdBuildObject(projectileRemnantPrefab.name, puddlePosition, projectile.transform.rotation);
+        NetworkServer.Destroy(projectile);
     }
 }
