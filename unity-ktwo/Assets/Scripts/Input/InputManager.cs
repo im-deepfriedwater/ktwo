@@ -73,10 +73,7 @@ public class InputManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		if (!isInitialized)
-		{
-			return;
-		}
+		if (!isInitialized) return;
 
 		foreach (var input in inputs)
         {

@@ -13,7 +13,7 @@ public class GameManager: MonoBehaviour
 
     bool waveBegun = false;
 
-    const float WAVE_START_DELAY = 5; // in seconds
+    public const float WAVE_START_DELAY = 5; // in seconds
 
     void Awake()
     {
@@ -22,8 +22,7 @@ public class GameManager: MonoBehaviour
 
     public void StartEncounter()
     {
-        Debug.Log("starting zombie wave counter");
-        StartCoroutine("BeginWave");
+        StartCoroutine(BeginWave());
         NetworkServer.Spawn(Instantiate(map, Vector3.zero, Quaternion.identity));
         SpawnManager.instance.SpawnPlayers(KtwoServer.instance.connections);
     }
@@ -35,7 +34,6 @@ public class GameManager: MonoBehaviour
         SpawnManager.instance.SpawnZombieAtPoint(SpawnZone.North);
         SpawnManager.instance.SpawnZombieAtPoint(SpawnZone.East);
         waveBegun = true;
-        Debug.Log("wave has begun");
     }
     
     void Update()

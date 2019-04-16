@@ -23,10 +23,7 @@ public abstract class AbstractAbility : NetworkBehaviour
 
     protected void Initialize()
     {
-        if (!hasAuthority)
-        {
-            return;
-        }
+        if (!hasAuthority) return;
 
         abilityGroupImage = GameObject
             .Find(string.Format("AbilityGroup{0}", abilitySlot))
@@ -35,8 +32,6 @@ public abstract class AbstractAbility : NetworkBehaviour
         abilityIcon = GameObject
             .Find(string.Format("AbilityIcon{0}", abilitySlot))
             .GetComponent<Image>();
-        
-        Debug.Log(abilityGroupImage == null);
     }
 
     void Start() // Will get called automatically on startup.
@@ -55,7 +50,6 @@ public abstract class AbstractAbility : NetworkBehaviour
     private void MarkAbilityAsUsed()
     {
         abilityGroupImage.enabled = false;
-
     }
 
     private void UpdateCooldownMask()
@@ -65,10 +59,7 @@ public abstract class AbstractAbility : NetworkBehaviour
 
     protected void UpdateAbilityUI() // This should be called at some point in the derived's update method
     {
-        if (!hasAuthority)
-        {
-            return;
-        }
+        if (!hasAuthority)  return;
         
         if (cooldownOver)
         {

@@ -22,8 +22,8 @@ public class SpawnManager : MonoBehaviour
 
     public bool SpawnOnStartup;
 
-    const float SPAWN_DELAY = 1.5f;
-    const float WAVE_DELAY = 10; // in seconds
+    public const float SPAWN_DELAY = 1.5f;
+    public const float WAVE_DELAY = 10; // in seconds
 
     void Awake()
     {
@@ -59,7 +59,7 @@ public class SpawnManager : MonoBehaviour
         {
             yield return new WaitForSeconds(SPAWN_DELAY);
             SpawnZombieAtRandomPoint();
-            counter--;
+            counter++;
         }
     }
 

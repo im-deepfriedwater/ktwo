@@ -48,9 +48,17 @@ public class EnemyController : NetworkBehaviour
         {
             agent.isStopped = true;
             rbd.velocity = Vector3.zero;
+            // the checks for OnTriggerStay execute sequentially 
+            // after the isAttacking. so if it is still false on next
+            // frame there must not be anyone to attack.
+            // this is a little logic hack that really encourages
+            // a rewrite of the enemy controller post-presentation...
+            isAttacking = false;
         }
         else 
         {
+            SetAttackAnimation(false);
+
             if (target == null)
             {
                 FindNewTarget();
@@ -118,7 +126,7 @@ public class EnemyController : NetworkBehaviour
         {
             if (!CountDownForAttackHitBoxCoroutineStarted)
             {
-                StartCoroutine("CountDownForAttackHitBox");
+                StartCoroutine(CountDownForAttackHitBox());
             }
         }
         else if (isAttacking && !isAttackOnCooldown && hitboxActivated)
@@ -184,7 +192,7 @@ public class EnemyController : NetworkBehaviour
         {
             if (!CountDownForAttackHitBoxCoroutineStarted)
             {
-                StartCoroutine("CountDownForAttackHitBox");
+                StartCoroutine(CountDownForAttackHitBox());
             }
         } 
         else if (isAttacking && !isAttackOnCooldown && hitboxActivated)
@@ -194,16 +202,20 @@ public class EnemyController : NetworkBehaviour
             zombie.ServerSideHit(damage, direction);
             hitboxActivated = false;
             isAttackOnCooldown = true;
-            if (StartAttackCooldownCoroutineStarted)
-            {
-                return;
-            }
-            StartCoroutine("StartAttackCooldown");
+            if (StartAttackCooldownCoroutineStarted) return;
+            StartCoroutine(StartAttackCooldown());
         }
 
         if (zombie.currentHealth <= 0) 
         {
             FindNewTarget();
+        }
+
+        // if we have attacked, attempt to reset state so the zombie
+        // does not stay in place attacking. 
+        if (hasAttacked) 
+        {
+            isAttacking = false;
         }
     }
 
