@@ -3,21 +3,21 @@ using UnityEngine.Networking;
 using UnityEngine.Networking.Match;
 using System.Collections.Generic;
 
-public class KtwoServer: NetworkManager
-{    
+public class KtwoServer : NetworkManager
+{
 
     public static KtwoServer instance;
     public int playerSpot = 0;
     // We can use the count of connections to represent player ids.
     public Dictionary<NetworkConnection, PlayerConnectionObject> connections;
-    
-    public void Awake ()
+
+    public void Awake()
     {
         connections = new Dictionary<NetworkConnection, PlayerConnectionObject>();
         instance = this;
     }
 
-    public void Start ()
+    public void Start()
     {
         StartServer();
     }
@@ -34,8 +34,8 @@ public class KtwoServer: NetworkManager
         if (conn.lastError != NetworkError.Ok)
         {
             if (LogFilter.logError)
-            { 
-                Debug.LogError("ServerDisconnected due to error: " + conn.lastError); 
+            {
+                Debug.LogError("ServerDisconnected due to error: " + conn.lastError);
             }
         }
         Debug.Log("A client disconnected from the server: " + conn);
@@ -54,6 +54,7 @@ public class KtwoServer: NetworkManager
         var player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
         NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
         var connectionObject = player.GetComponent<PlayerConnectionObject>();
+        connectionObject.chosenCharacter = 1;
         connectionObject.playerConnectionSpot = playerSpot;
         connections[conn] = connectionObject;
         playerSpot++;
