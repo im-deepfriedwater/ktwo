@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class NetworkStructure: NetworkBehaviour
+public class NetworkRoot: NetworkBehaviour
 {
     public DamagableStructure structure;
 

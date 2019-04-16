@@ -20,20 +20,13 @@ public class DamagableEnemy: Damagable
     private GameObject fireEffect;
 
     InvinicibilityFlashModifier invinicibilityComponent;
-    
-    void Awake()
-    {
-        fireEffect = GameObject.Find("CFX4 Fire");
-        fireEffect.SetActive(false);
-        rbd = GetComponent<Rigidbody>();
-        if (OnHit == null)
-        {
-            OnHit = new UnityEventFloat();
-        }
-    }
 
     new void Start()
     {
+        if (OnHit == null) OnHit = new UnityEventFloat();
+        fireEffect = GameObject.Find("CFX4 Fire");
+        fireEffect.SetActive(false);
+        rbd = GetComponent<Rigidbody>();
         invinicibilityComponent = GetComponent<InvinicibilityFlashModifier>();
         base.Start();
     }
@@ -44,7 +37,7 @@ public class DamagableEnemy: Damagable
 
         currentHealth -= damage;
         OnHit.Invoke(currentHealth / health);
-        StartCoroutine("BeginInvincibility");
+        StartCoroutine(BeginInvincibility());
         if (currentHealth <= 0)
         {
             Die();
@@ -76,7 +69,7 @@ public class DamagableEnemy: Damagable
         CmdReportEnemyHit(damage);
         Hit(damage);
         KnockbackEnemy(direction);
-        StartCoroutine("BeginInvincibility");
+        StartCoroutine(BeginInvincibility());
     }
 
     public void ServerSideHit(float damage, Vector3 direction)
@@ -85,7 +78,7 @@ public class DamagableEnemy: Damagable
         RpcTellEnemyHit(damage);
         Hit(damage);
         KnockbackEnemy(direction);
-        StartCoroutine("BeginInvincibility");
+        StartCoroutine(BeginInvincibility());
     }
 
     void KnockbackEnemy(Vector3 direction)

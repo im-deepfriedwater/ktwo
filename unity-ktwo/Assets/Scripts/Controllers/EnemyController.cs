@@ -48,18 +48,20 @@ public class EnemyController : NetworkBehaviour
         {
             agent.isStopped = true;
             rbd.velocity = Vector3.zero;
-        } else 
+        }
+        else 
         {
             if (target == null)
             {
                 FindNewTarget();
                 // if target is STILL null there must not
-                // be anymore so do nothing.
+                // be anyone so do nothing.
                 if (target == null)
                 {
                     return;
                 }
-            } else 
+            } 
+            else 
             {
                 float distance = Vector3.Distance(target.transform.position, transform.position);
                 agent.SetDestination(target.transform.position);
@@ -99,8 +101,8 @@ public class EnemyController : NetworkBehaviour
     }
 
     void OnTriggerExit(Collider other)
-    {
-        ResumeMovement();
+    {   
+        isAttacking = false;
     }
 
     void AttackStructure(Collider other)
@@ -130,12 +132,6 @@ public class EnemyController : NetworkBehaviour
             }
             StartCoroutine("StartAttackCooldown");
         }
-
-        if (structure.currentHealth <= 0) 
-        {
-            ResumeMovement();
-            return;
-        }
     }
 
     void AttackPlayer(Collider other)
@@ -153,7 +149,8 @@ public class EnemyController : NetworkBehaviour
             {
                 StartCoroutine(CountDownForAttackHitBox());
             }
-        } else if (isAttacking && !isAttackOnCooldown && hitboxActivated)
+        } 
+        else if (isAttacking && !isAttackOnCooldown && hitboxActivated)
         {
             hasAttacked = true;
             Vector3 direction = currentTransform.forward;
@@ -170,8 +167,6 @@ public class EnemyController : NetworkBehaviour
         if (player.currentHealth <= 0) 
         {
             FindNewTarget();
-            ResumeMovement();
-            return;
         }
     }
 
@@ -191,7 +186,8 @@ public class EnemyController : NetworkBehaviour
             {
                 StartCoroutine("CountDownForAttackHitBox");
             }
-        } else if (isAttacking && !isAttackOnCooldown && hitboxActivated)
+        } 
+        else if (isAttacking && !isAttackOnCooldown && hitboxActivated)
         {
             hasAttacked = true;
             Vector3 direction = currentTransform.forward;
@@ -208,8 +204,6 @@ public class EnemyController : NetworkBehaviour
         if (zombie.currentHealth <= 0) 
         {
             FindNewTarget();
-            ResumeMovement();
-            return;
         }
     }
 

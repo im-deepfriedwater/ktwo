@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class GreasePuddleBehaviour : BasePuddleBehaviour
 {
-
+    NetworkRoot network;
     void OnTriggerEnter(Collider other)
     {
-        if (CannotBeUsed(other.gameObject)) return;
+        if (CannotBeUsed(other.gameObject) || !network.isServer) return;
 
         if (other.gameObject.tag != "Zombie") return;
         affectedEntities.Add(other.gameObject);
 
         Vector3 direction = Quaternion.Euler(0, Random.Range(0, 360), 0) * gameObject.transform.forward;
-        other.gameObject.GetComponent<DamagableEnemy>().Hit(0f, direction);
+        other.gameObject.GetComponent<DamagableEnemy>().ServerSideHit(0f, direction);
 
         StartCoroutine(
             RemoveFromHashSet(other.gameObject)

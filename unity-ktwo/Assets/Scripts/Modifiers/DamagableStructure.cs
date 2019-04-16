@@ -12,25 +12,25 @@ public class DamagableStructure : Damagable
 
     // There must be a network structure on the root
     // structure group.
-    public NetworkStructure networkStructure;
+    public NetworkRoot network;
     
     private Material defaultMaterial;
 
     new void Start ()
     {
-        networkStructure = transform.parent.gameObject.GetComponent<NetworkStructure>();
+        network = transform.parent.gameObject.GetComponent<NetworkRoot>();
         defaultMaterial = gameObject.GetComponent<Renderer>().material;
         base.Start();
     }
 
     override public void Hit(float damage)
     {
-        if (isInvincible || !networkStructure.isServer)
+        if (isInvincible || !network.isServer)
         {
             return;
         }
 
-        networkStructure.RpcTellStructureHit(damage);
+        network.RpcTellStructureHit(damage);
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
@@ -50,7 +50,7 @@ public class DamagableStructure : Damagable
 
     public void Die()
     {
-        if (!networkStructure.isServer) return;
+        if (!network.isServer) return;
         NetworkServer.Destroy(transform.parent.gameObject);
     }
 }

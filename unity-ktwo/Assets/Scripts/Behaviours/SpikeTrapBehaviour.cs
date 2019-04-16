@@ -5,16 +5,17 @@ using UnityEngine;
 public class SpikeTrapBehaviour : MonoBehaviour
 {
     public float attackFrequency;
+    NetworkRoot network;
 
     private bool spikesActive = false;
     private DPSModifier dpsMod;
-    private NetworkStructure network;
     
     private Transform spikes;
     private Animator spikeAnimator;
 
-    void Awake()
+    void Start()
     {   
+        network = transform.parent.gameObject.GetComponent<NetworkRoot>();
         spikes = transform.Find("Spikes");
         spikeAnimator = spikes.GetComponent<Animator>();
         dpsMod = gameObject.GetComponent<DPSModifier>();
@@ -23,8 +24,7 @@ public class SpikeTrapBehaviour : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag != "Zombie") return;
-        if (!spikesActive) return;
+        if (!network.isServer || other.gameObject.tag != "Zombie" || !spikesActive) return;
         other.gameObject.GetComponent<DamagableEnemy>().ServerSideHit(dpsMod.damageAmount, Vector3.zero);
     }
 

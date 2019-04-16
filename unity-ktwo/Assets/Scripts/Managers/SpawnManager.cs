@@ -90,19 +90,13 @@ public class SpawnManager : MonoBehaviour
 
     public void SpawnPlayers(Dictionary<NetworkConnection, PlayerConnectionObject> connections)
     {
-        Debug.Log(connections.Count);
-        Debug.Log(KtwoServer.instance.playerSpot);
-
         foreach (var kvp in connections)
         {
             var targetString = kvp.Value.playerConnectionSpot != 0 ? 
                 string.Format("PlayerSpawnPoint ({0})", kvp.Value.playerConnectionSpot):
                 "PlayerSpawnPoint"; 
 
-            Debug.Log(targetString);
             var spawnDestination = GameObject.Find(targetString);
-
-            Debug.Log(CharacterManager.instance.characters);
 
             GameObject go = Instantiate(
                 CharacterManager.instance.characters[kvp.Value.chosenCharacter],

@@ -83,10 +83,7 @@ public class PlayerBehaviour : NetworkBehaviour
 
     public void UpdateHealthBar(float healthPercentage)
     {
-        if (!hasAuthority)
-        {
-            return;
-        }
+        if (!hasAuthority) return;
         healthBar.value = 1 - healthPercentage;
     }
 
@@ -94,10 +91,7 @@ public class PlayerBehaviour : NetworkBehaviour
     {
         animator.SetBool("IsDead", true);
     
-        if (!hasAuthority) 
-        {
-            return;
-        }
+        if (!hasAuthority) return;
 
         input.enabled = false;
         rbd.isKinematic = true;
