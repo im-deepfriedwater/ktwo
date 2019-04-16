@@ -104,7 +104,7 @@ public abstract class AbstractAbility : NetworkBehaviour
     [Command]
     public void CmdBuildObjectWithPrefab(GameObject prefab)
     {
-        var go = (GameObject)Instantiate(Resources.Load(name, typeof(GameObject)), prefab.transform.position, prefab.transform.rotation);
+        var go = (GameObject)Instantiate(Resources.Load(prefab.name, typeof(GameObject)), prefab.transform.position, prefab.transform.rotation);
         NetworkServer.Spawn(go);
     }
 }
