@@ -11,6 +11,8 @@ public struct CharacterInfoStruct
 
     GameObject previewObject;
 
+    // These both should have a 1-to-1
+    // correspondence and be length 4.
     string[] abilityDescriptions;
     Image[] abilityIcons;
 }
