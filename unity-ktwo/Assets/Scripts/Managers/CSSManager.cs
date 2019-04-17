@@ -6,7 +6,7 @@ public class CSSManager : MonoBehaviour
 {
     public static CSSManager instance;
     CharacterEnum chosenCharacter;
-    List<CharacterInfoStruct> rosterData;
+    public List<CharacterInfoStruct> rosterData;
 
     // Start is called before the first frame update
     void Start()

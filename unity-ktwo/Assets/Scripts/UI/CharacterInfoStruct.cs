@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public struct CharacterInfoStruct
 {
-    CharacterEnum character;
+    public CharacterEnum character;
 
-    string characterDescription;
+    public string characterDescription;
 
-    GameObject previewObject;
+   public  GameObject previewObject;
 
     // These both should have a 1-to-1
     // correspondence and be length 4.
-    string[] abilityDescriptions;
-    Image[] abilityIcons;
+    public string[] abilityDescriptions;
+    public Image[] abilityIcons;
 }
