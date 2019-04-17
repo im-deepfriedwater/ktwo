@@ -331,6 +331,60 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb5383f8135cd4a1f92ff377664f8e61, type: 3}
+--- !u!1 &350998162 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5752666004993154227, guid: 180119d3049514d15be3a8fd8d7b0a73,
+    type: 3}
+  m_PrefabInstance: {fileID: 1328804718}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &350998163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350998162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53455e7f28dc2ca4fab8509e74ba8cd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rosterData:
+  - character: 0
+    characterDescription: Builder of walls, roads, and zombie death spike traps. the
+      architect brings a frantic but methodical playstyle encouraging strategic choke
+      points.
+    previewObject: {fileID: 0}
+    abilityDescriptions:
+    - 
+    - 
+    - 
+    - 
+    abilityIcons:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - character: 0
+    characterDescription: 
+    previewObject: {fileID: 0}
+    abilityDescriptions: []
+    abilityIcons: []
+  - character: 0
+    characterDescription: 
+    previewObject: {fileID: 0}
+    abilityDescriptions: []
+    abilityIcons: []
+  - character: 0
+    characterDescription: 
+    previewObject: {fileID: 0}
+    abilityDescriptions: []
+    abilityIcons: []
+  - character: 0
+    characterDescription: 
+    previewObject: {fileID: 0}
+    abilityDescriptions: []
+    abilityIcons: []
 --- !u!1 &466284334
 GameObject:
   m_ObjectHideFlags: 0
@@ -1696,6 +1750,52 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675291344376900105, guid: 680c4410854207444ac65e01f69a595f,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675291344376900105, guid: 680c4410854207444ac65e01f69a595f,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675291344376900105, guid: 680c4410854207444ac65e01f69a595f,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675291344376900105, guid: 680c4410854207444ac65e01f69a595f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675291344376900105, guid: 680c4410854207444ac65e01f69a595f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675291344377001513, guid: 680c4410854207444ac65e01f69a595f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675291344386508267, guid: 680c4410854207444ac65e01f69a595f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675291343696214832, guid: 680c4410854207444ac65e01f69a595f,
+        type: 3}
+      propertyPath: m_Text
+      value: Choose a Char!
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675291345685686595, guid: 680c4410854207444ac65e01f69a595f,
+        type: 3}
+      propertyPath: m_Text
+      value: Builder of walls, roads, and zombie death spike traps. the architect
+        brings a frantic but methodical playstyle encouraging strategic choke points.
       objectReference: {fileID: 0}
     - target: {fileID: 2675291345754176638, guid: 680c4410854207444ac65e01f69a595f,
         type: 3}
