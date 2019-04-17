@@ -54,6 +54,7 @@ public class KtwoServer : NetworkManager
         var player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
         NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
         var connectionObject = player.GetComponent<PlayerConnectionObject>();
+        // currently hardcoding selected character
         connectionObject.chosenCharacter = 1;
         connectionObject.playerConnectionSpot = playerSpot;
         connections[conn] = connectionObject;

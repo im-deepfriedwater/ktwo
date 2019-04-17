@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 [RequireComponent(typeof(InvinicibilityFlashModifier))]
-public class DamagablePlayer: Damagable
-{   
+public class DamagablePlayer : Damagable
+{
     [Range(1, 10)]
     public int knockbackFactor; // There's not really any sense of units here sorry...
     private float calculatedKnockBackFactor;
@@ -18,7 +18,7 @@ public class DamagablePlayer: Damagable
     public new UnityEventFloat OnHit; // `new` Overrides original OnHit field.
 
     InvinicibilityFlashModifier invinicibilityComponent;
-    
+
     void Awake()
     {
         rbd = GetComponent<Rigidbody>();
@@ -35,10 +35,17 @@ public class DamagablePlayer: Damagable
         base.Start();
     }
 
+
     override public void Heal(float healAmount)
     {
         currentHealth = Mathf.Min(currentHealth + healAmount, startingHealth);
         OnHit.Invoke(currentHealth / startingHealth);
+    }
+
+    [ClientRpc]
+    public void RpcHeal(float healAmount)
+    {
+        Heal(healAmount);
     }
 
 
@@ -68,7 +75,7 @@ public class DamagablePlayer: Damagable
         var elapsedTime = 0f;
         while (elapsedTime < duration)
         {
-            Hit(damageAmount);
+            CmdServerRegisterHit(damageAmount);
             yield return new WaitForSeconds(1.0f);
             elapsedTime++;
         }
@@ -81,7 +88,7 @@ public class DamagablePlayer: Damagable
     }
 
     IEnumerator BeginInvincibility()
-    {   
+    {
         isInvincible = true;
         invinicibilityComponent.enabled = true;
         yield return new WaitForSeconds(invincibilityDuration);
@@ -108,7 +115,7 @@ public class DamagablePlayer: Damagable
     }
 
     [ClientRpc]
-    void RpcTriggerClientInvincibility() 
+    void RpcTriggerClientInvincibility()
     {
         StartCoroutine(BeginInvincibility());
     }

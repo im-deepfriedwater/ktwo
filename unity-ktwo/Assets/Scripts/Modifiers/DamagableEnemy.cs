@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 [RequireComponent(typeof(InvinicibilityFlashModifier))]
-public class DamagableEnemy: Damagable
-{   
+public class DamagableEnemy : Damagable
+{
     public float health = 100; // 100 by default.
     [Range(1, 10)]
     public int knockbackFactor; // There's not really any sense of units here sorry...
@@ -42,7 +42,6 @@ public class DamagableEnemy: Damagable
         {
             Die();
         }
-
     }
 
     public IEnumerator DamageOverTime(float damageAmount, float duration)
@@ -50,7 +49,7 @@ public class DamagableEnemy: Damagable
         var elapsedTime = 0f;
         while (elapsedTime < duration)
         {
-            Hit(damageAmount);
+            ServerSideHit(damageAmount, Vector3.zero);
             yield return new WaitForSeconds(1.0f);
             elapsedTime++;
         }
@@ -88,7 +87,7 @@ public class DamagableEnemy: Damagable
     }
 
     IEnumerator BeginInvincibility()
-    {   
+    {
         isInvincible = true;
         invinicibilityComponent.enabled = true;
         yield return new WaitForSeconds(invincibilityDuration);
@@ -98,7 +97,7 @@ public class DamagableEnemy: Damagable
 
     public void Die()
     {
-        if (isServer) 
+        if (isServer)
         {
             EnemyManager.instance.zombies.Remove(gameObject);
             NetworkServer.Destroy(gameObject);
@@ -119,5 +118,11 @@ public class DamagableEnemy: Damagable
     public void RpcTellEnemyHit(float damage)
     {
         Hit(damage);
+    }
+
+    [ClientRpc]
+    public void RpcHeal(float healAmount)
+    {
+        Heal(healAmount);
     }
 }

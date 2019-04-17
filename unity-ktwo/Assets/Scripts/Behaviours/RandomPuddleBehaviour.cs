@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class RandomPuddleBehaviour : BasePuddleBehaviour
 {
@@ -34,9 +35,24 @@ public class RandomPuddleBehaviour : BasePuddleBehaviour
 
     new void Awake()
     {
-        buff = (Random.Range(0, 2) == 0);
-        gameObject.GetComponentInChildren<Renderer>().material = buff ? buffPuddle : debuffPuddle;
         base.Awake();
+    }
+
+    void Start()
+    {
+        if (isServer)
+        {
+            buff = (Random.Range(0, 2) == 0);
+            gameObject.GetComponentInChildren<Renderer>().material = buff ? buffPuddle : debuffPuddle;
+            RpcSetBuff(buff);
+        }
+    }
+
+    [ClientRpc]
+    void RpcSetBuff(bool buff)
+    {
+        this.buff = buff;
+        gameObject.GetComponentInChildren<Renderer>().material = buff ? buffPuddle : debuffPuddle;
     }
 
     void OnTriggerEnter(Collider other)
@@ -46,11 +62,11 @@ public class RandomPuddleBehaviour : BasePuddleBehaviour
         if (buff)
         {
             Buff(other);
-        }    
+        }
         else
         {
             Debuff(other);
-        } 
+        }
     }
 
     private void Buff(Collider other)
@@ -62,7 +78,7 @@ public class RandomPuddleBehaviour : BasePuddleBehaviour
                 other.GetComponent<PlayerBehaviour>()
                     .TimedAffectSpeed(speedBoostPercent, buffDuration, true)
             );
-            other.GetComponent<DamagablePlayer>().Heal(healAmount);
+            other.GetComponent<DamagablePlayer>().RpcHeal(healAmount);
             StartCoroutine(
                 RemoveFromHashSet(other.gameObject, buffDuration)
             );
@@ -76,7 +92,7 @@ public class RandomPuddleBehaviour : BasePuddleBehaviour
                 other.GetComponent<EnemyController>()
                     .TimedAffectSpeed(speedBoostPercent, buffDuration, true)
             );
-            other.GetComponent<DamagableEnemy>().Heal(healAmount);
+            other.GetComponent<DamagableEnemy>().RpcHeal(healAmount);
             StartCoroutine(
                 RemoveFromHashSet(other.gameObject, buffDuration)
             );
@@ -86,12 +102,12 @@ public class RandomPuddleBehaviour : BasePuddleBehaviour
         if (other.gameObject.tag == "Structure")
         {
             affectedEntities.Add(other.gameObject);
-            
+
             var overallDuration = 0f;
             var structureDamagable = other.gameObject.GetComponent<DamagableStructure>();
             if (structureDamagable != null)
             {
-                structureDamagable.Heal(structureHealAmount);
+                structureDamagable.RpcHeal(structureHealAmount);
                 StartCoroutine(
                     structureDamagable.BeginInvincibility(invincibilityDuration)
                 );
@@ -149,10 +165,11 @@ public class RandomPuddleBehaviour : BasePuddleBehaviour
             );
             numberOfUses -= 1;
         }
+
         if (other.gameObject.tag == "Structure")
         {
             affectedEntities.Add(other.gameObject);
-            
+
             var overallDuration = 0f;
             var structureDamagable = other.gameObject.GetComponent<DamagableStructure>();
             if (structureDamagable != null)

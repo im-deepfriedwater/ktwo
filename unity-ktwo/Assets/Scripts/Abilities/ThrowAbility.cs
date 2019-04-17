@@ -59,7 +59,6 @@ public class ThrowAbility : AbstractAbility
             yield return null;
         }
 
-        // I haven't done the calculation for the parabolitic projectile motion so i hardcoded height for now
         var puddlePosition = new Vector3(Projectile.transform.position.x, player.transform.position.y, Projectile.transform.position.z);
         CmdBuildObject(toSpawn, puddlePosition, Projectile.transform.rotation);
         Destroy(Projectile);

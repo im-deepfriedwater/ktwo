@@ -10,7 +10,7 @@ public class FoodBehaviour : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag != "Player") return;
-        other.gameObject.GetComponent<DamagablePlayer>().Heal(healAmount);
+        other.gameObject.GetComponent<DamagablePlayer>().RpcHeal(healAmount);
         Destroy(gameObject);
     }
 }
