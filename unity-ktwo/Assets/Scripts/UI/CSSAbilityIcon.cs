@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class CSSAbilityIcon : MonoBehaviour
+public class CSSAbilityIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    // Start is called before the first frame update
-    void Start()
+    public int slotNumber;
+
+    public void OnPointerEnter(PointerEventData _)
     {
-        
+        CSSManager.instance.ShowAbilityDescription(slotNumber);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnPointerExit(PointerEventData _)
     {
-        
+        CSSManager.instance.RestoreCharacterDescription();
     }
 }

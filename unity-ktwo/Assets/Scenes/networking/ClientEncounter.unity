@@ -393,18 +393,21 @@ MonoBehaviour:
     - {fileID: 21300000, guid: b1a68d980ad56dc4db012b31704f89ba, type: 3}
     - {fileID: 21300000, guid: 4659fbf6b715ca94cb5d78128f9b582f, type: 3}
   - character: 1
-    characterDescription: 
+    characterDescription: Most chaotic chemist you'll ever meet. Her chemical puddles
+      are known to be flammable, manipulative, anarchic, and sometimes helpful.
     previewModel: {fileID: 974981217}
     abilityDescriptions:
-    - 
-    - 
-    - 
-    - 
+    - The helpful puddle blah blah blah
+    - The flammable puddle blah blah blah
+    - The random puddle is truly the Chemist at her most chaotic. 50% chance of buffing
+      or debuffing
+    - The turn puddle takes advantage of a certain chemical the zombies of K'tah rely
+      on to temporarily attack other zombies.
     abilityIcons:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 21300000, guid: de0d710dda7d86b47adb272e908f769d, type: 3}
+    - {fileID: 21300000, guid: b98ee354b7232974598f6deca69c9ec4, type: 3}
+    - {fileID: 21300000, guid: 032180e2566f9a5499224e07825633e9, type: 3}
+    - {fileID: 21300000, guid: 2fbbd6623a138294183bf2b447865156, type: 3}
   - character: 2
     characterDescription: 
     previewModel: {fileID: 3997339407512011802}
@@ -437,19 +440,18 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
   - character: 4
-    characterDescription: '"The Tinkerer" was too busy building turrents out of BBQ
-      grills and sticking dynamite into soup cans to be ready in time. Check back
-      soon!'
+    characterDescription: The Tinkerer was too busy building turrents out of BBQ grills
+      and sticking dynamite into soup cans to be ready in time. Check back soon!
     previewModel: {fileID: 1375093108637305472}
     abilityDescriptions:
-    - '"The Tinkerer" was too busy building turrents out of BBQ grills and sticking
-      dynamite into soup cans to be ready in time. Check back soon!'
-    - '"The Tinkerer" was too busy building turrents out of BBQ grills and sticking
-      dynamite into soup cans to be ready in time. Check back soon!'
-    - '"The Tinkerer" was too busy building turrents out of BBQ grills and sticking
-      dynamite into soup cans to be ready in time. Check back soon!'
-    - '"The Tinkerer" was too busy building turrents out of BBQ grills and sticking
-      dynamite into soup cans to be ready in time. Check back soon!'
+    - The Tinkerer was too busy building turrents out of BBQ grills and sticking dynamite
+      into soup cans to be ready in time. Check back soon!
+    - The Tinkerer was too busy building turrents out of BBQ grills and sticking dynamite
+      into soup cans to be ready in time. Check back soon!
+    - The Tinkerer was too busy building turrents out of BBQ grills and sticking dynamite
+      into soup cans to be ready in time. Check back soon!
+    - The Tinkerer was too busy building turrents out of BBQ grills and sticking dynamite
+      into soup cans to be ready in time. Check back soon!
     abilityIcons:
     - {fileID: 0}
     - {fileID: 0}
@@ -458,6 +460,8 @@ MonoBehaviour:
   textDescription: {fileID: 1769923785}
   name: {fileID: 124835937}
   currentModel: {fileID: 0}
+  animator: {fileID: 1053270488}
+  animationPlayed: 0
 --- !u!1 &466284334
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,6 +550,25 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2675291344874107742}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &820661056 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 849540594, guid: 680c4410854207444ac65e01f69a595f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2675291344874107742}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &820661058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820661056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcc52294636c7474b9adb8d9ffdf4e67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotNumber: 2
 --- !u!1 &939072476
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,6 +653,94 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2675291344874107742}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1053270487 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2675291343763514507, guid: 680c4410854207444ac65e01f69a595f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2675291344874107742}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1053270488
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053270487}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ac40826a8831be8479c59e00ea51507e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &1093567605 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1029462776, guid: 680c4410854207444ac65e01f69a595f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2675291344874107742}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1093567607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1093567605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcc52294636c7474b9adb8d9ffdf4e67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotNumber: 3
+--- !u!1 &1125543542 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2675291344053079751, guid: 680c4410854207444ac65e01f69a595f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2675291344874107742}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1125543544
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125543542}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ac40826a8831be8479c59e00ea51507e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &1291139597 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1083977887, guid: 680c4410854207444ac65e01f69a595f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2675291344874107742}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1291139599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1291139597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcc52294636c7474b9adb8d9ffdf4e67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotNumber: 1
 --- !u!1 &1300914407 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1300914407, guid: 680c4410854207444ac65e01f69a595f,
@@ -859,7 +970,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1927183723
 RectTransform:
   m_ObjectHideFlags: 0
@@ -876,7 +987,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -345}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1927183724
@@ -923,6 +1034,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927183722}
   m_CullTransparentMesh: 0
+--- !u!1 &2038736385 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5878421346269809991, guid: 680c4410854207444ac65e01f69a595f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2675291344874107742}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2038736387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038736385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcc52294636c7474b9adb8d9ffdf4e67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotNumber: 0
 --- !u!1 &1375093108637305472 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6504174361656888219, guid: 890aa5764c3bfac4f90e4a6086e2a7a8,
@@ -940,6 +1070,23 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CSS
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675291343696214832, guid: 680c4410854207444ac65e01f69a595f,
+        type: 3}
+      propertyPath: m_Text
+      value: Welcome player 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 691624306, guid: 680c4410854207444ac65e01f69a595f, type: 3}
+      propertyPath: m_Name
+      value: SkillIcon (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1040122320, guid: 680c4410854207444ac65e01f69a595f, type: 3}
+      propertyPath: m_Name
+      value: SkillIcon (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1300914407, guid: 680c4410854207444ac65e01f69a595f, type: 3}
+      propertyPath: m_Name
+      value: SkillIcon (1)
       objectReference: {fileID: 0}
     - target: {fileID: 2675291343763514504, guid: 680c4410854207444ac65e01f69a595f,
         type: 3}
@@ -1045,6 +1192,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675291343763514504, guid: 680c4410854207444ac65e01f69a595f,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675291345685686595, guid: 680c4410854207444ac65e01f69a595f,
+        type: 3}
+      propertyPath: m_Text
+      value: Click a character to choose them! no player will be able to choose the
+        same as another. Strict no copying policy here.
       objectReference: {fileID: 0}
     - target: {fileID: 2675291344704275342, guid: 680c4410854207444ac65e01f69a595f,
         type: 3}
@@ -1208,10 +1366,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1300914407, guid: 680c4410854207444ac65e01f69a595f, type: 3}
-      propertyPath: m_Name
-      value: SkillIcon (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 849540595, guid: 680c4410854207444ac65e01f69a595f, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
@@ -1236,10 +1390,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1040122320, guid: 680c4410854207444ac65e01f69a595f, type: 3}
-      propertyPath: m_Name
-      value: SkillIcon (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 1029462777, guid: 680c4410854207444ac65e01f69a595f, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
@@ -1263,15 +1413,26 @@ PrefabInstance:
     - target: {fileID: 1029462777, guid: 680c4410854207444ac65e01f69a595f, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 691624306, guid: 680c4410854207444ac65e01f69a595f, type: 3}
-      propertyPath: m_Name
-      value: SkillIcon (3)
       objectReference: {fileID: 0}
     - target: {fileID: 4283153044184687936, guid: 680c4410854207444ac65e01f69a595f,
         type: 3}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675291343725182301, guid: 680c4410854207444ac65e01f69a595f,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 175
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675291345164669953, guid: 680c4410854207444ac65e01f69a595f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675291345741005521, guid: 680c4410854207444ac65e01f69a595f,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 680c4410854207444ac65e01f69a595f, type: 3}
@@ -1493,6 +1654,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 2195381668852323417, guid: c261bd1f290874541b0f808ca1173698,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 07548b90cab3b154baa917e6d20e9b86, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c261bd1f290874541b0f808ca1173698, type: 3}
 --- !u!1 &3997339407512011802 stripped
@@ -1594,6 +1760,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 8659807108569866042, guid: 1ff56e4e11676e149b93251295eef64d,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 49f4dd3b5921cfd48b48ccf0328c554d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ff56e4e11676e149b93251295eef64d, type: 3}
 --- !u!1001 &5284472762309083419
@@ -1683,6 +1854,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 6504174361649510445, guid: 890aa5764c3bfac4f90e4a6086e2a7a8,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 5b4bf5f087165de42b4ff72199f8bc82, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 890aa5764c3bfac4f90e4a6086e2a7a8, type: 3}
 --- !u!1001 &7679605702193491088

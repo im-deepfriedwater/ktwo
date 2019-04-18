@@ -24,6 +24,11 @@ public class CSSManager : MonoBehaviour
     public Text name;
     public GameObject currentModel = null;
 
+    public Animator animator;
+
+    public bool animationPlayed = false;
+
+
     string currentLoadedText;
 
     // Start is called before the first frame update
@@ -34,7 +39,7 @@ public class CSSManager : MonoBehaviour
 
     public void PreviewCharacter(CharacterEnum? characterToPreview)
     {
-        if (characterToPreview == null) return;
+        if (characterToPreview == null || !animationPlayed) return;
         var characterIndex = (int)characterToPreview;
         UpdateAbilityIcons(characterIndex);
         UpdateCharacterDescription(characterIndex);
@@ -52,6 +57,13 @@ public class CSSManager : MonoBehaviour
     public void ChooseCharacter(CharacterEnum character)
     {
         chosenCharacter = character;
+
+        if (!animationPlayed) // begin animation, load text boxes
+        {
+            animationPlayed = true;
+            animator.SetBool("characterChosen", true);
+            PreviewCharacter(character);
+        }
     }
 
     void UpdateAbilityIcons(int characterId)
@@ -85,8 +97,13 @@ public class CSSManager : MonoBehaviour
         currentModel.SetActive(true);
     }
 
-    void ShowAbilityDescription(int abilityIndex)
+    public void ShowAbilityDescription(int abilityIndex)
     {
-        throw new System.NotImplementedException();
+        textDescription.text = rosterData[(int)chosenCharacter].abilityDescriptions[abilityIndex];
+    }
+
+    public void RestoreCharacterDescription()
+    {
+        UpdateCharacterDescription((int)chosenCharacter);
     }
 }
