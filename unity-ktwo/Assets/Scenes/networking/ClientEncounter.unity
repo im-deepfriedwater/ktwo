@@ -385,30 +385,32 @@ MonoBehaviour:
       points.
     previewModel: {fileID: 1617541732}
     abilityDescriptions:
-    - Builds a wall of 100 HP. Zombies are easily infuriated by walls and will often
+    - Builds a wall of 25 HP. Zombies are easily infuriated by walls and will often
       stop to bash walls in their path until they are destroyed.
-    - Builds a beautiful single piece of a paved road. Its structure is optimal it
-      gives players who run on it a 30% speed boost.
-    - Builds a deliberately cemented trap, formulated to somehow slow only zombies
-      by 30% and not any other player.
-    - Going back to medival roots, the architect builds a relatively violent sautomated
-      spike trap! Does 40 ppoints of damage to zombies when raised.
+    - Builds a beautiful single piece of a paved road. Its optimal structure gives
+      players who run on it a 20% speed boost.
+    - Builds a wet cement trap, formulated to somehow slow only zombies by 70% and
+      not players.
+    - Builds a relatively violent and automated spike trap. Does 75 points of damage
+      to zombies when raised.
     abilityIcons:
     - {fileID: 21300000, guid: ba9f0d9e0f5fdb94a9a7735fa9a13d6e, type: 3}
     - {fileID: 21300000, guid: 78d388f30e685c64387eca2a39a44806, type: 3}
     - {fileID: 21300000, guid: b1a68d980ad56dc4db012b31704f89ba, type: 3}
     - {fileID: 21300000, guid: 4659fbf6b715ca94cb5d78128f9b582f, type: 3}
   - character: 1
-    characterDescription: Most chaotic chemist you'll ever meet. Her chemical puddles
-      are known to be flammable, manipulative, anarchic, and sometimes helpful.
+    characterDescription: Most chaotic chemist you'll meet. Her chemical puddles are
+      known to be flammable, manipulative, anarchic, and sometimes helpful.
     previewModel: {fileID: 974981217}
     abilityDescriptions:
-    - The helpful puddle blah blah blah
-    - The flammable puddle blah blah blah
-    - The random puddle is truly the Chemist at her most chaotic. 50% chance of buffing
-      or debuffing
+    - The helpful puddle gives teammates a 15% speed boost, zombies -15% speed reduction,
+      and makes structures invincible for 2 seconds.
+    - Throws a vial containing a flammable concoction that set zombies ablaze for
+      5 seconds, dealing 10 damage per second.
     - The turn puddle takes advantage of a certain chemical the zombies of K'tah rely
-      on to temporarily attack other zombies.
+      on to temporarily attack other zombies for 5 seconds.
+    - The random vial is contains an unpredictable concoction that may either buff
+      with heal and speed boost, OR slow and damage. 50/50 chance.
     abilityIcons:
     - {fileID: 21300000, guid: de0d710dda7d86b47adb272e908f769d, type: 3}
     - {fileID: 21300000, guid: b98ee354b7232974598f6deca69c9ec4, type: 3}
@@ -418,10 +420,14 @@ MonoBehaviour:
     characterDescription: 
     previewModel: {fileID: 3997339407512011802}
     abilityDescriptions:
-    - 
-    - 
-    - 
-    - 
+    - Chucks a knife in the direction the Chef is facing. Does only 10 damage but
+      the Chef is pretty fast aat throwing these.
+    - Quickly cooks, and then drops a delicacy that will rejuvenate any teammate who
+      picks it up for 15 health points.
+    - Drops an excess amount of stored grease which flings zombies back in a random
+      direction.
+    - Activates its dish washing function to spray bubbles out in the direction the
+      Chef is facing, slowing zombies who come in contact with it by 75%.
     abilityIcons:
     - {fileID: 0}
     - {fileID: 0}
@@ -556,6 +562,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &547717575 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2675291344704275342, guid: 680c4410854207444ac65e01f69a595f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2675291344874107742}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &691624306 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 691624306, guid: 680c4410854207444ac65e01f69a595f,
@@ -581,6 +593,85 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotNumber: 2
+--- !u!1 &855992141
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 855992142}
+  - component: {fileID: 855992144}
+  - component: {fileID: 855992143}
+  m_Layer: 5
+  m_Name: PlayerIndicator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &855992142
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855992141}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 547717575}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: -30}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &855992143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855992141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 8cefe5df27e4d174eb24480bcb97bf2e, type: 3}
+    m_FontSize: 30
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: p1
+--- !u!222 &855992144
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855992141}
+  m_CullTransparentMesh: 0
 --- !u!1 &939072476
 GameObject:
   m_ObjectHideFlags: 0
