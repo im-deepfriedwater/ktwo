@@ -92,8 +92,8 @@ public class SpawnManager : MonoBehaviour
     {
         foreach (var kvp in connections)
         {
-            var targetString = kvp.Value.playerConnectionSpot != 0 ? 
-                string.Format("PlayerSpawnPoint ({0})", kvp.Value.playerConnectionSpot):
+            var targetString = kvp.Value.connectionNumber != 0 ? 
+                string.Format("PlayerSpawnPoint ({0})", kvp.Value.connectionNumber):
                 "PlayerSpawnPoint"; 
 
             var spawnDestination = GameObject.Find(targetString);

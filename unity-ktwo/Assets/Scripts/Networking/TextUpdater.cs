@@ -29,7 +29,7 @@ public class TextUpdater: MonoBehaviour
         foreach (KeyValuePair<NetworkConnection, PlayerConnectionObject> entry in KtwoServer.instance.connections)
         {
             var x = Instantiate(text, textGroup.transform);
-            x.GetComponent<Text>().text = string.Format("Player {0} Connected", entry.Value.playerConnectionSpot);
+            x.GetComponent<Text>().text = string.Format("Player {0} Connected", entry.Value.connectionNumber);
         }
     }
 }

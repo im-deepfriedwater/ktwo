@@ -23,18 +23,28 @@ public class CSSManager : MonoBehaviour
     public Text textDescription;
     public Text name;
     public GameObject currentModel = null;
-
+    public GameObject CSS;
+    public GameObject VThirdPersonController;
+    public GameObject playerUI;
+    public Canvas canvas;
     public Animator animator;
 
+    public PlayerConnectionObject localPlayer;
+
     public bool animationPlayed = false;
-
-
+    public int connectionNumber;
     string currentLoadedText;
+
 
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
+    }
+
+    public void UpdateWelcomeMessage()
+    {
+        name.text = string.Format("Welcome Player {0}", connectionNumber + 1);
     }
 
     public void PreviewCharacter(CharacterEnum? characterToPreview)
@@ -64,6 +74,10 @@ public class CSSManager : MonoBehaviour
             animator.SetBool("characterChosen", true);
             PreviewCharacter(character);
         }
+
+        localPlayer.chosenCharacter = (int)this.chosenCharacter;
+        localPlayer.CmdUpdateChosenCharacter((int)chosenCharacter);
+
     }
 
     void UpdateAbilityIcons(int characterId)
@@ -105,5 +119,19 @@ public class CSSManager : MonoBehaviour
     public void RestoreCharacterDescription()
     {
         UpdateCharacterDescription((int)chosenCharacter);
+    }
+
+    public void ShowCSSScreen()
+    {
+        UpdateWelcomeMessage();
+        CSS.SetActive(true);
+    }
+
+    public void HideCSSScreen()
+    {
+        CSS.SetActive(false);
+        VThirdPersonController.SetActive(true);
+        playerUI.SetActive(true);
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
     }
 }

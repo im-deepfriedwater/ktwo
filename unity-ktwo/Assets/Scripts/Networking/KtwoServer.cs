@@ -54,9 +54,7 @@ public class KtwoServer: NetworkManager
         var player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
         NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
         var connectionObject = player.GetComponent<PlayerConnectionObject>();
-        connectionObject.playerConnectionSpot = playerSpot;
         connections[conn] = connectionObject;
-        playerSpot++;
         GameObject.Find("PlayerConnectionTextGroup").GetComponent<TextUpdater>().UpdateText();
     }
 
@@ -75,11 +73,6 @@ public class KtwoServer: NetworkManager
         Debug.Log("Server network error occurred: " + (NetworkError)errorCode);
     }
 
-    public override void OnStartHost()
-    {
-        Debug.Log("Host has started");
-    }
-
     public override void OnStartServer()
     {
         Debug.Log("Server has started");
@@ -88,10 +81,5 @@ public class KtwoServer: NetworkManager
     public override void OnStopServer()
     {
         Debug.Log("Server has stopped");
-    }
-
-    public override void OnStopHost()
-    {
-        Debug.Log("Host has stopped");
     }
 }

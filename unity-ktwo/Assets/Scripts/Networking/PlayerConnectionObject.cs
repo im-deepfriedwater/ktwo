@@ -16,18 +16,58 @@ public class PlayerConnectionObject : NetworkBehaviour
     // 3 = Dog
     // 4 = Tinkerer
 
-    [SyncVar]
-    public int chosenCharacter = 0;
+    public int chosenCharacter;
 
     [SyncVar]
     bool isPartyLeader = false; // is true for the first person to connect
 
-    [SyncVar]
-    public int playerConnectionSpot; // Ascending order, 0 is first, 1 is second etc
+    // Given to the player in terms of which player they are.
+    // E.G.: first player to connect is 0, 2nd is 1 etc...
+    public int connectionNumber;
+    
+    void Start()
+    {
+        if (isServer) 
+        {
+            RpcInitializeCSS(KtwoServer.instance.playerSpot++);
+        }
+
+        if (hasAuthority)
+        {
+            CSSManager.instance.localPlayer = this;
+        }
+    }
 
     [ClientRpc]
     public void RpcLoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+    }
+
+    [ClientRpc]
+    public void RpcInitializeCSS(int connectionNumber)
+    {
+        // if (!hasAuthority) return;
+        Debug.Log("this happened");
+        this.connectionNumber = connectionNumber;
+        CSSManager.instance.connectionNumber = connectionNumber;
+        CSSManager.instance.ShowCSSScreen();
+    }
+
+    [Command]
+    public void CmdUpdateChosenCharacter(int character)
+    {
+        chosenCharacter = character;
+    }
+
+    [ClientRpc]
+    public void RpcInitializeForEncounter()
+    {
+        if (!hasAuthority) 
+        {
+            Debug.Log("skipping tho");
+            return;
+        }
+        CSSManager.instance.HideCSSScreen();
     }
 }
