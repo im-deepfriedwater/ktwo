@@ -13,7 +13,7 @@ public class CSSCharacterIcon : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public bool playable = true;
     Image icon;
 
-    void Start ()
+    void Start()
     {
         icon = GetComponent<Image>();
         

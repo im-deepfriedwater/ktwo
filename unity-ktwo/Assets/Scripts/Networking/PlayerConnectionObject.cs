@@ -27,15 +27,8 @@ public class PlayerConnectionObject : NetworkBehaviour
     
     void Start()
     {
-        if (isServer) 
-        {
-            RpcInitializeCSS(KtwoServer.instance.playerSpot++);
-        }
-
-        if (hasAuthority)
-        {
-            CSSManager.instance.localPlayer = this;
-        }
+        if (isServer) RpcInitializeCSS(KtwoServer.instance.playerSpot++);
+        if (hasAuthority) CSSManager.instance.localPlayer = this;
     }
 
     [ClientRpc]
@@ -62,11 +55,7 @@ public class PlayerConnectionObject : NetworkBehaviour
     [ClientRpc]
     public void RpcInitializeForEncounter()
     {
-        if (!hasAuthority) 
-        {
-            Debug.Log("skipping tho");
-            return;
-        }
+        if (!hasAuthority) return;
         CSSManager.instance.HideCSSScreen();
     }
 }
