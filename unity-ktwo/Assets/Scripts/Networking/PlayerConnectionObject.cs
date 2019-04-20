@@ -47,8 +47,7 @@ public class PlayerConnectionObject : NetworkBehaviour
     [ClientRpc]
     public void RpcInitializeCSS(int connectionNumber)
     {
-        // if (!hasAuthority) return;
-        Debug.Log("this happened");
+        if (!hasAuthority) return;
         this.connectionNumber = connectionNumber;
         CSSManager.instance.connectionNumber = connectionNumber;
         CSSManager.instance.ShowCSSScreen();

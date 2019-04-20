@@ -15,26 +15,25 @@ public class CSSManager : MonoBehaviour
     public static CSSManager instance;
 
     public List<GameObject> previewModels;
-
     public List<GameObject> abilityIcons;
-    CharacterEnum? chosenCharacter = null;
     public List<CSSCharacterInfoStruct> rosterData;
 
-    public Text textDescription;
-    public Text name;
     public GameObject currentModel = null;
     public GameObject CSS;
     public GameObject VThirdPersonController;
     public GameObject playerUI;
+
+    public Text textDescription;
+    public Text name;
     public Canvas canvas;
     public Animator animator;
-
     public PlayerConnectionObject localPlayer;
 
     public bool animationPlayed = false;
     public int connectionNumber;
-    string currentLoadedText;
 
+    string currentLoadedText;
+    CharacterEnum? chosenCharacter = null;
 
     // Start is called before the first frame update
     void Start()
@@ -88,6 +87,7 @@ public class CSSManager : MonoBehaviour
             iconToChange.sprite = rosterData[characterId].abilityIcons[i];
         }    
     }
+
     void UpdateCharacterTitle(int characterId)
     {
         name.text = string.Format("\"The {0}\"", rosterData[characterId].character.ToString());

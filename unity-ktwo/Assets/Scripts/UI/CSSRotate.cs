@@ -8,10 +8,6 @@ public class CSSRotate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(
-            transform.rotation.x, 
-            transform.rotation.y + rotationSpeed, 
-            transform.rotation.z
-        );
+        transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
     }
 }
