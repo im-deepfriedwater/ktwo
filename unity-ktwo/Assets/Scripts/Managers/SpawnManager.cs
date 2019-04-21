@@ -16,7 +16,7 @@ public class SpawnManager : MonoBehaviour
 
     public List<GameObject> playerSpawns;
     public List<GameObject> zombieSpawns;
-    
+
     public GameObject zombie;
     public SpawnZone StartSpawnZone;
 
@@ -27,11 +27,11 @@ public class SpawnManager : MonoBehaviour
 
     void Awake()
     {
-        playerSpawns = new List<GameObject>(); 
+        playerSpawns = new List<GameObject>();
         zombieSpawns = new List<GameObject>();
         instance = this;
     }
-    
+
     public void SpawnZombieAtPoint(SpawnZone sa)
     {
         var destination = GameObject.Find(string.Format("ZombieSpawnZone{0}", sa.ToString()));
@@ -55,7 +55,7 @@ public class SpawnManager : MonoBehaviour
     public IEnumerator TimedSpawn(int numberOfZombies)
     {
         var counter = 0;
-        while(counter < numberOfZombies)
+        while (counter < numberOfZombies)
         {
             yield return new WaitForSeconds(SPAWN_DELAY);
             SpawnZombieAtRandomPoint();
@@ -65,7 +65,7 @@ public class SpawnManager : MonoBehaviour
 
     public void SpawnAtClosest(Transform t)
     {
-        var shortest = Mathf.Infinity; 
+        var shortest = Mathf.Infinity;
         GameObject destination = null;
         foreach (GameObject go in zombieSpawns)
         {

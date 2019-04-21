@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 [RequireComponent(typeof(InvinicibilityFlashModifier))]
-public class DamagableEnemy: Damagable
-{   
+public class DamagableEnemy : Damagable
+{
     public float health = 100; // 100 by default.
     [Range(1, 10)]
     public int knockbackFactor; // There's not really any sense of units here sorry...
@@ -31,18 +31,51 @@ public class DamagableEnemy: Damagable
         base.Start();
     }
 
-    override public void Hit(float damage)
+    override public void Heal(float healAmount)
+    {
+        currentHealth = Mathf.Min(currentHealth + healAmount, startingHealth);
+
+        RpcHeal(healAmount);
+    }
+
+    [ClientRpc]
+    public void RpcHeal(float healAmount)
+    {
+        currentHealth = Mathf.Min(currentHealth + healAmount, startingHealth);
+        OnHit.Invoke(currentHealth / startingHealth);
+    }
+
+    public void Hit(float damage, Vector3 direction, bool iFrames)
     {
         if (isInvincible) return;
 
         currentHealth -= damage;
-        OnHit.Invoke(currentHealth / health);
-        StartCoroutine(BeginInvincibility());
-        if (currentHealth <= 0)
+
+        if (currentHealth <= 0) Die();
+
+        if (iFrames)
         {
-            Die();
+            KnockbackEnemy(direction);
+            StartCoroutine(BeginInvincibility());
         }
 
+        RpcHit(damage, direction, iFrames);
+    }
+
+    [ClientRpc]
+    public void RpcHit(float damage, Vector3 direction, bool iFrames)
+    {
+        if (isInvincible) return;
+
+        currentHealth -= damage;
+
+        if (currentHealth <= 0) Die();
+
+        if (iFrames)
+        {
+            KnockbackEnemy(direction);
+            StartCoroutine(BeginInvincibility());
+        }
     }
 
     public IEnumerator DamageOverTime(float damageAmount, float duration)
@@ -50,7 +83,7 @@ public class DamagableEnemy: Damagable
         var elapsedTime = 0f;
         while (elapsedTime < duration)
         {
-            Hit(damageAmount);
+            Hit(damageAmount, Vector3.zero, false);
             yield return new WaitForSeconds(1.0f);
             elapsedTime++;
         }
@@ -63,24 +96,6 @@ public class DamagableEnemy: Damagable
         fireEffect.SetActive(false);
     }
 
-    public void ClientSideHit(float damage, Vector3 direction)
-    {
-        if (isServer) return;
-        CmdReportEnemyHit(damage);
-        Hit(damage);
-        KnockbackEnemy(direction);
-        StartCoroutine(BeginInvincibility());
-    }
-
-    public void ServerSideHit(float damage, Vector3 direction)
-    {
-        if (!isServer) return;
-        RpcTellEnemyHit(damage);
-        Hit(damage);
-        KnockbackEnemy(direction);
-        StartCoroutine(BeginInvincibility());
-    }
-
     void KnockbackEnemy(Vector3 direction)
     {
         calculatedKnockBackFactor = knockbackFactor * 10; // Adjusted from 1 - 10 -> 10 - 100
@@ -88,7 +103,7 @@ public class DamagableEnemy: Damagable
     }
 
     IEnumerator BeginInvincibility()
-    {   
+    {
         isInvincible = true;
         invinicibilityComponent.enabled = true;
         yield return new WaitForSeconds(invincibilityDuration);
@@ -98,26 +113,10 @@ public class DamagableEnemy: Damagable
 
     public void Die()
     {
-        if (isServer) 
+        if (isServer)
         {
             EnemyManager.instance.zombies.Remove(gameObject);
             NetworkServer.Destroy(gameObject);
         }
-    }
-
-    [Command]
-    public void CmdReportEnemyHit(float damage)
-    {
-        health -= damage;
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-    }
-
-    [ClientRpc]
-    public void RpcTellEnemyHit(float damage)
-    {
-        Hit(damage);
     }
 }

@@ -9,12 +9,12 @@ public class SpikeTrapBehaviour : MonoBehaviour
 
     private bool spikesActive = false;
     private DPSModifier dpsMod;
-    
+
     private Transform spikes;
     private Animator spikeAnimator;
 
     void Start()
-    {   
+    {
         network = transform.parent.gameObject.GetComponent<NetworkRoot>();
         spikes = transform.Find("Spikes");
         spikeAnimator = spikes.GetComponent<Animator>();
@@ -25,7 +25,7 @@ public class SpikeTrapBehaviour : MonoBehaviour
     void OnTriggerStay(Collider other)
     {
         if (!network.isServer || other.gameObject.tag != "Zombie" || !spikesActive) return;
-        other.gameObject.GetComponent<DamagableEnemy>().ServerSideHit(dpsMod.damageAmount, Vector3.zero);
+        other.gameObject.GetComponent<DamagableEnemy>().Hit(dpsMod.damageAmount, Vector3.zero, true);
     }
 
     private IEnumerator CycleSpikes()

@@ -59,8 +59,8 @@ public abstract class AbstractAbility : NetworkBehaviour
 
     protected void UpdateAbilityUI() // This should be called at some point in the derived's update method
     {
-        if (!hasAuthority)  return;
-        
+        if (!hasAuthority) return;
+
         if (cooldownOver)
         {
             MarkAbilityAsReady();
@@ -92,5 +92,12 @@ public abstract class AbstractAbility : NetworkBehaviour
     protected virtual void Awake()
     {
         inputState = GetComponent<InputState>();
+    }
+
+    [Command]
+    public void CmdBuildObject(string name, Vector3 position, Quaternion rotation)
+    {
+        var go = (GameObject)Instantiate(Resources.Load(name, typeof(GameObject)), position, rotation);
+        NetworkServer.Spawn(go);
     }
 }

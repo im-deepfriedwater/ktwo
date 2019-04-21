@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 4432589971207890241}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 25, z: 1}
   m_Children: []
   m_Father: {fileID: 7061299352214789536}
   m_RootOrder: 0
@@ -57,7 +57,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 615afa307e4a949459d32faf5ab78734, type: 2}
+  - {fileID: 2100000, guid: cc4900ae12737334d87f3c9fee637635, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -86,10 +86,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7061299352214789536}
-  - component: {fileID: 5482569671518517322}
+  - component: {fileID: 7102688449191365773}
   - component: {fileID: 3160449240614949933}
+  - component: {fileID: 1180272155295065620}
   m_Layer: 0
-  m_Name: AggressionPuddle
+  m_Name: HelpfulPuddle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +111,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5482569671518517322
+--- !u!114 &7102688449191365773
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,12 +120,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 6777690292249990457}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eac55145f52fc934888a994b98870b79, type: 3}
+  m_Script: {fileID: 11500000, guid: 724518c1dc38c7a46aef2d35284df3c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfUses: 3
   decayRate: 10
-  duration: 6
+  speedBoostPercent: 0.1
+  buffDuration: 8
+  speedDebuffPercent: 0.4
+  debuffDuration: 5
+  invincibilityDuration: 2
+  DPSBuffPercent: 0
+  DPSBuffDuration: 8
 --- !u!136 &3160449240614949933
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -139,3 +146,36 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.00000011920929, y: 0, z: -0.00000008940697}
+--- !u!114 &1180272155295065620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6777690292249990457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0

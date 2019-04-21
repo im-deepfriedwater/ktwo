@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 [RequireComponent(typeof(InvinicibilityFlashModifier))]
-public class DamagablePlayer: Damagable
-{   
+public class DamagablePlayer : Damagable
+{
     [Range(1, 10)]
     public int knockbackFactor; // There's not really any sense of units here sorry...
     private float calculatedKnockBackFactor;
@@ -18,7 +18,7 @@ public class DamagablePlayer: Damagable
     public new UnityEventFloat OnHit; // `new` Overrides original OnHit field.
 
     InvinicibilityFlashModifier invinicibilityComponent;
-    
+
     void Awake()
     {
         rbd = GetComponent<Rigidbody>();
@@ -38,29 +38,48 @@ public class DamagablePlayer: Damagable
     override public void Heal(float healAmount)
     {
         currentHealth = Mathf.Min(currentHealth + healAmount, startingHealth);
+
+        RpcHeal(healAmount);
+    }
+
+    [ClientRpc]
+    public void RpcHeal(float healAmount)
+    {
+        currentHealth = Mathf.Min(currentHealth + healAmount, startingHealth);
         OnHit.Invoke(currentHealth / startingHealth);
     }
 
-
-    // A hit with knockback.
-    public void Hit(float damage, Vector3 direction)
+    public void Hit(float damage, Vector3 direction, bool iFrames)
     {
-        Hit(damage);
-        KnockbackPlayer(direction);
-        StartCoroutine(BeginInvincibility());
-    }
-
-    public override void Hit(float damage)
-    {
-        if (isInvincible || !hasAuthority) return;
-
-        if (!isServer) CmdServerRegisterHit(damage);
+        if (isInvincible) return;
 
         currentHealth -= damage;
 
         if (currentHealth <= 0) GetComponent<PlayerBehaviour>().Die();
 
+        if (iFrames)
+        {
+            KnockbackPlayer(direction);
+            StartCoroutine(BeginInvincibility());
+        }
+
+        RpcHit(damage, direction, iFrames);
+    }
+
+    [ClientRpc]
+    public void RpcHit(float damage, Vector3 direction, bool iFrames)
+    {
+        currentHealth -= damage;
+
+        if (currentHealth <= 0) GetComponent<PlayerBehaviour>().Die();
+
         OnHit.Invoke(currentHealth / startingHealth);
+
+        if (iFrames)
+        {
+            KnockbackPlayer(direction);
+            StartCoroutine(BeginInvincibility());
+        }
     }
 
     public IEnumerator DamageOverTime(float damageAmount, float duration)
@@ -68,7 +87,7 @@ public class DamagablePlayer: Damagable
         var elapsedTime = 0f;
         while (elapsedTime < duration)
         {
-            Hit(damageAmount);
+            Hit(damageAmount, Vector3.zero, false);
             yield return new WaitForSeconds(1.0f);
             elapsedTime++;
         }
@@ -81,7 +100,7 @@ public class DamagablePlayer: Damagable
     }
 
     IEnumerator BeginInvincibility()
-    {   
+    {
         isInvincible = true;
         invinicibilityComponent.enabled = true;
         yield return new WaitForSeconds(invincibilityDuration);
@@ -108,7 +127,7 @@ public class DamagablePlayer: Damagable
     }
 
     [ClientRpc]
-    void RpcTriggerClientInvincibility() 
+    void RpcTriggerClientInvincibility()
     {
         StartCoroutine(BeginInvincibility());
     }

@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 public class Damagable : NetworkBehaviour
 {
     public float startingHealth;
-    
+
     public float currentHealth;
 
     public UnityEvent OnZeroHealth; // Death animations, or functions to call on death go here.
@@ -26,7 +26,7 @@ public class Damagable : NetworkBehaviour
         currentHealth = Mathf.Min(currentHealth + healAmount, startingHealth);
     }
 
-    virtual public void Hit(float damage) 
+    virtual public void Hit(float damage)
     {
         currentHealth -= damage;
         OnHit.Invoke();
