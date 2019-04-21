@@ -13,10 +13,10 @@ public class DamagableStructure : Damagable
     // There must be a network structure on the root
     // structure group.
     public NetworkRoot network;
-    
+
     private Material defaultMaterial;
 
-    new void Start ()
+    new void Start()
     {
         network = transform.parent.gameObject.GetComponent<NetworkRoot>();
         defaultMaterial = gameObject.GetComponent<Renderer>().material;
@@ -39,7 +39,7 @@ public class DamagableStructure : Damagable
     }
 
     public IEnumerator BeginInvincibility(float duration)
-    {   
+    {
         var materialRenderer = gameObject.GetComponent<Renderer>();
         isInvincible = true;
         materialRenderer.material = invincibleMaterial;
@@ -52,5 +52,11 @@ public class DamagableStructure : Damagable
     {
         if (!network.isServer) return;
         NetworkServer.Destroy(transform.parent.gameObject);
+    }
+
+    [ClientRpc]
+    public void RpcHeal(float healAmount)
+    {
+        Heal(healAmount);
     }
 }

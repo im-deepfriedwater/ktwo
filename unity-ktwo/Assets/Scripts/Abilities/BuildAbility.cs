@@ -34,11 +34,4 @@ public class BuildAbility : AbstractAbility
         newPosition += transform.forward * distanceFactor;
         CmdBuildObject(buildPrefab.name, newPosition, transform.rotation);
     }
-
-    [Command]
-    public void CmdBuildObject(string name, Vector3 position, Quaternion rotation)    
-    {      
-        var go = (GameObject)Instantiate(Resources.Load(name, typeof(GameObject)), position, rotation);
-        NetworkServer.Spawn(go);
-    }
-} 
+}
