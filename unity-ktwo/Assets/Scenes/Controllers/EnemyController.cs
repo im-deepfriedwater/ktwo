@@ -103,6 +103,7 @@ public class EnemyController : NetworkBehaviour
 
     void OnTriggerStay(Collider other)
     {
+        if (!isServer) return;
         if (other.gameObject.tag == "Structure") AttackStructure(other);
         if (other.gameObject.tag == "Player" && !turned) AttackPlayer(other);
         if (other.gameObject.tag == "Zombie" && turned) AttackZombie(other);
@@ -180,7 +181,6 @@ public class EnemyController : NetworkBehaviour
 
     void AttackZombie(Collider other)
     {
-        if (!isServer) return;
         var zombie = other.gameObject.GetComponent<DamagableEnemy>();
         if (zombie == null) return;
 

@@ -35,17 +35,21 @@ public class DamagablePlayer : Damagable
         base.Start();
     }
 
-
     override public void Heal(float healAmount)
     {
+        if (!hasAuthority) return;
+
+        if (!isServer) CmdHeal(healAmount);
+
         currentHealth = Mathf.Min(currentHealth + healAmount, startingHealth);
         OnHit.Invoke(currentHealth / startingHealth);
     }
 
-    [ClientRpc]
-    public void RpcHeal(float healAmount)
+    [Command]
+    public void CmdHeal(float healAmount)
     {
-        Heal(healAmount);
+        currentHealth = Mathf.Min(currentHealth + healAmount, startingHealth);
+        OnHit.Invoke(currentHealth / startingHealth);
     }
 
 
@@ -57,11 +61,11 @@ public class DamagablePlayer : Damagable
         StartCoroutine(BeginInvincibility());
     }
 
-    public override void Hit(float damage)
+    public void Hit(float damage, bool hasIFrames)
     {
         if (isInvincible || !hasAuthority) return;
 
-        if (!isServer) CmdServerRegisterHit(damage);
+        // if (!isServer) CmdServerRegisterHit(damage, hasIFrames);
 
         currentHealth -= damage;
 
@@ -75,7 +79,7 @@ public class DamagablePlayer : Damagable
         var elapsedTime = 0f;
         while (elapsedTime < duration)
         {
-            CmdServerRegisterHit(damageAmount);
+            Hit(damageAmount, false);
             yield return new WaitForSeconds(1.0f);
             elapsedTime++;
         }
@@ -97,14 +101,14 @@ public class DamagablePlayer : Damagable
     }
 
     [Command]
-    void CmdServerRegisterHit(float damage)
+    void CmdServerRegisterHit(float damage, bool hasIFrames)
     {
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
             RpcPlayerOutOfHealth();
         }
-        RpcTriggerClientInvincibility();
+        if (hasIFrames) RpcTriggerClientInvincibility();
     }
 
     [ClientRpc]

@@ -78,7 +78,7 @@ public class RandomPuddleBehaviour : BasePuddleBehaviour
                 other.GetComponent<PlayerBehaviour>()
                     .TimedAffectSpeed(speedBoostPercent, buffDuration, true)
             );
-            other.GetComponent<DamagablePlayer>().RpcHeal(healAmount);
+            other.GetComponent<DamagablePlayer>().Heal(healAmount);
             StartCoroutine(
                 RemoveFromHashSet(other.gameObject, buffDuration)
             );
@@ -92,7 +92,7 @@ public class RandomPuddleBehaviour : BasePuddleBehaviour
                 other.GetComponent<EnemyController>()
                     .TimedAffectSpeed(speedBoostPercent, buffDuration, true)
             );
-            other.GetComponent<DamagableEnemy>().RpcHeal(healAmount);
+            other.GetComponent<DamagableEnemy>().Heal(healAmount);
             StartCoroutine(
                 RemoveFromHashSet(other.gameObject, buffDuration)
             );
@@ -107,7 +107,7 @@ public class RandomPuddleBehaviour : BasePuddleBehaviour
             var structureDamagable = other.gameObject.GetComponent<DamagableStructure>();
             if (structureDamagable != null)
             {
-                structureDamagable.RpcHeal(structureHealAmount);
+                structureDamagable.Heal(structureHealAmount);
                 StartCoroutine(
                     structureDamagable.BeginInvincibility(invincibilityDuration)
                 );
