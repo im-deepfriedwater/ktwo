@@ -57,6 +57,7 @@ public class RandomPuddleBehaviour : BasePuddleBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (!isServer) return;
         if (CannotBeUsed(other.gameObject)) return;
 
         if (buff)
@@ -74,10 +75,7 @@ public class RandomPuddleBehaviour : BasePuddleBehaviour
         if (other.gameObject.tag == "Player")
         {
             affectedEntities.Add(other.gameObject);
-            StartCoroutine(
-                other.GetComponent<PlayerBehaviour>()
-                    .TimedAffectSpeed(speedBoostPercent, buffDuration, true)
-            );
+            other.GetComponent<PlayerBehaviour>().RpcTimedAffectSpeed(speedBoostPercent, buffDuration, true);
             other.GetComponent<DamagablePlayer>().Heal(healAmount);
             StartCoroutine(
                 RemoveFromHashSet(other.gameObject, buffDuration)

@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 
 // For controlling the main behaviours of the player.
 public class PlayerBehaviour : NetworkBehaviour
-{   
+{
     [HideInInspector]
     Slider healthBar;
     [Tooltip("UI for game screen. Should be in Canvas, called GameOverScreen")]
@@ -21,7 +21,7 @@ public class PlayerBehaviour : NetworkBehaviour
     Collider lastCollided;
     Animator animator;
     Rigidbody rbd;
-    
+
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
@@ -61,13 +61,19 @@ public class PlayerBehaviour : NetworkBehaviour
         if (!hasAuthority)
         {
             return;
-        } 
+        }
 
         var speedChange = defaultSpeed * percent;
         playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
     }
 
-    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff) 
+    [ClientRpc]
+    public void RpcTimedAffectSpeed(float percent, float time, bool buff)
+    {
+        StartCoroutine(TimedAffectSpeed(percent, time, buff));
+    }
+
+    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff)
     {
         var speedChange = defaultSpeed * percent;
         playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
@@ -90,7 +96,7 @@ public class PlayerBehaviour : NetworkBehaviour
     public void Die()
     {
         animator.SetBool("IsDead", true);
-    
+
         if (!hasAuthority) return;
 
         input.enabled = false;
