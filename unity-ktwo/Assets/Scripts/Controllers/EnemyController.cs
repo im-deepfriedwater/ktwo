@@ -122,6 +122,8 @@ public class EnemyController : NetworkBehaviour
         isAttacking = true;
         agent.isStopped = true;
 
+        if (!isServer) return;
+
         if (isAttacking && !isAttackOnCooldown && !hitboxActivated)
         {
             if (!CountDownForAttackHitBoxCoroutineStarted)
@@ -188,6 +190,8 @@ public class EnemyController : NetworkBehaviour
         SetAttackAnimation(true);
         isAttacking = true;
         agent.isStopped = true;
+
+        if (!isServer) return;
 
         if (isAttacking && !isAttackOnCooldown && !hitboxActivated)
         {
