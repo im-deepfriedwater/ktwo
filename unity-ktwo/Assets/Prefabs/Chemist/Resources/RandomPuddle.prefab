@@ -125,7 +125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberOfUses: 3
   decayRate: 10
-  speedBoostPercent: 0.25
+  speedBoostPercent: 1
   buffDuration: 10
   healAmount: 10
   speedDebuffPercent: 0.25

@@ -19,10 +19,7 @@ public class HelpfulPuddleBehaviour : BasePuddleBehaviour
         if (other.gameObject.tag == "Player")
         {
             affectedEntities.Add(other.gameObject);
-            StartCoroutine(
-                other.GetComponent<PlayerBehaviour>()
-                    .TimedAffectSpeed(speedBoostPercent, buffDuration, true)
-            );
+            other.GetComponent<PlayerBehaviour>().RpcTimedAffectSpeed(speedBoostPercent, buffDuration, true);
             StartCoroutine(
                 RemoveFromHashSet(other.gameObject, buffDuration)
             );
@@ -32,7 +29,7 @@ public class HelpfulPuddleBehaviour : BasePuddleBehaviour
         if (other.gameObject.tag == "Structure")
         {
             affectedEntities.Add(other.gameObject);
-            
+
             var overallDuration = 0f;
             var structureDamagable = other.gameObject.GetComponent<DamagableStructure>();
             if (structureDamagable != null)
