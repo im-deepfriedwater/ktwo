@@ -39,14 +39,13 @@ public class DamagablePlayer : Damagable
     {
         if (!hasAuthority) return;
 
-        if (!isServer) CmdHeal(healAmount);
-
         currentHealth = Mathf.Min(currentHealth + healAmount, startingHealth);
-        OnHit.Invoke(currentHealth / startingHealth);
+
+        RpcHeal(healAmount);
     }
 
-    [Command]
-    public void CmdHeal(float healAmount)
+    [ClientRpc]
+    public void RpcHeal(float healAmount)
     {
         currentHealth = Mathf.Min(currentHealth + healAmount, startingHealth);
         OnHit.Invoke(currentHealth / startingHealth);

@@ -14,6 +14,7 @@ public class HelpfulPuddleBehaviour : BasePuddleBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (!isServer) return;
         if (CannotBeUsed(other.gameObject)) return;
 
         if (other.gameObject.tag == "Player")
