@@ -54,23 +54,25 @@ public class DamagablePlayer : Damagable
 
 
     // A hit with knockback
-    public void Hit(float damage, Vector3 direction)
+    public void Hit(float damage, Vector3 direction, bool iFrames)
     {
-        if (isInvincible || !hasAuthority) return;
+        if (isInvincible) return;
 
         currentHealth -= damage;
 
         if (currentHealth <= 0) GetComponent<PlayerBehaviour>().Die();
 
-        KnockbackPlayer(direction);
+        if (iFrames)
+        {
+            KnockbackPlayer(direction);
+            StartCoroutine(BeginInvincibility());
+        }
 
-        StartCoroutine(BeginInvincibility());
-
-        RpcHit(damage, direction);
+        RpcHit(damage, direction, iFrames);
     }
 
     [ClientRpc]
-    public void RpcHit(float damage, Vector3 direction)
+    public void RpcHit(float damage, Vector3 direction, bool iFrames)
     {
         currentHealth -= damage;
 
@@ -78,9 +80,11 @@ public class DamagablePlayer : Damagable
 
         OnHit.Invoke(currentHealth / startingHealth);
 
-        KnockbackPlayer(direction);
-
-        StartCoroutine(BeginInvincibility());
+        if (iFrames)
+        {
+            KnockbackPlayer(direction);
+            StartCoroutine(BeginInvincibility());
+        }
     }
 
     public IEnumerator DamageOverTime(float damageAmount, float duration)
@@ -88,7 +92,7 @@ public class DamagablePlayer : Damagable
         var elapsedTime = 0f;
         while (elapsedTime < duration)
         {
-            Hit(damageAmount);
+            Hit(damageAmount, Vector3.zero, false);
             yield return new WaitForSeconds(1.0f);
             elapsedTime++;
         }

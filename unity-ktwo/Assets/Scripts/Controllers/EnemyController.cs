@@ -165,7 +165,7 @@ public class EnemyController : NetworkBehaviour
         {
             hasAttacked = true;
             Vector3 direction = currentTransform.forward;
-            player.Hit(damage, direction);
+            player.Hit(damage, direction, true);
             hitboxActivated = false;
             isAttackOnCooldown = true;
             if (StartAttackCooldownCoroutineStarted)
