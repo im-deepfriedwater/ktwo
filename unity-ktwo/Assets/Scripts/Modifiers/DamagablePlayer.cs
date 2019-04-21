@@ -53,25 +53,34 @@ public class DamagablePlayer : Damagable
     }
 
 
-    // A hit with knockback.
+    // A hit with knockback
     public void Hit(float damage, Vector3 direction)
     {
-        Hit(damage);
-        KnockbackPlayer(direction);
-        StartCoroutine(BeginInvincibility());
-    }
-
-    public void Hit(float damage, bool hasIFrames)
-    {
         if (isInvincible || !hasAuthority) return;
-
-        // if (!isServer) CmdServerRegisterHit(damage, hasIFrames);
 
         currentHealth -= damage;
 
         if (currentHealth <= 0) GetComponent<PlayerBehaviour>().Die();
 
+        KnockbackPlayer(direction);
+
+        StartCoroutine(BeginInvincibility());
+
+        RpcHit(damage, direction);
+    }
+
+    [ClientRpc]
+    public void RpcHit(float damage, Vector3 direction)
+    {
+        currentHealth -= damage;
+
+        if (currentHealth <= 0) GetComponent<PlayerBehaviour>().Die();
+
         OnHit.Invoke(currentHealth / startingHealth);
+
+        KnockbackPlayer(direction);
+
+        StartCoroutine(BeginInvincibility());
     }
 
     public IEnumerator DamageOverTime(float damageAmount, float duration)
@@ -79,7 +88,7 @@ public class DamagablePlayer : Damagable
         var elapsedTime = 0f;
         while (elapsedTime < duration)
         {
-            Hit(damageAmount, false);
+            Hit(damageAmount);
             yield return new WaitForSeconds(1.0f);
             elapsedTime++;
         }
@@ -101,14 +110,14 @@ public class DamagablePlayer : Damagable
     }
 
     [Command]
-    void CmdServerRegisterHit(float damage, bool hasIFrames)
+    void CmdServerRegisterHit(float damage)
     {
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
             RpcPlayerOutOfHealth();
         }
-        if (hasIFrames) RpcTriggerClientInvincibility();
+        RpcTriggerClientInvincibility();
     }
 
     [ClientRpc]

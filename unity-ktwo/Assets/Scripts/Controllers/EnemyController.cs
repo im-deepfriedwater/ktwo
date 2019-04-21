@@ -103,7 +103,6 @@ public class EnemyController : NetworkBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (!isServer) return;
         if (other.gameObject.tag == "Structure") AttackStructure(other);
         if (other.gameObject.tag == "Player" && !turned) AttackPlayer(other);
         if (other.gameObject.tag == "Zombie" && turned) AttackZombie(other);
@@ -151,6 +150,9 @@ public class EnemyController : NetworkBehaviour
         SetAttackAnimation(true);
         isAttacking = true;
         agent.isStopped = true;
+
+        // WIP
+        if (!isServer) return;
 
         if (isAttacking && !isAttackOnCooldown && !hitboxActivated)
         {
