@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 1944726647725310807}
   - component: {fileID: 484720589339430577}
   - component: {fileID: 7448844879944474370}
+  - component: {fileID: 350998163}
   m_Layer: 0
   m_Name: MasterManager
   m_TagString: Untagged
@@ -127,6 +128,131 @@ MonoBehaviour:
   zombie: {fileID: 7086454018950713939, guid: 27df18849fea7834eacf23589b8fe0cb, type: 3}
   StartSpawnZone: 1
   SpawnOnStartup: 1
+--- !u!114 &350998163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5752666004993154227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53455e7f28dc2ca4fab8509e74ba8cd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  previewModels:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  abilityIcons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  rosterData:
+  - character: 0
+    characterDescription: Builder of walls, roads, and zombie death spike traps. the
+      architect brings a frantic but methodical playstyle encouraging strategic choke
+      points.
+    previewModel: {fileID: 0}
+    abilityDescriptions:
+    - Builds a wall of 25 HP. Zombies are easily infuriated by walls and will often
+      stop to bash walls in their path until they are destroyed.
+    - Builds a beautiful single piece of a paved road. Its optimal structure gives
+      players who run on it a 20% speed boost.
+    - Builds a wet cement trap, formulated to somehow slow only zombies by 70% and
+      not players.
+    - Builds a relatively violent and automated spike trap. Does 75 points of damage
+      to zombies when raised.
+    abilityIcons:
+    - {fileID: 21300000, guid: ba9f0d9e0f5fdb94a9a7735fa9a13d6e, type: 3}
+    - {fileID: 21300000, guid: 78d388f30e685c64387eca2a39a44806, type: 3}
+    - {fileID: 21300000, guid: b1a68d980ad56dc4db012b31704f89ba, type: 3}
+    - {fileID: 21300000, guid: 4659fbf6b715ca94cb5d78128f9b582f, type: 3}
+  - character: 1
+    characterDescription: Most chaotic chemist you'll meet. Her chemical puddles are
+      known to be flammable, manipulative, anarchic, and sometimes helpful.
+    previewModel: {fileID: 0}
+    abilityDescriptions:
+    - The helpful puddle gives teammates a 15% speed boost, zombies -15% speed reduction,
+      and makes structures invincible for 2 seconds.
+    - Throws a vial containing a flammable concoction that set zombies ablaze for
+      5 seconds, dealing 10 damage per second.
+    - The turn puddle takes advantage of a certain chemical the zombies of K'tah rely
+      on to temporarily attack other zombies for 5 seconds.
+    - The random vial is contains an unpredictable concoction that may either buff
+      with heal and speed boost, OR slow and damage. 50/50 chance.
+    abilityIcons:
+    - {fileID: 21300000, guid: de0d710dda7d86b47adb272e908f769d, type: 3}
+    - {fileID: 21300000, guid: b98ee354b7232974598f6deca69c9ec4, type: 3}
+    - {fileID: 21300000, guid: 032180e2566f9a5499224e07825633e9, type: 3}
+    - {fileID: 21300000, guid: 2fbbd6623a138294183bf2b447865156, type: 3}
+  - character: 2
+    characterDescription: 
+    previewModel: {fileID: 0}
+    abilityDescriptions:
+    - Chucks a knife in the direction the Chef is facing. Does only 10 damage but
+      the Chef is pretty fast aat throwing these.
+    - Quickly cooks, and then drops a delicacy that will rejuvenate any teammate who
+      picks it up for 15 health points.
+    - Drops an excess amount of stored grease which flings zombies back in a random
+      direction.
+    - Activates its dish washing function to spray bubbles out in the direction the
+      Chef is facing, slowing zombies who come in contact with it by 75%.
+    abilityIcons:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - character: 3
+    characterDescription: Some say "The Herder" is the best boy. He's also a boy in
+      progress. We're working on him getting him ready to play ASAP!
+    previewModel: {fileID: 0}
+    abilityDescriptions:
+    - Some say "The Herder" is the best boy. He's also a boy in progress. We're working
+      on him getting him ready to play ASAP!
+    - Some say "The Herder" is the best boy. He's also a boy in progress. We're working
+      on him getting him ready to play ASAP!
+    - Some say "The Herder" is the best boy. He's also a boy in progress. We're working
+      on him getting him ready to play ASAP!
+    - Some say "The Herder" is the best boy. He's also a boy in progress. We're working
+      on him getting him ready to play ASAP!
+    abilityIcons:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - character: 4
+    characterDescription: The Tinkerer was too busy building turrents out of BBQ grills
+      and sticking dynamite into soup cans to be ready in time. Check back soon!
+    previewModel: {fileID: 0}
+    abilityDescriptions:
+    - The Tinkerer was too busy building turrents out of BBQ grills and sticking dynamite
+      into soup cans to be ready in time. Check back soon!
+    - The Tinkerer was too busy building turrents out of BBQ grills and sticking dynamite
+      into soup cans to be ready in time. Check back soon!
+    - The Tinkerer was too busy building turrents out of BBQ grills and sticking dynamite
+      into soup cans to be ready in time. Check back soon!
+    - The Tinkerer was too busy building turrents out of BBQ grills and sticking dynamite
+      into soup cans to be ready in time. Check back soon!
+    abilityIcons:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  textDescription: {fileID: 0}
+  name: {fileID: 0}
+  currentModel: {fileID: 0}
+  CSS: {fileID: 0}
+  VThirdPersonController: {fileID: 1954116143776750275}
+  playerUI: {fileID: 0}
+  canvas: {fileID: 0}
+  animator: {fileID: 0}
+  localPlayer: {fileID: 0}
+  animationPlayed: 0
+  connectionNumber: 0
 --- !u!1001 &821104020857565117
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -138,6 +264,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: vThirdPersonController
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187630364382164350, guid: bfc097b51660dba418e520b1f6092bb3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1187630364381890554, guid: bfc097b51660dba418e520b1f6092bb3,
         type: 3}
@@ -196,6 +327,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfc097b51660dba418e520b1f6092bb3, type: 3}
+--- !u!1 &1954116143776750275 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1187630364382164350, guid: bfc097b51660dba418e520b1f6092bb3,
+    type: 3}
+  m_PrefabInstance: {fileID: 821104020857565117}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1954116143777015879 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1187630364381890554, guid: bfc097b51660dba418e520b1f6092bb3,

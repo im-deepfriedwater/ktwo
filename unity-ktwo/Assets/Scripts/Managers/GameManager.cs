@@ -23,8 +23,17 @@ public class GameManager: MonoBehaviour
     public void StartEncounter()
     {
         StartCoroutine(BeginWave());
+        TellPlayersToHideCSSScreen();
         NetworkServer.Spawn(Instantiate(map, Vector3.zero, Quaternion.identity));
         SpawnManager.instance.SpawnPlayers(KtwoServer.instance.connections);
+    }
+
+    void TellPlayersToHideCSSScreen()
+    {
+        foreach (var kvp in KtwoServer.instance.connections)
+        {
+            kvp.Value.RpcInitializeForEncounter();
+        }
     }
 
     IEnumerator BeginWave()

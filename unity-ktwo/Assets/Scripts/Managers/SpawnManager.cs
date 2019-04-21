@@ -92,9 +92,9 @@ public class SpawnManager : MonoBehaviour
     {
         foreach (var kvp in connections)
         {
-            var targetString = kvp.Value.playerConnectionSpot != 0 ?
-                string.Format("PlayerSpawnPoint ({0})", kvp.Value.playerConnectionSpot) :
-                "PlayerSpawnPoint";
+            var targetString = kvp.Value.connectionNumber != 0 ? 
+                string.Format("PlayerSpawnPoint ({0})", kvp.Value.connectionNumber):
+                "PlayerSpawnPoint"; 
 
             var spawnDestination = GameObject.Find(targetString);
 
@@ -104,6 +104,7 @@ public class SpawnManager : MonoBehaviour
                 spawnDestination.transform.rotation
             );
 
+            Debug.Log(string.Format("connection number: {0}  spawning at: {1}", kvp.Value.connectionNumber, targetString));
             NetworkServer.Spawn(go);
             go.GetComponent<NetworkIdentity>().AssignClientAuthority(kvp.Key);
         }

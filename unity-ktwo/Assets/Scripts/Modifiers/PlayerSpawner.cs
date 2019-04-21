@@ -9,5 +9,7 @@ public class PlayerSpawner : MonoBehaviour
         {
             SpawnManager.instance.playerSpawns.Add(this.gameObject);
         }
+
+        Destroy(GetComponent<MeshRenderer>());
     }
 }
