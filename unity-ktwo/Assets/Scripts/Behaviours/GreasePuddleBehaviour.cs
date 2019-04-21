@@ -13,7 +13,7 @@ public class GreasePuddleBehaviour : BasePuddleBehaviour
         affectedEntities.Add(other.gameObject);
 
         Vector3 direction = Quaternion.Euler(0, Random.Range(0, 360), 0) * gameObject.transform.forward;
-        other.gameObject.GetComponent<DamagableEnemy>().ServerSideHit(0f, direction);
+        other.gameObject.GetComponent<DamagableEnemy>().Hit(0f, direction, false);
 
         StartCoroutine(
             RemoveFromHashSet(other.gameObject)

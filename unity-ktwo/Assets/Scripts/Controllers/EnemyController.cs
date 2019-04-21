@@ -151,7 +151,6 @@ public class EnemyController : NetworkBehaviour
         isAttacking = true;
         agent.isStopped = true;
 
-        // WIP
         if (!isServer) return;
 
         if (isAttacking && !isAttackOnCooldown && !hitboxActivated)
@@ -201,7 +200,7 @@ public class EnemyController : NetworkBehaviour
         {
             hasAttacked = true;
             Vector3 direction = currentTransform.forward;
-            zombie.ServerSideHit(damage, direction);
+            zombie.Hit(damage, direction, true);
             hitboxActivated = false;
             isAttackOnCooldown = true;
             if (StartAttackCooldownCoroutineStarted) return;
@@ -225,6 +224,12 @@ public class EnemyController : NetworkBehaviour
     {
         var speedChange = defaultSpeed * percent;
         agent.speed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
+    }
+
+    [ClientRpc]
+    public void RpcTimedAffectSpeed(float percent, float time, bool buff)
+    {
+        StartCoroutine(TimedAffectSpeed(percent, time, buff));
     }
 
     public IEnumerator TimedAffectSpeed(float percent, float time, bool buff)

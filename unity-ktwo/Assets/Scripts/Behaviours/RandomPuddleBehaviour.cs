@@ -86,10 +86,7 @@ public class RandomPuddleBehaviour : BasePuddleBehaviour
         if (other.gameObject.tag == "Zombie")
         {
             affectedEntities.Add(other.gameObject);
-            StartCoroutine(
-                other.GetComponent<EnemyController>()
-                    .TimedAffectSpeed(speedBoostPercent, buffDuration, true)
-            );
+            other.GetComponent<EnemyController>().RpcTimedAffectSpeed(speedBoostPercent, buffDuration, true);
             other.GetComponent<DamagableEnemy>().Heal(healAmount);
             StartCoroutine(
                 RemoveFromHashSet(other.gameObject, buffDuration)
@@ -133,10 +130,7 @@ public class RandomPuddleBehaviour : BasePuddleBehaviour
         if (other.gameObject.tag == "Player")
         {
             affectedEntities.Add(other.gameObject);
-            StartCoroutine(
-                other.GetComponent<PlayerBehaviour>()
-                    .TimedAffectSpeed(speedDebuffPercent, debuffDuration, false)
-            );
+            other.GetComponent<PlayerBehaviour>().RpcTimedAffectSpeed(speedDebuffPercent, debuffDuration, false);
             StartCoroutine(
                 other.GetComponent<DamagablePlayer>()
                     .DamageOverTime(DPS, DOTDuration)
@@ -150,10 +144,7 @@ public class RandomPuddleBehaviour : BasePuddleBehaviour
         if (other.gameObject.tag == "Zombie")
         {
             affectedEntities.Add(other.gameObject);
-            StartCoroutine(
-                other.GetComponent<EnemyController>()
-                    .TimedAffectSpeed(speedDebuffPercent, debuffDuration, false)
-            );
+            other.GetComponent<EnemyController>().RpcTimedAffectSpeed(speedDebuffPercent, debuffDuration, false);
             StartCoroutine(
                 other.GetComponent<DamagableEnemy>()
                     .DamageOverTime(DPS, DOTDuration)

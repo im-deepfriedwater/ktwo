@@ -11,10 +11,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MapPrototype.unity
     guid: 2a9b8c61aa1fc5e4c8ba7ed8e4eff9fd
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/networking/ClientEncounter.unity
     guid: dbd6daf8967d9d84ebdfab6e96d5f825
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/networking/ServerEncounter.unity
     guid: 97966ade453bd1442b9e57591887dce4
   m_configObjects: {}

@@ -55,7 +55,7 @@ public class KtwoServer : NetworkManager
         NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
         var connectionObject = player.GetComponent<PlayerConnectionObject>();
         // currently hardcoding selected character
-        connectionObject.chosenCharacter = 1;
+        connectionObject.chosenCharacter = 0;
         connectionObject.playerConnectionSpot = playerSpot;
         connections[conn] = connectionObject;
         playerSpot++;

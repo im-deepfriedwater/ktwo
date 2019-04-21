@@ -59,10 +59,7 @@ public class HelpfulPuddleBehaviour : BasePuddleBehaviour
         if (other.gameObject.tag == "Zombie")
         {
             affectedEntities.Add(other.gameObject);
-            StartCoroutine(
-                other.GetComponent<EnemyController>()
-                    .TimedAffectSpeed(speedDebuffPercent, debuffDuration, false)
-            );
+            other.GetComponent<EnemyController>().RpcTimedAffectSpeed(speedDebuffPercent, debuffDuration, false);
             StartCoroutine(
                 RemoveFromHashSet(other.gameObject, debuffDuration)
             );

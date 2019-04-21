@@ -37,8 +37,6 @@ public class DamagablePlayer : Damagable
 
     override public void Heal(float healAmount)
     {
-        if (!hasAuthority) return;
-
         currentHealth = Mathf.Min(currentHealth + healAmount, startingHealth);
 
         RpcHeal(healAmount);
@@ -51,8 +49,6 @@ public class DamagablePlayer : Damagable
         OnHit.Invoke(currentHealth / startingHealth);
     }
 
-
-    // A hit with knockback
     public void Hit(float damage, Vector3 direction, bool iFrames)
     {
         if (isInvincible) return;

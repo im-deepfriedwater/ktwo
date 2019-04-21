@@ -31,16 +31,50 @@ public class DamagableEnemy : Damagable
         base.Start();
     }
 
-    override public void Hit(float damage)
+    override public void Heal(float healAmount)
+    {
+        currentHealth = Mathf.Min(currentHealth + healAmount, startingHealth);
+
+        RpcHeal(healAmount);
+    }
+
+    [ClientRpc]
+    public void RpcHeal(float healAmount)
+    {
+        currentHealth = Mathf.Min(currentHealth + healAmount, startingHealth);
+        OnHit.Invoke(currentHealth / startingHealth);
+    }
+
+    public void Hit(float damage, Vector3 direction, bool iFrames)
     {
         if (isInvincible) return;
 
         currentHealth -= damage;
-        OnHit.Invoke(currentHealth / health);
-        StartCoroutine(BeginInvincibility());
-        if (currentHealth <= 0)
+
+        if (currentHealth <= 0) Die();
+
+        if (iFrames)
         {
-            Die();
+            KnockbackEnemy(direction);
+            StartCoroutine(BeginInvincibility());
+        }
+
+        RpcHit(damage, direction, iFrames);
+    }
+
+    [ClientRpc]
+    public void RpcHit(float damage, Vector3 direction, bool iFrames)
+    {
+        if (isInvincible) return;
+
+        currentHealth -= damage;
+
+        if (currentHealth <= 0) Die();
+
+        if (iFrames)
+        {
+            KnockbackEnemy(direction);
+            StartCoroutine(BeginInvincibility());
         }
     }
 
@@ -49,7 +83,7 @@ public class DamagableEnemy : Damagable
         var elapsedTime = 0f;
         while (elapsedTime < duration)
         {
-            ServerSideHit(damageAmount, Vector3.zero);
+            Hit(damageAmount, Vector3.zero, false);
             yield return new WaitForSeconds(1.0f);
             elapsedTime++;
         }
@@ -60,24 +94,6 @@ public class DamagableEnemy : Damagable
         fireEffect.SetActive(true);
         yield return new WaitForSeconds(duration);
         fireEffect.SetActive(false);
-    }
-
-    public void ClientSideHit(float damage, Vector3 direction)
-    {
-        if (isServer) return;
-        CmdReportEnemyHit(damage);
-        Hit(damage);
-        KnockbackEnemy(direction);
-        StartCoroutine(BeginInvincibility());
-    }
-
-    public void ServerSideHit(float damage, Vector3 direction)
-    {
-        if (!isServer) return;
-        RpcTellEnemyHit(damage);
-        Hit(damage);
-        KnockbackEnemy(direction);
-        StartCoroutine(BeginInvincibility());
     }
 
     void KnockbackEnemy(Vector3 direction)
@@ -102,27 +118,5 @@ public class DamagableEnemy : Damagable
             EnemyManager.instance.zombies.Remove(gameObject);
             NetworkServer.Destroy(gameObject);
         }
-    }
-
-    [Command]
-    public void CmdReportEnemyHit(float damage)
-    {
-        health -= damage;
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-    }
-
-    [ClientRpc]
-    public void RpcTellEnemyHit(float damage)
-    {
-        Hit(damage);
-    }
-
-    [ClientRpc]
-    public void RpcHeal(float healAmount)
-    {
-        Heal(healAmount);
     }
 }
