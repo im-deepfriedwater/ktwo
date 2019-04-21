@@ -104,6 +104,7 @@ public class SpawnManager : MonoBehaviour
                 spawnDestination.transform.rotation
             );
 
+            Debug.Log(string.Format("connection number: {0}  spawning at: {1}", kvp.Value.connectionNumber, targetString));
             NetworkServer.Spawn(go);
             go.GetComponent<NetworkIdentity>().AssignClientAuthority(kvp.Key);
         }

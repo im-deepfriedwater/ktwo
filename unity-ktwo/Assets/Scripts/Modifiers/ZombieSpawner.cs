@@ -11,5 +11,7 @@ public class ZombieSpawner : MonoBehaviour
         {
             SpawnManager.instance.zombieSpawns.Add(this.gameObject);
         }
+
+        Destroy(GetComponent<MeshRenderer>());
     }
 }

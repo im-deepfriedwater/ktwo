@@ -27,7 +27,13 @@ public class PlayerConnectionObject : NetworkBehaviour
     
     void Start()
     {
-        if (isServer) RpcInitializeCSS(KtwoServer.instance.playerSpot++);
+        if (isServer) 
+        {
+            RpcInitializeCSS(KtwoServer.instance.playerSpot);
+            connectionNumber = KtwoServer.instance.playerSpot;
+            KtwoServer.instance.playerSpot++;
+        }
+
         if (hasAuthority) CSSManager.instance.localPlayer = this;
     }
 
