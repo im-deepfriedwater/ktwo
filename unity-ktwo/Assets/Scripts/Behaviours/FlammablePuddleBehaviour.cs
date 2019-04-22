@@ -19,10 +19,7 @@ public class FlammablePuddleBehaviour : BasePuddleBehaviour
             other.GetComponent<DamagableEnemy>()
                 .DamageOverTime(DPS, duration)
         );
-        StartCoroutine(
-            other.GetComponent<DamagableEnemy>()
-                .SetOnFire(duration)
-        );
+        other.GetComponent<DamagableEnemy>().RpcSetOnFire(duration);
         StartCoroutine(
             RemoveFromHashSet(other.gameObject, duration)
         );
