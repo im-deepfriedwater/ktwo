@@ -25,7 +25,7 @@ public class ThrowAbility : AbstractAbility
         {
             cooldownOver = false;
             StartCoroutine("WaitForCooldown");
-            CmdServerCommandClientThrow(projectileRemnantPrefab.name);
+            CmdThrowProjectile(projectileRemnantPrefab.name);
         }
         UpdateAbilityUI();
     }
@@ -65,14 +65,15 @@ public class ThrowAbility : AbstractAbility
     }
 
     [ClientRpc]
-    void RpcClientThrowProjectile(string toSpawn)
+    void RpcThrowProjectile(string toSpawn)
     {
         StartCoroutine(ThrowProjectileFromPlayer(toSpawn));
     }
 
     [Command]
-    void CmdServerCommandClientThrow(string toSpawn)
+    void CmdThrowProjectile(string toSpawn)
     {
-        RpcClientThrowProjectile(toSpawn);
+        RpcThrowProjectile(toSpawn);
+        StartCoroutine(ThrowProjectileFromPlayer(toSpawn));
     }
 }

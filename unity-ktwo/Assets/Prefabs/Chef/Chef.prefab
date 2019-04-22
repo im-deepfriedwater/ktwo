@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 2066117842890531173}
   - component: {fileID: 7512839444171565598}
   - component: {fileID: 3247492658356029761}
+  - component: {fileID: 2554292210089043042}
   m_Layer: 0
   m_Name: Chef
   m_TagString: Player
@@ -409,6 +410,26 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5543226, y: 0.14739406, z: 0.42618164}
   m_Center: {x: -0.0001604557, y: 0.08, z: 0.038124993}
+--- !u!114 &2554292210089043042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2656795568448256124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1590678366, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Animator: {fileID: 5747216500199810497}
+  m_ParameterSendBits: 63
+  param0: 
+  param1: 
+  param2: 
+  param3: 
+  param4: 
+  param5: 
 --- !u!1 &3119021049955908768
 GameObject:
   m_ObjectHideFlags: 0

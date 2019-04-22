@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 291319098352329379}
   - component: {fileID: 291319098353623683}
   - component: {fileID: 291319098354622531}
-  - component: {fileID: 291319098342968643}
   m_Layer: 0
   m_Name: Knife
   m_TagString: Untagged
@@ -26,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 291319098352369283}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children: []
   m_Father: {fileID: 2962033760894654008}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &291319098353623683
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -79,25 +78,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!95 &291319098342968643
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 291319098352369283}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 04d003ca8334e8c4f98e68ca96f03074, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5373945188573429481
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,11 +87,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2962033760894654008}
+  - component: {fileID: 3383517054467846371}
   - component: {fileID: 1740506667858698395}
-  - component: {fileID: 2097611756407242225}
+  - component: {fileID: 1915783058220166641}
   - component: {fileID: 8497392458854547225}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Knife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124,14 +105,36 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5373945188573429481}
-  m_LocalRotation: {x: 0.5, y: 0.50000006, z: -0.50000006, w: 0.5}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 291319098352329379}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 90.00001, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3383517054467846371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5373945188573429481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.033333335
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!114 &1740506667858698395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,8 +147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d056b909a88992d46903abdecb1399d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 30
---- !u!65 &2097611756407242225
+  damageAmount: 100
+--- !u!65 &1915783058220166641
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -156,8 +159,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.6968739, y: 1.2749529, z: 0.7657555}
-  m_Center: {x: -0.19138473, y: 0.0023302436, z: 0.15951443}
+  m_Size: {x: 0.70158273, y: 0.4385054, z: 0.8301758}
+  m_Center: {x: 0.007467121, y: -0.045703053, z: 0.08491209}
 --- !u!114 &8497392458854547225
 MonoBehaviour:
   m_ObjectHideFlags: 0
