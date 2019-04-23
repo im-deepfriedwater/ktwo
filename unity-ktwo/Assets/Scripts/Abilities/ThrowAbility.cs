@@ -60,7 +60,10 @@ public class ThrowAbility : AbstractAbility
         }
 
         var puddlePosition = new Vector3(Projectile.transform.position.x, player.transform.position.y, Projectile.transform.position.z);
-        CmdBuildObject(toSpawn, puddlePosition, Projectile.transform.rotation);
+        if (!isServer)
+        {
+            CmdBuildObject(toSpawn, puddlePosition, Projectile.transform.rotation);
+        }
         Destroy(Projectile);
     }
 

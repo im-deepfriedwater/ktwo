@@ -58,10 +58,7 @@ public class PlayerBehaviour : NetworkBehaviour
 
     public void AffectSpeed(float percent, bool buff)
     {
-        if (!hasAuthority)
-        {
-            return;
-        }
+        if (!hasAuthority) return;
 
         var speedChange = defaultSpeed * percent;
         playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
@@ -70,10 +67,11 @@ public class PlayerBehaviour : NetworkBehaviour
     [ClientRpc]
     public void RpcTimedAffectSpeed(float percent, float time, bool buff)
     {
-        StartCoroutine(TimedAffectSpeed(percent, time, buff));
+        if (!hasAuthority) return;
+        StartCoroutine(TimedAffectSpeedCR(percent, time, buff));
     }
 
-    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff)
+    public IEnumerator TimedAffectSpeedCR(float percent, float time, bool buff)
     {
         var speedChange = defaultSpeed * percent;
         playerController.freeRunningSpeed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
