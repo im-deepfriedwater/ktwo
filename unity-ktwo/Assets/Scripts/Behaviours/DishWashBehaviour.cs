@@ -18,8 +18,6 @@ public class DishWashBehaviour : NetworkBehaviour
 
     void Start()
     {
-        player = (!isServer) ? PlayerManager.instance.players[0] : PlayerManager.instance.player;
-        transform.parent = player.transform;
         bubbles = gameObject.GetComponent<ParticleSystem>();
         StartCoroutine(Deactivate(abilityDuration));
     }
@@ -33,7 +31,6 @@ public class DishWashBehaviour : NetworkBehaviour
     {
         if (!isServer) return;
         if (other.gameObject.tag != "Zombie") return;
-
         other.gameObject.GetComponent<EnemyController>().AffectSpeed(speedDebuffPercent, false);
     }
 

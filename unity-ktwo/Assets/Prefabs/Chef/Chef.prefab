@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 2161978991939191877}
   - component: {fileID: 7544338721945984654}
   - component: {fileID: 7483121811640213980}
+  - component: {fileID: 181997129845042099}
   - component: {fileID: 2810506578411400446}
   - component: {fileID: 5747216500199810497}
   - component: {fileID: 153608647816132652}
@@ -241,7 +242,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2656795568448256124}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f46cb6020aba09241b568a071637a3f3, type: 3}
   m_Name: 
@@ -250,6 +251,26 @@ MonoBehaviour:
   cooldown: 10
   abilitySlot: 3
   abilityName: Dish Wash
+  heightOffset: 1
+  distanceFactor: 1
+  buildPrefab: {fileID: 4806013720213129187, guid: 340cf00b7b274b64d95473568a6f523f,
+    type: 3}
+--- !u!114 &181997129845042099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2656795568448256124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24617909dcc1dac4e8995114212cb693, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputButtons: 07000000
+  cooldown: 10
+  abilitySlot: 3
+  abilityName: DishWash
   heightOffset: 1
   distanceFactor: 1
   buildPrefab: {fileID: 4806013720213129187, guid: 340cf00b7b274b64d95473568a6f523f,
