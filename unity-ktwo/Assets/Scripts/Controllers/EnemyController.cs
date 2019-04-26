@@ -230,13 +230,12 @@ public class EnemyController : NetworkBehaviour
         agent.speed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);
     }
 
-    [ClientRpc]
-    public void RpcTimedAffectSpeed(float percent, float time, bool buff)
+    public void TimedAffectSpeed(float percent, float time, bool buff)
     {
-        StartCoroutine(TimedAffectSpeed(percent, time, buff));
+        StartCoroutine(TimedAffectSpeedCR(percent, time, buff));
     }
 
-    public IEnumerator TimedAffectSpeed(float percent, float time, bool buff)
+    public IEnumerator TimedAffectSpeedCR(float percent, float time, bool buff)
     {
         var speedChange = defaultSpeed * percent;
         agent.speed = buff ? (defaultSpeed + speedChange) : (defaultSpeed - speedChange);

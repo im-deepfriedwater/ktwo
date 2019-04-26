@@ -25,7 +25,7 @@ public class ThrowAbility : AbstractAbility
         {
             cooldownOver = false;
             StartCoroutine("WaitForCooldown");
-            CmdServerCommandClientThrow(projectileRemnantPrefab.name);
+            CmdThrowProjectile(projectileRemnantPrefab.name);
         }
         UpdateAbilityUI();
     }
@@ -60,19 +60,23 @@ public class ThrowAbility : AbstractAbility
         }
 
         var puddlePosition = new Vector3(Projectile.transform.position.x, player.transform.position.y, Projectile.transform.position.z);
-        CmdBuildObject(toSpawn, puddlePosition, Projectile.transform.rotation);
+        if (!isServer)
+        {
+            CmdBuildObject(toSpawn, puddlePosition, Projectile.transform.rotation);
+        }
         Destroy(Projectile);
     }
 
     [ClientRpc]
-    void RpcClientThrowProjectile(string toSpawn)
+    void RpcThrowProjectile(string toSpawn)
     {
         StartCoroutine(ThrowProjectileFromPlayer(toSpawn));
     }
 
     [Command]
-    void CmdServerCommandClientThrow(string toSpawn)
+    void CmdThrowProjectile(string toSpawn)
     {
-        RpcClientThrowProjectile(toSpawn);
+        RpcThrowProjectile(toSpawn);
+        StartCoroutine(ThrowProjectileFromPlayer(toSpawn));
     }
 }

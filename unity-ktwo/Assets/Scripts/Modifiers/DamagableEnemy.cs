@@ -89,6 +89,12 @@ public class DamagableEnemy : Damagable
         }
     }
 
+    [ClientRpc]
+    public void RpcSetOnFire(float duration)
+    {
+        StartCoroutine(SetOnFire(duration));
+    }
+
     public IEnumerator SetOnFire(float duration)
     {
         fireEffect.SetActive(true);
