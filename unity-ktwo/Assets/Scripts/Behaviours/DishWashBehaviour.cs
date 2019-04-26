@@ -40,19 +40,31 @@ public class DishWashBehaviour : NetworkBehaviour
         if (other.gameObject.tag != "Zombie") return;
         other.GetComponent<EnemyController>().ResetSpeed();
         affectedEntities.Add(other.gameObject);
-
+        Debug.Log("is this running");
         other.GetComponent<EnemyController>().TimedAffectSpeed(speedDebuffPercent, duration, false);
         StartCoroutine(
             RemoveFromHashSet(other.gameObject, duration)
         );
     }
 
+    void OnDestroy()
+    {
+        Debug.Log("entity count = " + affectedEntities.Count);
+        foreach (var entity in affectedEntities)
+        {
+            entity.GetComponent<EnemyController>().ResetSpeed();
+            Debug.Log("zombie " + entity.name);
+        }
+        Debug.Log("prefab destroyed");
+    }
+
     IEnumerator Deactivate(float time)
     {
         yield return new WaitForSeconds(time);
-        active = false;
-        transform.localScale = Vector3.zero;
         bubbles.Stop();
+        transform.localScale = Vector3.zero;
+        active = false;
+        Debug.Log("bubble visual stopped");
     }
 
     public IEnumerator RemoveFromHashSet(GameObject entity, float time = 0f)

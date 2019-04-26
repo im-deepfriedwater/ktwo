@@ -10,13 +10,10 @@ public class ProjectileBehaviour : NetworkBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("hello??");
-        Debug.Log(isServer);
         if (!isServer) return;
         if (other.gameObject.tag != "Zombie") return;
 
         other.GetComponent<DamagableEnemy>().Hit(damageAmount, Vector3.zero, true);
-        Debug.Log(other.GetComponent<DamagableEnemy>().currentHealth);
         transform.localScale = Vector3.zero;
     }
 }
