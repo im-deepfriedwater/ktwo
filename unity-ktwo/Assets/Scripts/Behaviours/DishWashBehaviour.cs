@@ -42,6 +42,7 @@ public class DishWashBehaviour : NetworkBehaviour
         affectedEntities.Add(other.gameObject);
         Debug.Log("is this running");
         other.GetComponent<EnemyController>().TimedAffectSpeed(speedDebuffPercent, duration, false);
+        other.GetComponent<EnemyController>().RpcTimedAffectSpeed(speedDebuffPercent, duration, false);
         StartCoroutine(
             RemoveFromHashSet(other.gameObject, duration)
         );

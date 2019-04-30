@@ -235,6 +235,15 @@ public class EnemyController : NetworkBehaviour
         StartCoroutine(TimedAffectSpeedCR(percent, time, buff));
     }
 
+    [ClientRpc]
+    public void RpcTimedAffectSpeed(float percent, float time, bool buff)
+    {
+        if(!isServer)
+        {
+            TimedAffectSpeed(percent, time, buff);
+        }
+    }
+
     public IEnumerator TimedAffectSpeedCR(float percent, float time, bool buff)
     {
         var speedChange = defaultSpeed * percent;
