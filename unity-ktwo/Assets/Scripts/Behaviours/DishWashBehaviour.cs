@@ -40,8 +40,6 @@ public class DishWashBehaviour : NetworkBehaviour
         if (!isServer) return;
         if (other.gameObject.tag != "Zombie") return;
         other.GetComponent<EnemyController>().ResetSpeed();
-
-        //Debug.Log("is this running");
         other.GetComponent<EnemyController>().TimedAffectSpeed(speedDebuffPercent, duration, false);
         other.GetComponent<EnemyController>().RpcTimedAffectSpeed(speedDebuffPercent, duration, false);
         StartCoroutine(
