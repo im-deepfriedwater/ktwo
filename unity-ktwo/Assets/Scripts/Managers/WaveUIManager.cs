@@ -8,6 +8,11 @@ using UnityEngine.Networking;
 // to display specific UI related things to
 // to the player.
 
+// In order to get it synced across the client
+// and the server, we need to network spawn a prefab
+// of this script onto the client. This is currently
+// done by the GameManager.
+
 // Will exist on both the client and the server.
 // Client should not run any methods besides
 // ones run by the RpcClient tagged methods.
@@ -28,13 +33,13 @@ public class WaveUIManager : NetworkBehaviour
     public const string SCORE_FORMAT_STRING = "Points | {0}";
 
     [Tooltip("Should reference WaveAnnouncement in the scene")]
-    public Text waveAnnouncement;
+    Text waveAnnouncement;
 
     [Tooltip("Should reference WaveTimerUI in the scene")]
-    public Text waveTimerUI;
+    Text timerUI;
 
-    [Tooltip("Should reference WaveScoreUI in the scene")]
-    public Text waveScoreUI;
+    [Tooltip("Should reference WaveScore in the scene")]
+    Text scoreUI;
 
     public float fadeInDuration = 2;
     public float fadeOutDuration = 2;
@@ -48,6 +53,29 @@ public class WaveUIManager : NetworkBehaviour
     void Awake()
     {
         instance = this;
+    }
+
+    void Start()
+    {
+        if (isServer)
+        {
+            RpcInitialize();
+        }
+    }
+
+    void Initialize()
+    {
+        var timerGameObject = GameObject.Find("WaveTimerUI");
+        timerGameObject.transform.localScale = Vector3.one;
+        timerUI = timerGameObject.GetComponent<Text>();
+
+        var scoreGameObject = GameObject.Find("WaveScoreUI");
+        scoreGameObject.transform.localScale = Vector3.one;
+        scoreUI = scoreGameObject.GetComponent<Text>();
+
+        var announcementObject = GameObject.Find("WaveAnnouncementUI");
+        announcementObject.transform.localScale = Vector3.one;
+        waveAnnouncement = scoreGameObject.GetComponent<Text>();
     }
 
     IEnumerator FadeTextInAndOut(string text)
@@ -145,13 +173,13 @@ public class WaveUIManager : NetworkBehaviour
         string minutes = ((int)(clientSideTimer / 60)).ToString("00");
         string seconds = ((int)(clientSideTimer % 60)).ToString("00");
 
-        waveTimerUI.text = isWave ? string.Format(format, minutes, seconds) :
+        timerUI.text = isWave ? string.Format(format, minutes, seconds) :
             string.Format(format, WaveManager.instance.currentWave, minutes, seconds);
     }
 
-    void UpdateWaveScoreUI(int score)
+    void UpdatescoreUI(int score)
     {
-        waveScoreUI.text = string.Format(SCORE_FORMAT_STRING, score);
+        scoreUI.text = string.Format(SCORE_FORMAT_STRING, score);
     }
 
     [ClientRpc]
@@ -197,6 +225,12 @@ public class WaveUIManager : NetworkBehaviour
     [ClientRpc]
     void RpcUpdateScoreText(int score)
     {
-        UpdateWaveScoreUI(score);
+        UpdatescoreUI(score);
+    }
+
+    [ClientRpc]
+    public void RpcInitialize()
+    {
+        Initialize();
     }
 }

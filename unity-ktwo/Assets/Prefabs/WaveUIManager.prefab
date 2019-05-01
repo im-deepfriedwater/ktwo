@@ -77,8 +77,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f77eb0b5f9b1f24faacc03e7f67cde1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveAnnouncement: {fileID: 0}
-  waveTimerUI: {fileID: 0}
-  waveScoreUI: {fileID: 0}
+  announcementGameObject: {fileID: 381, guid: 9fe42b0ee0035224c9348d03a6c213a6, type: 3}
+  timerGameObject: {fileID: 458, guid: 05a19577a9e44d942859ea4c093448ba, type: 3}
+  scoreGameObject: {fileID: 557, guid: 91355ed72558d8648b9074d22cc1d93a, type: 3}
   fadeInDuration: 2
   fadeOutDuration: 2

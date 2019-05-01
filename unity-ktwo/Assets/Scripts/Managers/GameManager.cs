@@ -8,6 +8,7 @@ public class GameManager: MonoBehaviour
     public static GameManager instance;
 
     public GameObject map;
+    public GameObject networkUIManager;
     public float currentWaveTime = 0;
     public bool encounterStarted = false;
 
@@ -21,12 +22,13 @@ public class GameManager: MonoBehaviour
     public void StartEncounter()
     {
         StartCoroutine(BeginWave());
-        TellPlayersToHideCSSScreen();
+        TellClientsToInitializeForEncounter();
+        NetworkServer.Spawn(Instantiate(networkUIManager, Vector3.zero, Quaternion.identity));
         NetworkServer.Spawn(Instantiate(map, Vector3.zero, Quaternion.identity));
         SpawnManager.instance.SpawnPlayers(KtwoServer.instance.connections);
     }
 
-    void TellPlayersToHideCSSScreen()
+    void TellClientsToInitializeForEncounter()
     {
         foreach (var kvp in KtwoServer.instance.connections)
         {
