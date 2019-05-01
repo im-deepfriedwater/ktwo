@@ -11,9 +11,7 @@ public class GameManager: MonoBehaviour
     public float currentWaveTime = 0;
     public bool encounterStarted = false;
 
-    bool waveBegun = false;
-
-    public const float WAVE_START_DELAY = 5; // in seconds
+    public const float WAVE_START_DELAY = 15; // in seconds
 
     void Awake()
     {
@@ -39,17 +37,7 @@ public class GameManager: MonoBehaviour
     IEnumerator BeginWave()
     {
         yield return new WaitForSeconds(WAVE_START_DELAY);
-        SpawnManager.instance.SpawnZombieAtPoint(SpawnZone.South);
-        SpawnManager.instance.SpawnZombieAtPoint(SpawnZone.North);
-        SpawnManager.instance.SpawnZombieAtPoint(SpawnZone.East);
-        waveBegun = true;
+        WaveManager.instance.BeginWave();
     }
-    
-    void Update()
-    {
-        if (waveBegun)
-        {
-            currentWaveTime += Time.deltaTime;
-        }
-    }
+
 }
