@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -25,7 +26,7 @@ public class EnemyController : NetworkBehaviour
     bool CountDownForAttackHitBoxCoroutineStarted = false;
     bool StartAttackCooldownCoroutineStarted = false;
 
-    private bool turned = false;
+    public bool turned = false;
 
     Transform currentTransform;
     NavMeshAgent agent;
@@ -44,6 +45,10 @@ public class EnemyController : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(turned && target == null)
+        {
+            FindNewTarget();
+        }
         if (isAttacking)
         {
             agent.isStopped = true;
@@ -82,10 +87,20 @@ public class EnemyController : NetworkBehaviour
     void FindNewTarget()
     {
         if (!isServer) return;
-        var target = turned ? EnemyManager.instance.GetRandomZombie()
-            : PlayerManager.instance.TargetRandomPlayer();
-        this.target = target;
-        RpcSetTarget(target.GetComponent<NetworkIdentity>());
+        try
+        {
+            var chosenTarget = turned ? EnemyManager.instance.GetRandomZombie()
+                : PlayerManager.instance.TargetRandomPlayer();
+            while (chosenTarget == gameObject)
+            {
+                chosenTarget = EnemyManager.instance.GetRandomZombie();
+            }
+            target = chosenTarget;
+            RpcSetTarget(target.GetComponent<NetworkIdentity>());
+        } catch(NullReferenceException e)
+        {
+            Debug.Log("Currently Null!");
+        }
     }
 
     void FaceTarget()
@@ -185,8 +200,10 @@ public class EnemyController : NetworkBehaviour
     void AttackZombie(Collider other)
     {
         var zombie = other.gameObject.GetComponent<DamagableEnemy>();
-        if (zombie == null) return;
-
+        if (zombie == null)
+        {
+            FindNewTarget();
+        }
         SetAttackAnimation(true);
         isAttacking = true;
         agent.isStopped = true;
@@ -211,7 +228,7 @@ public class EnemyController : NetworkBehaviour
             StartCoroutine(StartAttackCooldown());
         }
 
-        if (zombie.currentHealth <= 0)
+        if (zombie == null)
         {
             FindNewTarget();
         }
@@ -257,20 +274,26 @@ public class EnemyController : NetworkBehaviour
         agent.speed = defaultSpeed;
     }
 
-    public IEnumerator TurnAgainstOwn(float time)
+    public void TurnAgainstOwn(float time)
+    {
+        StartCoroutine(TurnAgainstOwnCR(time));
+    }
+
+    public IEnumerator TurnAgainstOwnCR(float time)
     {
         var zombie = gameObject;
-        target = EnemyManager.instance.GetRandomZombie();
         turned = true;
+        FindNewTarget();
         yield return new WaitForSeconds(time);
         turned = false;
-        StopAllCoroutines();
-        SetAttackAnimation(false);
-        isAttackOnCooldown = false;
-        isAttacking = false;
-        hitboxActivated = false;
-        CountDownForAttackHitBoxCoroutineStarted = false;
-        StartAttackCooldownCoroutineStarted = false;
+        FindNewTarget();
+        //StopAllCoroutines();
+        //SetAttackAnimation(false);
+        //isAttackOnCooldown = false;
+        //isAttacking = false;
+        //hitboxActivated = false;
+        //CountDownForAttackHitBoxCoroutineStarted = false;
+        //StartAttackCooldownCoroutineStarted = false;
 
         if (isServer)
         {

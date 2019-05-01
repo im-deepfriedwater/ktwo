@@ -23,6 +23,10 @@ public class EnemyManager : MonoBehaviour
 
     public GameObject GetRandomZombie()
     {
+        if(zombies.Count == 1)
+        {
+            return null;
+        }
         var target = Random.Range(0, zombies.Count);
         var enumerator = zombies.GetEnumerator();
         for (int i = 0; i < target; i++)
