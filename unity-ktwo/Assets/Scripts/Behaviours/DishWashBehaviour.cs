@@ -31,6 +31,7 @@ public class DishWashBehaviour : NetworkBehaviour
     {
         if (!isServer) return;
         if (other.gameObject.tag != "Zombie") return;
+        affectedEntities.Add(other.gameObject);
         other.gameObject.GetComponent<EnemyController>().AffectSpeed(speedDebuffPercent, false);
     }
 
@@ -39,8 +40,8 @@ public class DishWashBehaviour : NetworkBehaviour
         if (!isServer) return;
         if (other.gameObject.tag != "Zombie") return;
         other.GetComponent<EnemyController>().ResetSpeed();
-        affectedEntities.Add(other.gameObject);
-        Debug.Log("is this running");
+
+        //Debug.Log("is this running");
         other.GetComponent<EnemyController>().TimedAffectSpeed(speedDebuffPercent, duration, false);
         other.GetComponent<EnemyController>().RpcTimedAffectSpeed(speedDebuffPercent, duration, false);
         StartCoroutine(
@@ -61,6 +62,14 @@ public class DishWashBehaviour : NetworkBehaviour
 
     IEnumerator Deactivate(float time)
     {
+        foreach (var entity in affectedEntities)
+        {
+            entity.GetComponent<EnemyController>().TimedAffectSpeed(speedDebuffPercent, duration, false);
+            entity.GetComponent<EnemyController>().RpcTimedAffectSpeed(speedDebuffPercent, duration, false);
+            StartCoroutine(
+                RemoveFromHashSet(entity.gameObject, duration)
+            );
+        }
         yield return new WaitForSeconds(time);
         bubbles.Stop();
         transform.localScale = Vector3.zero;
