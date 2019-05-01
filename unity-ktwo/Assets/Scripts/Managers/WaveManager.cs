@@ -116,9 +116,10 @@ public class WaveManager : MonoBehaviour
 
     void SpawnZombies()
     {
-        if (timeSinceLastTick < currentZombieTickDuration && zombiesSpawnedInWave <= waveTotalZombies)
+        if (timeSinceLastTick >= currentZombieTickDuration && zombiesSpawnedInWave < waveTotalZombies)
         {
             SpawnManager.instance.SpawnMultipleZombiesAtRandomPoints(currentZombiesPerTick);
+            zombiesSpawnedInWave += currentZombiesPerTick;
             timeSinceLastTick = 0;
         }
     }
