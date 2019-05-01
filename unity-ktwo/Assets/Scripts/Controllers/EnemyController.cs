@@ -287,14 +287,6 @@ public class EnemyController : NetworkBehaviour
         yield return new WaitForSeconds(time);
         turned = false;
         FindNewTarget();
-        //StopAllCoroutines();
-        //SetAttackAnimation(false);
-        //isAttackOnCooldown = false;
-        //isAttacking = false;
-        //hitboxActivated = false;
-        //CountDownForAttackHitBoxCoroutineStarted = false;
-        //StartAttackCooldownCoroutineStarted = false;
-
         if (isServer)
         {
             agent.SetDestination(target.transform.position);
