@@ -11,8 +11,11 @@ public class BarkBehaviour : NetworkBehaviour
 
     void Start()
     {
-        animator = GetComponentInParent<Animator>();
-        animator.SetBool("IsBarking", true);
+        if (!isServer)
+        {
+            animator = GetComponentInParent<Animator>();
+            animator.SetBool("IsBarking", true);
+        }
         StartCoroutine(
             ResetBarking()
         );
@@ -28,7 +31,7 @@ public class BarkBehaviour : NetworkBehaviour
     private IEnumerator ResetBarking()
     {
         yield return new WaitForSeconds(duration);
-        animator.SetBool("IsBarking", false);
+        if (!isServer) animator.SetBool("IsBarking", false);
         Destroy(gameObject);
     }
 }

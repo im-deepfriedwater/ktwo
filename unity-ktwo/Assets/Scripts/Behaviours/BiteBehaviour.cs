@@ -12,8 +12,11 @@ public class BiteBehaviour : NetworkBehaviour
 
     void Start()
     {
-        animator = GetComponentInParent<Animator>();
-        animator.SetBool("IsBiting", true);
+        if (!isServer)
+        {
+            animator = GetComponentInParent<Animator>();
+            animator.SetBool("IsBiting", true);
+        }
         StartCoroutine(
             ResetBiting()
         );
@@ -29,7 +32,7 @@ public class BiteBehaviour : NetworkBehaviour
     private IEnumerator ResetBiting()
     {
         yield return new WaitForSeconds(duration);
-        animator.SetBool("IsBiting", false);
+        if (!isServer) animator.SetBool("IsBiting", false);
         Destroy(gameObject);
     }
 }
