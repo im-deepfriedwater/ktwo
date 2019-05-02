@@ -938,6 +938,7 @@ GameObject:
   - component: {fileID: 5945045877925384971}
   - component: {fileID: 7400027996752528723}
   - component: {fileID: 8623518214080015137}
+  - component: {fileID: 7318724529123515686}
   - component: {fileID: 7765989419747376978}
   m_Layer: 0
   m_Name: Herder
@@ -1301,6 +1302,26 @@ MonoBehaviour:
   heightOffset: 1
   distanceFactor: 1
   buildPrefab: {fileID: 5850824527726423099, guid: 9d051de239cc36d4d92fcf62e1297eaa,
+    type: 3}
+--- !u!114 &7318724529123515686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5945045877925386086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f46cb6020aba09241b568a071637a3f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputButtons: 07000000
+  cooldown: 30
+  abilitySlot: 3
+  abilityName: Bone
+  heightOffset: 0
+  distanceFactor: 0
+  buildPrefab: {fileID: 2274790662457325287, guid: 2590f9c115a6cb541b144486a94d0409,
     type: 3}
 --- !u!114 &7765989419747376978
 MonoBehaviour:
