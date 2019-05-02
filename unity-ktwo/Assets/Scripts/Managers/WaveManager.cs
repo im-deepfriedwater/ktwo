@@ -57,7 +57,7 @@ public class WaveManager : MonoBehaviour
         timeSinceLastTick = 0;
         zombiesSpawnedInWave = 0;
         StartCoroutine(ManageWave());
-        WaveUIManager.instance.OnWaveBegin();
+        WaveUIManager.instance.OnWaveBegin(currentWave);
     }
 
     IEnumerator ManageWave()
@@ -128,7 +128,7 @@ public class WaveManager : MonoBehaviour
     {
         StopAllCoroutines();
         SpawnManager.instance.StopAllCoroutines();
-        WaveUIManager.instance.OnWaveBegin();
+        WaveUIManager.instance.OnWaveEnd();
         zombiesKilled = 0;
         UpdateVariablesForNextWave();
         currentPoints += POINTS_PER_ZOMBIE;

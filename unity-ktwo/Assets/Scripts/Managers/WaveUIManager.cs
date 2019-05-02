@@ -32,14 +32,17 @@ public class WaveUIManager : NetworkBehaviour
     public const string RESPITE_FORMAT_STRING = "Respite | {0}:{1}";
     public const string SCORE_FORMAT_STRING = "Points | {0}";
 
-    [Tooltip("Should reference WaveAnnouncement in the scene")]
-    Text waveAnnouncement;
+    [Tooltip("WaveAnnouncementUI GameObject should exist in scene")]
+    Text waveAnnouncementText;
+    Image waveAnnouncementBg;
 
-    [Tooltip("Should reference WaveTimerUI in the scene")]
+    [Tooltip("WaveTimerUI GameObject should exist in the scene")]
     Text timerUI;
 
-    [Tooltip("Should reference WaveScore in the scene")]
+    [Tooltip("WaveScore GameObject should exist in the scene")]
     Text scoreUI;
+
+    public int currentWave = 0;
 
     public float fadeInDuration = 2;
     public float fadeOutDuration = 2;
@@ -67,32 +70,38 @@ public class WaveUIManager : NetworkBehaviour
     {
         var timerGameObject = GameObject.Find("WaveTimerUI");
         timerGameObject.transform.localScale = Vector3.one;
-        timerUI = timerGameObject.GetComponent<Text>();
+        timerUI = timerGameObject.GetComponentInChildren<Text>();
 
+        Debug.Log("I got called " + timerUI == null);
         var scoreGameObject = GameObject.Find("WaveScoreUI");
         scoreGameObject.transform.localScale = Vector3.one;
-        scoreUI = scoreGameObject.GetComponent<Text>();
+        scoreUI = scoreGameObject.GetComponentInChildren<Text>();
 
         var announcementObject = GameObject.Find("WaveAnnouncementUI");
-        announcementObject.transform.localScale = Vector3.one;
-        waveAnnouncement = scoreGameObject.GetComponent<Text>();
+        waveAnnouncementText = announcementObject.GetComponentInChildren<Text>();
+        waveAnnouncementBg = announcementObject.GetComponentInChildren<Image>();
     }
 
     IEnumerator FadeTextInAndOut(string text)
     {
-        waveAnnouncement.gameObject.SetActive(true);
-
         float currentTime = 0;
-        waveAnnouncement.text = text;
+        waveAnnouncementText.text = text;
         while (currentTime < fadeInDuration)
         {
             currentTime += Time.deltaTime;
-            waveAnnouncement.color = new Color(
-                waveAnnouncement.color.r,
-                waveAnnouncement.color.g,
-                waveAnnouncement.color.b,
+            waveAnnouncementText.color = new Color(
+                waveAnnouncementText.color.r,
+                waveAnnouncementText.color.g,
+                waveAnnouncementText.color.b,
                 Mathf.Lerp(0, 1, currentTime / fadeInDuration)
             );
+
+            waveAnnouncementBg.color = new Color(
+                waveAnnouncementBg.color.r,
+                waveAnnouncementBg.color.g,
+                waveAnnouncementBg.color.b,
+                Mathf.Lerp(0, 1, currentTime / fadeInDuration)
+  );
             yield return null;
         }
 
@@ -101,16 +110,23 @@ public class WaveUIManager : NetworkBehaviour
         while (currentTime < fadeOutDuration)
         {
             currentTime += Time.deltaTime;
-            waveAnnouncement.color = new Color(
-                waveAnnouncement.color.r,
-                waveAnnouncement.color.g,
-                waveAnnouncement.color.b,
+            waveAnnouncementText.color = new Color(
+                waveAnnouncementText.color.r,
+                waveAnnouncementText.color.g,
+                waveAnnouncementText.color.b,
                 Mathf.Lerp(1, 0, currentTime / fadeInDuration)
             );
+
+            waveAnnouncementBg.color = new Color(
+                waveAnnouncementBg.color.r,
+                waveAnnouncementBg.color.g,
+                waveAnnouncementBg.color.b,
+                Mathf.Lerp(1, 0, currentTime / fadeInDuration)
+            );
+
             yield return null;
         }
 
-        waveAnnouncement.gameObject.SetActive(false);
     }
 
     public void OnAllPlayersDead()
@@ -124,10 +140,11 @@ public class WaveUIManager : NetworkBehaviour
         RpcWaveEnd();
     }
 
-    public void OnWaveBegin()
+    public void OnWaveBegin(int currentWave)
     {
         StopAllCoroutines();
-        RpcWaveBegin();
+        RpcWaveBegin(currentWave);
+        RpcWaveTimerBegin();
     }
 
     public void OnRespiteBegin()
@@ -142,7 +159,7 @@ public class WaveUIManager : NetworkBehaviour
         {
             if (timeSinceLastSync > NETWORK_TIME_SYNC_RATE)
             {
-                RpcSyncTime(WaveManager.instance.currentWaveTime);   
+                CmdSyncTime();   
             }
             timeSinceLastSync += Time.deltaTime;
             clientSideTimer += Time.deltaTime;
@@ -158,7 +175,7 @@ public class WaveUIManager : NetworkBehaviour
         {
             if (timeSinceLastSync > NETWORK_TIME_SYNC_RATE)
             {
-                RpcSyncTime(WaveManager.instance.currentWaveTime);   
+                CmdSyncTime();   
             }
             timeSinceLastSync += Time.deltaTime;
             clientSideTimer -= Time.deltaTime;
@@ -173,8 +190,8 @@ public class WaveUIManager : NetworkBehaviour
         string minutes = ((int)(clientSideTimer / 60)).ToString("00");
         string seconds = ((int)(clientSideTimer % 60)).ToString("00");
 
-        timerUI.text = isWave ? string.Format(format, minutes, seconds) :
-            string.Format(format, WaveManager.instance.currentWave, minutes, seconds);
+        timerUI.text = isWave ? string.Format(format, currentWave, minutes, seconds):
+            string.Format(format, minutes, seconds);
     }
 
     void UpdatescoreUI(int score)
@@ -183,8 +200,9 @@ public class WaveUIManager : NetworkBehaviour
     }
 
     [ClientRpc]
-    void RpcWaveBegin()
+    void RpcWaveBegin(int currentWave)
     {
+        this.currentWave = currentWave;
         StartCoroutine(FadeTextInAndOut(WAVE_BEGUN_MESSAGE));
     }
 
@@ -218,8 +236,8 @@ public class WaveUIManager : NetworkBehaviour
     [ClientRpc]
     void RpcShowGameOverText(int score)
     {
-        waveAnnouncement.text = string.Format(GAME_OVER_MESSAGE, score);
-        waveAnnouncement.gameObject.SetActive(true);
+        waveAnnouncementText.text = string.Format(GAME_OVER_MESSAGE, score);
+        waveAnnouncementText.gameObject.transform.localScale = Vector3.one;
     }
 
     [ClientRpc]
@@ -232,5 +250,11 @@ public class WaveUIManager : NetworkBehaviour
     public void RpcInitialize()
     {
         Initialize();
+    }
+
+    [Command]
+    public void CmdSyncTime()
+    {
+        RpcSyncTime(WaveManager.instance.currentWaveTime);
     }
 }
