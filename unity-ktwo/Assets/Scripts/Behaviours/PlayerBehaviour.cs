@@ -95,11 +95,12 @@ public class PlayerBehaviour : NetworkBehaviour
     {
         animator.SetBool("IsDead", true);
 
+        isDead = true;
+
         if (!hasAuthority) return;
 
         input.enabled = false;
         rbd.isKinematic = true;
-        isDead = true;
 
         if (isServer)
         {
