@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 7512839444171565598}
   - component: {fileID: 3247492658356029761}
   - component: {fileID: 2554292210089043042}
+  - component: {fileID: 557727450449517188}
   m_Layer: 0
   m_Name: Chef
   m_TagString: Player
@@ -451,6 +452,20 @@ MonoBehaviour:
   param3: 
   param4: 
   param5: 
+--- !u!114 &557727450449517188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2656795568448256124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1e3ae36f64cdb448a63d9b838ae94c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityIcons: []
+  characterPortrait: {fileID: 21300000, guid: 0d46a81357420584e85a502b5f360e4d, type: 3}
 --- !u!1 &3119021049955908768
 GameObject:
   m_ObjectHideFlags: 0
