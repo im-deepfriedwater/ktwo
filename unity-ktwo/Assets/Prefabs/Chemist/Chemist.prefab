@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 6820572977501334325}
   - component: {fileID: 8504642337005033712}
   - component: {fileID: 3330308716848957593}
+  - component: {fileID: 395362606801419022}
   m_Layer: 0
   m_Name: Chemist
   m_TagString: Player
@@ -446,6 +447,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a9136f324d4544d9b1acfc83521224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &395362606801419022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946821268631264674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1e3ae36f64cdb448a63d9b838ae94c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityIcons:
+  - {fileID: 21300000, guid: de0d710dda7d86b47adb272e908f769d, type: 3}
+  - {fileID: 21300000, guid: b98ee354b7232974598f6deca69c9ec4, type: 3}
+  - {fileID: 21300000, guid: 032180e2566f9a5499224e07825633e9, type: 3}
+  - {fileID: 21300000, guid: 2fbbd6623a138294183bf2b447865156, type: 3}
+  characterPortrait: {fileID: 21300000, guid: 06008b125468c0b478cacc1d531777f4, type: 3}
 --- !u!1 &4927143864708447749
 GameObject:
   m_ObjectHideFlags: 0
