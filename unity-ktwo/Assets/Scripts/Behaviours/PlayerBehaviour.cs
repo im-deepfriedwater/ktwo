@@ -41,6 +41,7 @@ public class PlayerBehaviour : NetworkBehaviour
             return;
         }
 
+        GetComponent<SetCharacterUI>().Initialize();
         PlayerManager.instance.player = gameObject;
         playerController = GetComponent<vThirdPersonController>();
         healthBar = GameObject.Find("HealthBarSlider").GetComponent<Slider>();
