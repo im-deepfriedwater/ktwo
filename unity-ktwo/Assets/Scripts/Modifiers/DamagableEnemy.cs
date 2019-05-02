@@ -122,6 +122,7 @@ public class DamagableEnemy : Damagable
         if (isServer)
         {
             EnemyManager.instance.zombies.Remove(gameObject);
+            WaveManager.instance.OnZombieDeath();
             NetworkServer.Destroy(gameObject);
         }
     }

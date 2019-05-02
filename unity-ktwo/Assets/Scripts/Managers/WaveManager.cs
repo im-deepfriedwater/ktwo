@@ -14,7 +14,7 @@ public class WaveManager : MonoBehaviour
     public const int POINTS_PER_WAVE = 10000;
 
     public static int SECONDS_IN_A_WAVE = 120;
-    public static int SECONDS_IN_A_RESPITE = 10;
+    public static int SECONDS_IN_A_RESPITE = 30;
 
     public const int BASE_TOTAL_ZOMBIES = 3;
     public const int BASE_ZOMBIES_PER_TICK = 3;
@@ -106,7 +106,14 @@ public class WaveManager : MonoBehaviour
 
     public void OnZombieDeath()
     {
-        currentPoints += POINTS_PER_ZOMBIE;
+        zombiesKilled++;
+        UpdatePoints(POINTS_PER_ZOMBIE);
+    }
+
+    void UpdatePoints(int pointValue)
+    {
+        currentPoints += pointValue;
+        WaveUIManager.instance.OnUpdateScore(currentPoints);
     }
 
     public void UpdateVariablesForNextWave()
@@ -130,20 +137,22 @@ public class WaveManager : MonoBehaviour
         SpawnManager.instance.StopAllCoroutines();
         WaveUIManager.instance.OnWaveEnd();
         zombiesKilled = 0;
+        currentWave++;
         UpdateVariablesForNextWave();
-        currentPoints += POINTS_PER_ZOMBIE;
+        UpdatePoints(POINTS_PER_WAVE);
+        BeginRespite();
     }
 
     void EndWaveEarly()
     {
-        currentPoints += POINTS_PER_EARLY_WAVE_BONUS;
+        UpdatePoints(POINTS_PER_EARLY_WAVE_BONUS);
         EndWave();
     }
 
     void BeginRespite()
     {
-        WaveUIManager.instance.OnRespiteBegin();
         StartCoroutine(ManageRespite());
+        WaveUIManager.instance.OnRespiteBegin();
     }
 
     void EndRespite()
@@ -153,6 +162,7 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator ManageRespite()
     {
+        currentWaveTime = SECONDS_IN_A_RESPITE;
         while (currentWaveTime > 0)
         {
             currentWaveTime -= Time.deltaTime;

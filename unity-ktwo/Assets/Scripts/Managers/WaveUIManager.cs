@@ -30,7 +30,7 @@ public class WaveUIManager : NetworkBehaviour
 
     public const string WAVE_FORMAT_STRING = "Wave {0} | {1}:{2}";
     public const string RESPITE_FORMAT_STRING = "Respite | {0}:{1}";
-    public const string SCORE_FORMAT_STRING = "Points | {0}";
+    public const string SCORE_FORMAT_STRING = "SCore | {0}";
 
     [Tooltip("WaveAnnouncementUI GameObject should exist in scene")]
     Text waveAnnouncementText;
@@ -52,6 +52,7 @@ public class WaveUIManager : NetworkBehaviour
     // synced up to the timer in the WaveManager.
     float clientSideTimer = 0;
     float timeSinceLastSync = 0;
+
 
     void Awake()
     {
@@ -85,6 +86,7 @@ public class WaveUIManager : NetworkBehaviour
     IEnumerator FadeTextInAndOut(string text)
     {
         float currentTime = 0;
+        waveAnnouncementText.gameObject.transform.localScale = Vector3.one;
         waveAnnouncementText.text = text;
         while (currentTime < fadeInDuration)
         {
@@ -101,7 +103,7 @@ public class WaveUIManager : NetworkBehaviour
                 waveAnnouncementBg.color.g,
                 waveAnnouncementBg.color.b,
                 Mathf.Lerp(0, 1, currentTime / fadeInDuration)
-  );
+             );
             yield return null;
         }
 
@@ -127,6 +129,7 @@ public class WaveUIManager : NetworkBehaviour
             yield return null;
         }
 
+        waveAnnouncementText.gameObject.transform.localScale = Vector3.zero;
     }
 
     public void OnAllPlayersDead()
@@ -145,6 +148,26 @@ public class WaveUIManager : NetworkBehaviour
         StopAllCoroutines();
         RpcWaveBegin(currentWave);
         RpcWaveTimerBegin();
+        StartCoroutine(ServerSync());
+    }
+
+    IEnumerator ServerSync()
+    {
+        timeSinceLastSync = 0;
+
+        // This gets stopped by the StopAllCoroutines()
+        // call that happens on WaveEnd.
+        while (true)
+        {
+            timeSinceLastSync += Time.deltaTime;
+            if (timeSinceLastSync > NETWORK_TIME_SYNC_RATE)
+            {
+                timeSinceLastSync = 0;
+                RpcSyncTime(WaveManager.instance.currentWaveTime);
+                RpcSyncScore(WaveManager.instance.currentPoints);
+            }
+            yield return null;
+        }
     }
 
     public void OnRespiteBegin()
@@ -157,11 +180,7 @@ public class WaveUIManager : NetworkBehaviour
         clientSideTimer = 0;
         while (clientSideTimer < WaveManager.SECONDS_IN_A_WAVE)
         {
-            if (timeSinceLastSync > NETWORK_TIME_SYNC_RATE)
-            {
-                CmdSyncTime();   
-            }
-            timeSinceLastSync += Time.deltaTime;
+            Debug.Log("im still running idiots");
             clientSideTimer += Time.deltaTime;
             FormatWaveTimerUI(WAVE_FORMAT_STRING, isWave: true);
             yield return null;
@@ -170,15 +189,12 @@ public class WaveUIManager : NetworkBehaviour
 
     IEnumerator UpdateRespiteTimer()
     {
+        Debug.Log("you betetr not");
         clientSideTimer = WaveManager.SECONDS_IN_A_RESPITE;
         while (clientSideTimer > 0)
         {
-            if (timeSinceLastSync > NETWORK_TIME_SYNC_RATE)
-            {
-                CmdSyncTime();   
-            }
-            timeSinceLastSync += Time.deltaTime;
             clientSideTimer -= Time.deltaTime;
+            Debug.Log("clientSideTimer" + clientSideTimer + " " + Time.deltaTime);
             FormatWaveTimerUI(RESPITE_FORMAT_STRING, isWave: false);
             yield return null;
         }
@@ -194,9 +210,14 @@ public class WaveUIManager : NetworkBehaviour
             string.Format(format, minutes, seconds);
     }
 
-    void UpdatescoreUI(int score)
+    void UpdateScoreUI(int score)
     {
         scoreUI.text = string.Format(SCORE_FORMAT_STRING, score);
+    }
+
+    public void OnUpdateScore(int pointValue)
+    {
+        RpcUpdateScoreText(pointValue);
     }
 
     [ClientRpc]
@@ -209,6 +230,7 @@ public class WaveUIManager : NetworkBehaviour
     [ClientRpc]
     void RpcWaveEnd()
     {
+        StopAllCoroutines();
         StartCoroutine(FadeTextInAndOut(WAVE_ENDED_MESSAGE));
     }
 
@@ -221,6 +243,7 @@ public class WaveUIManager : NetworkBehaviour
     [ClientRpc]
     void RpcWaveTimerBegin()
     {
+        StopAllCoroutines();
         StartCoroutine(UpdateWaveTimer());
     }
 
@@ -234,6 +257,12 @@ public class WaveUIManager : NetworkBehaviour
     }
 
     [ClientRpc]
+    void RpcSyncScore(int score)
+    {
+        UpdateScoreUI(score);
+    }
+
+    [ClientRpc]
     void RpcShowGameOverText(int score)
     {
         waveAnnouncementText.text = string.Format(GAME_OVER_MESSAGE, score);
@@ -243,18 +272,12 @@ public class WaveUIManager : NetworkBehaviour
     [ClientRpc]
     void RpcUpdateScoreText(int score)
     {
-        UpdatescoreUI(score);
+        UpdateScoreUI(score);
     }
 
     [ClientRpc]
     public void RpcInitialize()
     {
         Initialize();
-    }
-
-    [Command]
-    public void CmdSyncTime()
-    {
-        RpcSyncTime(WaveManager.instance.currentWaveTime);
     }
 }
