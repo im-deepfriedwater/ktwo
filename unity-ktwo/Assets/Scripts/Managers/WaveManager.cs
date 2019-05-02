@@ -14,7 +14,7 @@ public class WaveManager : MonoBehaviour
     public const int POINTS_PER_WAVE = 10000;
 
     public static int SECONDS_IN_A_WAVE = 120;
-    public static int SECONDS_IN_A_RESPITE = 30;
+    public static int SECONDS_IN_A_RESPITE = 10;
 
     public const int BASE_TOTAL_ZOMBIES = 3;
     public const int BASE_ZOMBIES_PER_TICK = 3;
@@ -43,6 +43,7 @@ public class WaveManager : MonoBehaviour
     // This all gets modified as the wave counter increments.
     public int waveTotalZombies = BASE_TOTAL_ZOMBIES;
     public int zombiesSpawnedInWave = 0;
+    
 
     void Awake()
     {
@@ -53,21 +54,22 @@ public class WaveManager : MonoBehaviour
     public void BeginWave()
     {
         StopAllCoroutines();
-        currentWaveTime = 0;
         timeSinceLastTick = 0;
         zombiesSpawnedInWave = 0;
+        zombiesKilled = 0;
         StartCoroutine(ManageWave());
         WaveUIManager.instance.OnWaveBegin(currentWave);
     }
 
     IEnumerator ManageWave()
     {
-        while (currentWaveTime < SECONDS_IN_A_WAVE)
+        currentWaveTime = SECONDS_IN_A_WAVE;
+        while (currentWaveTime > 0)
         {
             if (CheckAllZombiesDead()) EndWaveEarly();
             if (CheckAllPlayersDead()) OnAllPlayersDead();
             SpawnZombies();
-            currentWaveTime += Time.deltaTime;
+            currentWaveTime -= Time.deltaTime;
             timeSinceLastTick += Time.deltaTime;
             yield return null;
         }
@@ -104,6 +106,9 @@ public class WaveManager : MonoBehaviour
         return zombiesKilled == waveTotalZombies;
     }
 
+    // Used for keeping track of
+    // when we hit the spawn limit
+    // and also for player score.
     public void OnZombieDeath()
     {
         zombiesKilled++;
@@ -136,10 +141,8 @@ public class WaveManager : MonoBehaviour
         StopAllCoroutines();
         SpawnManager.instance.StopAllCoroutines();
         WaveUIManager.instance.OnWaveEnd();
-        zombiesKilled = 0;
-        currentWave++;
-        UpdateVariablesForNextWave();
         UpdatePoints(POINTS_PER_WAVE);
+        EnemyManager.instance.KillAllZombies();
         BeginRespite();
     }
 
@@ -157,6 +160,8 @@ public class WaveManager : MonoBehaviour
 
     void EndRespite()
     {
+        currentWave++;  
+        UpdateVariablesForNextWave();
         BeginWave();
     }
 

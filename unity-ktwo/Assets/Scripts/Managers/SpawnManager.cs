@@ -56,9 +56,9 @@ public class SpawnManager : MonoBehaviour
         var counter = 0;
         while (counter < numberOfZombies)
         {
-            yield return new WaitForSeconds(SPAWN_DELAY);
             SpawnZombieAtRandomPoint();
             counter++;
+            yield return new WaitForSeconds(SPAWN_DELAY);
         }
     }
 

@@ -73,7 +73,6 @@ public class WaveUIManager : NetworkBehaviour
         timerGameObject.transform.localScale = Vector3.one;
         timerUI = timerGameObject.GetComponentInChildren<Text>();
 
-        Debug.Log("I got called " + timerUI == null);
         var scoreGameObject = GameObject.Find("WaveScoreUI");
         scoreGameObject.transform.localScale = Vector3.one;
         scoreUI = scoreGameObject.GetComponentInChildren<Text>();
@@ -86,8 +85,9 @@ public class WaveUIManager : NetworkBehaviour
     IEnumerator FadeTextInAndOut(string text)
     {
         float currentTime = 0;
-        waveAnnouncementText.gameObject.transform.localScale = Vector3.one;
         waveAnnouncementText.text = text;
+        waveAnnouncementText.gameObject.transform.parent.localScale = Vector3.one;
+
         while (currentTime < fadeInDuration)
         {
             currentTime += Time.deltaTime;
@@ -116,20 +116,20 @@ public class WaveUIManager : NetworkBehaviour
                 waveAnnouncementText.color.r,
                 waveAnnouncementText.color.g,
                 waveAnnouncementText.color.b,
-                Mathf.Lerp(1, 0, currentTime / fadeInDuration)
+                Mathf.Lerp(1, 0, currentTime / fadeOutDuration)
             );
 
             waveAnnouncementBg.color = new Color(
                 waveAnnouncementBg.color.r,
                 waveAnnouncementBg.color.g,
                 waveAnnouncementBg.color.b,
-                Mathf.Lerp(1, 0, currentTime / fadeInDuration)
+                Mathf.Lerp(1, 0, currentTime / fadeOutDuration)
             );
 
             yield return null;
         }
 
-        waveAnnouncementText.gameObject.transform.localScale = Vector3.zero;
+        waveAnnouncementText.gameObject.transform.parent.localScale = Vector3.zero;
     }
 
     public void OnAllPlayersDead()
@@ -177,11 +177,10 @@ public class WaveUIManager : NetworkBehaviour
 
     IEnumerator UpdateWaveTimer()
     {
-        clientSideTimer = 0;
-        while (clientSideTimer < WaveManager.SECONDS_IN_A_WAVE)
+        clientSideTimer = WaveManager.SECONDS_IN_A_WAVE;
+        while (clientSideTimer > 0)
         {
-            Debug.Log("im still running idiots");
-            clientSideTimer += Time.deltaTime;
+            clientSideTimer -= Time.deltaTime;
             FormatWaveTimerUI(WAVE_FORMAT_STRING, isWave: true);
             yield return null;
         }
@@ -189,12 +188,10 @@ public class WaveUIManager : NetworkBehaviour
 
     IEnumerator UpdateRespiteTimer()
     {
-        Debug.Log("you betetr not");
         clientSideTimer = WaveManager.SECONDS_IN_A_RESPITE;
         while (clientSideTimer > 0)
         {
             clientSideTimer -= Time.deltaTime;
-            Debug.Log("clientSideTimer" + clientSideTimer + " " + Time.deltaTime);
             FormatWaveTimerUI(RESPITE_FORMAT_STRING, isWave: false);
             yield return null;
         }
@@ -224,7 +221,15 @@ public class WaveUIManager : NetworkBehaviour
     void RpcWaveBegin(int currentWave)
     {
         this.currentWave = currentWave;
-        StartCoroutine(FadeTextInAndOut(WAVE_BEGUN_MESSAGE));
+        // Could not get this working for some reason, and tried
+        // a number of ways to debug it. Fade in and out
+        // works on wave end however. For some reason the 
+        // elements just become invisible, even if i paused
+        // the game client-side and changed the colors and transform
+        // they still won't show up at all.
+        // Filing a bug on the trello.
+        // - justin
+        // StartCoroutine(FadeTextInAndOut(WAVE_BEGUN_MESSAGE));
     }
 
     [ClientRpc]
