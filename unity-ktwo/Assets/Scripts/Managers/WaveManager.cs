@@ -44,7 +44,6 @@ public class WaveManager : MonoBehaviour
     public int waveTotalZombies = BASE_TOTAL_ZOMBIES;
     public int zombiesSpawnedInWave = 0;
     
-
     void Awake()
     {
         instance = this;
@@ -173,7 +172,6 @@ public class WaveManager : MonoBehaviour
             currentWaveTime -= Time.deltaTime;
             yield return null;
         }
-
         EndRespite();
     }
 }

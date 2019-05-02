@@ -30,7 +30,7 @@ public class WaveUIManager : NetworkBehaviour
 
     public const string WAVE_FORMAT_STRING = "Wave {0} | {1}:{2}";
     public const string RESPITE_FORMAT_STRING = "Respite | {0}:{1}";
-    public const string SCORE_FORMAT_STRING = "SCore | {0}";
+    public const string SCORE_FORMAT_STRING = "Score | {0}";
 
     [Tooltip("WaveAnnouncementUI GameObject should exist in scene")]
     Text waveAnnouncementText;
@@ -53,6 +53,7 @@ public class WaveUIManager : NetworkBehaviour
     float clientSideTimer = 0;
     float timeSinceLastSync = 0;
 
+    bool gameOver = false;
 
     void Awake()
     {
@@ -82,7 +83,7 @@ public class WaveUIManager : NetworkBehaviour
         waveAnnouncementBg = announcementObject.GetComponentInChildren<Image>();
     }
 
-    IEnumerator FadeTextInAndOut(string text)
+    IEnumerator FadeTextInAndOut(string text, bool fadeOut=true)
     {
         float currentTime = 0;
         waveAnnouncementText.text = text;
@@ -106,6 +107,8 @@ public class WaveUIManager : NetworkBehaviour
              );
             yield return null;
         }
+
+        if (!fadeOut) yield break;
 
         currentTime = 0;
 
@@ -134,6 +137,8 @@ public class WaveUIManager : NetworkBehaviour
 
     public void OnAllPlayersDead()
     {
+        StopAllCoroutines();
+        gameOver = true;
         RpcShowGameOverText(WaveManager.instance.currentPoints);
     }
 
@@ -182,6 +187,7 @@ public class WaveUIManager : NetworkBehaviour
         {
             clientSideTimer -= Time.deltaTime;
             FormatWaveTimerUI(WAVE_FORMAT_STRING, isWave: true);
+            if (gameOver) yield break;
             yield return null;
         }
     }
@@ -270,8 +276,8 @@ public class WaveUIManager : NetworkBehaviour
     [ClientRpc]
     void RpcShowGameOverText(int score)
     {
-        waveAnnouncementText.text = string.Format(GAME_OVER_MESSAGE, score);
-        waveAnnouncementText.gameObject.transform.localScale = Vector3.one;
+        gameOver = true;
+        StartCoroutine(FadeTextInAndOut(string.Format(GAME_OVER_MESSAGE, score), fadeOut: false));
     }
 
     [ClientRpc]
