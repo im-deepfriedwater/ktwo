@@ -569,14 +569,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1375093108637305472}
     - target: {fileID: 350998163, guid: 180119d3049514d15be3a8fd8d7b0a73, type: 3}
-      propertyPath: textDescription
-      value: 
-      objectReference: {fileID: 1769923785}
-    - target: {fileID: 350998163, guid: 180119d3049514d15be3a8fd8d7b0a73, type: 3}
-      propertyPath: name
-      value: 
-      objectReference: {fileID: 124835937}
-    - target: {fileID: 350998163, guid: 180119d3049514d15be3a8fd8d7b0a73, type: 3}
       propertyPath: CSS
       value: 
       objectReference: {fileID: 1053270487}
@@ -584,6 +576,14 @@ PrefabInstance:
       propertyPath: playerUI
       value: 
       objectReference: {fileID: 207353475}
+    - target: {fileID: 350998163, guid: 180119d3049514d15be3a8fd8d7b0a73, type: 3}
+      propertyPath: textDescription
+      value: 
+      objectReference: {fileID: 1769923785}
+    - target: {fileID: 350998163, guid: 180119d3049514d15be3a8fd8d7b0a73, type: 3}
+      propertyPath: name
+      value: 
+      objectReference: {fileID: 124835937}
     - target: {fileID: 350998163, guid: 180119d3049514d15be3a8fd8d7b0a73, type: 3}
       propertyPath: canvas
       value: 

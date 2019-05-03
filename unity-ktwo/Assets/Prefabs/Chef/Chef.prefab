@@ -464,7 +464,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1e3ae36f64cdb448a63d9b838ae94c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityIcons: []
+  abilityIcons:
+  - {fileID: 21300000, guid: dac2c0d6e698547439d46f78752a0723, type: 3}
+  - {fileID: 21300000, guid: 8bfdf0033ed1301488ba83fce532627b, type: 3}
+  - {fileID: 21300000, guid: 0b69104c11ad3a340b5237ec26c33800, type: 3}
+  - {fileID: 21300000, guid: b84fe58b20a064a4ba105f6060ca670c, type: 3}
   characterPortrait: {fileID: 21300000, guid: 0d46a81357420584e85a502b5f360e4d, type: 3}
 --- !u!1 &3119021049955908768
 GameObject:
