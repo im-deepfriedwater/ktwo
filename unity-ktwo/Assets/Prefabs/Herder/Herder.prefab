@@ -941,6 +941,7 @@ GameObject:
   - component: {fileID: 7318724529123515686}
   - component: {fileID: 9061495234399140210}
   - component: {fileID: 7765989419747376978}
+  - component: {fileID: 8828623708565967832}
   m_Layer: 0
   m_Name: Herder
   m_TagString: Player
@@ -1356,3 +1357,21 @@ MonoBehaviour:
   param3: 
   param4: 
   param5: 
+--- !u!114 &8828623708565967832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5945045877925386086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1e3ae36f64cdb448a63d9b838ae94c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityIcons:
+  - {fileID: 21300000, guid: 65842b762863a6049bff458eda0be501, type: 3}
+  - {fileID: 21300000, guid: 3d386e6f072fd1d409057acde09c4b43, type: 3}
+  - {fileID: 21300000, guid: ca5c2a3e37c0a424da552bc41894d360, type: 3}
+  - {fileID: 21300000, guid: 27c3cb795bfd88943b59b2f0592ed295, type: 3}
+  characterPortrait: {fileID: 21300000, guid: 61727654167616643885664993a04d81, type: 3}
