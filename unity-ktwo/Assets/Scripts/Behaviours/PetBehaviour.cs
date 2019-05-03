@@ -12,10 +12,13 @@ public class PetBehaviour : NetworkBehaviour
     Animator animator;
     ParticleSystem heart;
 
+    private GameObject herderPlayer;
+
     void Start()
     {
         heart = GetComponent<ParticleSystem>();
         heart.Play();
+        herderPlayer = Object.FindObjectOfType<HerderTag>().gameObject;
         StartCoroutine(
             EndPet()
         );
@@ -24,7 +27,7 @@ public class PetBehaviour : NetworkBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (!isServer) return;
-        if (other.gameObject.tag != "Player") return;
+        if (other.gameObject.tag != "Player" || other.gameObject == herderPlayer) return;
         other.GetComponent<DamagablePlayer>().Heal(healAmount);
     }
 

@@ -31,4 +31,22 @@ public class EnemyManager : MonoBehaviour
         }
         return enumerator.Current;
     }
+
+    public void SetGlobalTarget(GameObject target)
+    {
+        foreach (var zombie in zombies)
+        {
+            var controller = zombie.GetComponent<EnemyController>();
+            if (!controller.turned) controller.target = target;
+        }
+    }
+
+    public void ResetGlobalTarget()
+    {
+        foreach (var zombie in zombies)
+        {
+            var controller = zombie.GetComponent<EnemyController>();
+            if (!controller.turned) controller.FindNewTarget();
+        }
+    }
 }

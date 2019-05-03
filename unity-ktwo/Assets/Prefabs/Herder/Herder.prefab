@@ -939,6 +939,7 @@ GameObject:
   - component: {fileID: 7400027996752528723}
   - component: {fileID: 8623518214080015137}
   - component: {fileID: 7318724529123515686}
+  - component: {fileID: 9061495234399140210}
   - component: {fileID: 7765989419747376978}
   m_Layer: 0
   m_Name: Herder
@@ -1194,8 +1195,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.50095856, y: 0.14754272, z: 0.8}
-  m_Center: {x: 0.0027186126, y: 0.03137386, z: 0.050000012}
+  m_Size: {x: 0.50095856, y: 0.108549, z: 0.8}
+  m_Center: {x: 0.0027186275, y: 0.050870717, z: 0.050000012}
 --- !u!114 &5945045877925385202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1240,9 +1241,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.31
-  m_Height: 1.11
+  m_Height: 1.084558
   m_Direction: 1
-  m_Center: {x: 0, y: 0.51, z: 0.07}
+  m_Center: {x: 0, y: 0.54455805, z: 0.06999999}
 --- !u!114 &5945045877925384971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1316,13 +1317,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputButtons: 07000000
-  cooldown: 30
+  cooldown: 3
   abilitySlot: 3
   abilityName: Bone
   heightOffset: 0
   distanceFactor: 0
   buildPrefab: {fileID: 2274790662457325287, guid: 2590f9c115a6cb541b144486a94d0409,
     type: 3}
+--- !u!114 &9061495234399140210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5945045877925386086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ccf1669ab479064a81d9479d099956e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7765989419747376978
 MonoBehaviour:
   m_ObjectHideFlags: 0

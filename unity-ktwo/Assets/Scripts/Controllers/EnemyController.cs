@@ -25,7 +25,7 @@ public class EnemyController : NetworkBehaviour
     bool CountDownForAttackHitBoxCoroutineStarted = false;
     bool StartAttackCooldownCoroutineStarted = false;
 
-    private bool turned = false;
+    public bool turned = false;
 
     Transform currentTransform;
     NavMeshAgent agent;
@@ -79,7 +79,7 @@ public class EnemyController : NetworkBehaviour
         }
     }
 
-    void FindNewTarget()
+    public void FindNewTarget()
     {
         if (!isServer) return;
         var target = turned ? EnemyManager.instance.GetRandomZombie()
