@@ -14,10 +14,8 @@ public class AggressionPuddleBehaviour : BasePuddleBehaviour
         if (other.gameObject.tag != "Zombie") return;
         affectedEntities.Add(other.gameObject);
 
-        StartCoroutine(
-            other.GetComponent<EnemyController>()
-                .TurnAgainstOwn(duration)
-        );
+        other.GetComponent<EnemyController>()
+                .TurnAgainstOwn(duration);
         StartCoroutine(
             RemoveFromHashSet(other.gameObject, duration)
         );

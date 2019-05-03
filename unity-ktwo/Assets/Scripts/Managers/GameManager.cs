@@ -8,12 +8,11 @@ public class GameManager: MonoBehaviour
     public static GameManager instance;
 
     public GameObject map;
+    public GameObject networkUIManager;
     public float currentWaveTime = 0;
     public bool encounterStarted = false;
 
-    bool waveBegun = false;
-
-    public const float WAVE_START_DELAY = 5; // in seconds
+    public const float WAVE_START_DELAY = 15; // in seconds
 
     void Awake()
     {
@@ -23,12 +22,13 @@ public class GameManager: MonoBehaviour
     public void StartEncounter()
     {
         StartCoroutine(BeginWave());
-        TellPlayersToHideCSSScreen();
+        TellClientsToInitializeForEncounter();
+        NetworkServer.Spawn(Instantiate(networkUIManager, Vector3.zero, Quaternion.identity));
         NetworkServer.Spawn(Instantiate(map, Vector3.zero, Quaternion.identity));
         SpawnManager.instance.SpawnPlayers(KtwoServer.instance.connections);
     }
 
-    void TellPlayersToHideCSSScreen()
+    void TellClientsToInitializeForEncounter()
     {
         foreach (var kvp in KtwoServer.instance.connections)
         {
@@ -39,17 +39,7 @@ public class GameManager: MonoBehaviour
     IEnumerator BeginWave()
     {
         yield return new WaitForSeconds(WAVE_START_DELAY);
-        SpawnManager.instance.SpawnZombieAtPoint(SpawnZone.South);
-        SpawnManager.instance.SpawnZombieAtPoint(SpawnZone.North);
-        SpawnManager.instance.SpawnZombieAtPoint(SpawnZone.East);
-        waveBegun = true;
+        WaveManager.instance.BeginWave();
     }
-    
-    void Update()
-    {
-        if (waveBegun)
-        {
-            currentWaveTime += Time.deltaTime;
-        }
-    }
+
 }

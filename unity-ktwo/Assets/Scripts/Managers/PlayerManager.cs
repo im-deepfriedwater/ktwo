@@ -18,7 +18,6 @@ public class PlayerManager : MonoBehaviour
         instance = this;
     }
 
-
     public GameObject TargetRandomPlayer()
     {
         return players[Random.Range(0, players.Count)];

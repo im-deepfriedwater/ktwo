@@ -63,5 +63,6 @@ public class PlayerConnectionObject : NetworkBehaviour
     {
         if (!hasAuthority) return;
         CSSManager.instance.HideCSSScreen();
+        
     }
 }

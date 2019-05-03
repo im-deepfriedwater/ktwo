@@ -5,6 +5,7 @@ using Invector.CharacterController;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
+[RequireComponent(typeof(SetCharacterUI))]
 // For controlling the main behaviours of the player.
 public class PlayerBehaviour : NetworkBehaviour
 {
@@ -41,6 +42,7 @@ public class PlayerBehaviour : NetworkBehaviour
             return;
         }
 
+        GetComponent<SetCharacterUI>().Initialize();
         PlayerManager.instance.player = gameObject;
         playerController = GetComponent<vThirdPersonController>();
         healthBar = GameObject.Find("HealthBarSlider").GetComponent<Slider>();
@@ -95,11 +97,12 @@ public class PlayerBehaviour : NetworkBehaviour
     {
         animator.SetBool("IsDead", true);
 
+        isDead = true;
+
         if (!hasAuthority) return;
 
         input.enabled = false;
         rbd.isKinematic = true;
-        isDead = true;
 
         if (isServer)
         {
