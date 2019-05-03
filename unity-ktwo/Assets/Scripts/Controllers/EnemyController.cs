@@ -82,6 +82,11 @@ public class EnemyController : NetworkBehaviour
                 FaceTarget();
             }
         }
+
+        if (target.tag == "Player" && target.GetComponent<PlayerBehaviour>().isDead)
+        {
+            FindNewTarget();
+        }
     }
 
     public void FindNewTarget()
