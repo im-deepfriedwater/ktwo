@@ -1297,7 +1297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputButtons: 06000000
-  cooldown: 0.5
+  cooldown: 20
   abilitySlot: 2
   abilityName: Pet
   heightOffset: 1
