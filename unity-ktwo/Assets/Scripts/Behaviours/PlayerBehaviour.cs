@@ -96,18 +96,15 @@ public class PlayerBehaviour : NetworkBehaviour
     public void Die()
     {
         animator.SetBool("IsDead", true);
-
         isDead = true;
+
+        if (isServer) PlayerManager.instance.players.Remove(gameObject);
 
         if (!hasAuthority) return;
 
         input.enabled = false;
         rbd.isKinematic = true;
 
-        if (isServer)
-        {
-            Debug.Log(PlayerManager.instance.players.Remove(gameObject) == false);
-        }
         InitiateGameOver();
     }
 

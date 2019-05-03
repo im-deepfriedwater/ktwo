@@ -5,11 +5,11 @@ using UnityEngine.Networking;
 
 public class KtwoClient : NetworkManager
 {
-    // Start is called before the first frame update
-    void Start()
+    public static KtwoClient instance;
+
+    void Awake ()
     {
-        StartClient();
-        Debug.Log("Client attempting to connect...");
+        instance = this;
     }
 
     public override void OnClientConnect(NetworkConnection conn)
