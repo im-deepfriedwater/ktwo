@@ -29,6 +29,7 @@ public class PetBehaviour : NetworkBehaviour
         if (!isServer) return;
         if (other.gameObject.tag != "Player" || other.gameObject == herderPlayer) return;
         other.GetComponent<DamagablePlayer>().Heal(healAmount);
+        other.GetComponent<PlayerBehaviour>().TimedAffectSpeedCR(speedBuffPercent, speedBuffDuration, true);
     }
 
     private IEnumerator EndPet()
