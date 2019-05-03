@@ -153,9 +153,9 @@ MonoBehaviour:
   - {fileID: 0}
   rosterData:
   - character: 0
-    characterDescription: Builder of walls, roads, and zombie death spike traps. the
-      architect brings a frantic but methodical playstyle encouraging strategic choke
-      points.
+    characterDescription: Based on obstructing zombies with walls and slowing them
+      down with traps. The Architect synergizes well with characters that can do a
+      lot of damage.
     previewModel: {fileID: 0}
     abilityDescriptions:
     - Builds a wall of 25 HP. Zombies are easily infuriated by walls and will often
@@ -172,8 +172,8 @@ MonoBehaviour:
     - {fileID: 21300000, guid: b1a68d980ad56dc4db012b31704f89ba, type: 3}
     - {fileID: 21300000, guid: 4659fbf6b715ca94cb5d78128f9b582f, type: 3}
   - character: 1
-    characterDescription: Most chaotic chemist you'll meet. Her chemical puddles are
-      known to be flammable, manipulative, anarchic, and sometimes helpful.
+    characterDescription: Someone who just wants to try out their new concoctions.
+      The chemist tosses chemical vials for various effects.
     previewModel: {fileID: 0}
     abilityDescriptions:
     - The helpful puddle gives teammates a 15% speed boost, zombies -15% speed reduction,
@@ -190,46 +190,45 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 032180e2566f9a5499224e07825633e9, type: 3}
     - {fileID: 21300000, guid: 2fbbd6623a138294183bf2b447865156, type: 3}
   - character: 2
-    characterDescription: 
+    characterDescription: "A fun-loving robot that\u2019s a little clumsy. They are
+      a chaotic character that can be extremely helpful to the rest of their team. "
     previewModel: {fileID: 0}
     abilityDescriptions:
     - Chucks a knife in the direction the Chef is facing. Does only 10 damage but
-      the Chef is pretty fast aat throwing these.
+      the Chef is pretty fast at throwing these.
     - Quickly cooks, and then drops a delicacy that will rejuvenate any teammate who
       picks it up for 15 health points.
     - Drops an excess amount of stored grease which flings zombies back in a random
       direction.
-    - Activates its dish washing function to spray bubbles out in the direction the
-      Chef is facing, slowing zombies who come in contact with it by 75%.
+    - Activates its dish washing function to spray and slow zombies who come in contact
+      with it by 75%.
     abilityIcons:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 21300000, guid: dac2c0d6e698547439d46f78752a0723, type: 3}
+    - {fileID: 21300000, guid: 8bfdf0033ed1301488ba83fce532627b, type: 3}
+    - {fileID: 21300000, guid: 0b69104c11ad3a340b5237ec26c33800, type: 3}
+    - {fileID: 21300000, guid: b84fe58b20a064a4ba105f6060ca670c, type: 3}
   - character: 3
-    characterDescription: Some say "The Herder" is the best boy. He's also a boy in
-      progress. We're working on him getting him ready to play ASAP!
+    characterDescription: "Mankind\u2019s best friend. The Herder can control hordes
+      of zombies easily. They can bark and drive zombies into walls and traps."
     previewModel: {fileID: 0}
     abilityDescriptions:
-    - Some say "The Herder" is the best boy. He's also a boy in progress. We're working
-      on him getting him ready to play ASAP!
-    - Some say "The Herder" is the best boy. He's also a boy in progress. We're working
-      on him getting him ready to play ASAP!
-    - Some say "The Herder" is the best boy. He's also a boy in progress. We're working
-      on him getting him ready to play ASAP!
-    - Some say "The Herder" is the best boy. He's also a boy in progress. We're working
-      on him getting him ready to play ASAP!
+    - The Herder begins barking, scaring zombies away for a set amount of time.
+    - The Herder lets out a fierce bite hurting any zombies in its way.
+    - The Herder gives some emotional support, and asks its teammates to pet it, healing
+      teammates 15 points.
+    - The Herder digs up a particularly fragrant bone up from the ground, attracting
+      all zombies to it.
     abilityIcons:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 21300000, guid: 65842b762863a6049bff458eda0be501, type: 3}
+    - {fileID: 21300000, guid: 3d386e6f072fd1d409057acde09c4b43, type: 3}
+    - {fileID: 21300000, guid: ca5c2a3e37c0a424da552bc41894d360, type: 3}
+    - {fileID: 21300000, guid: 27c3cb795bfd88943b59b2f0592ed295, type: 3}
   - character: 4
-    characterDescription: The Tinkerer was too busy building turrents out of BBQ grills
+    characterDescription: The Tinkerer was too busy building turrets out of BBQ grills
       and sticking dynamite into soup cans to be ready in time. Check back soon!
     previewModel: {fileID: 0}
     abilityDescriptions:
-    - The Tinkerer was too busy building turrents out of BBQ grills and sticking dynamite
+    - The Tinkerer was too busy building turrets out of BBQ grills and sticking dynamite
       into soup cans to be ready in time. Check back soon!
     - The Tinkerer was too busy building turrents out of BBQ grills and sticking dynamite
       into soup cans to be ready in time. Check back soon!
@@ -242,12 +241,12 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-  textDescription: {fileID: 0}
-  name: {fileID: 0}
   currentModel: {fileID: 0}
   CSS: {fileID: 0}
   VThirdPersonController: {fileID: 1954116143776750275}
   playerUI: {fileID: 0}
+  textDescription: {fileID: 0}
+  name: {fileID: 0}
   canvas: {fileID: 0}
   animator: {fileID: 0}
   localPlayer: {fileID: 0}
