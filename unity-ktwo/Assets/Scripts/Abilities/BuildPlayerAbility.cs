@@ -19,25 +19,27 @@ public class BuildPlayerAbility : AbstractAbility
         {
             cooldownOver = false;
             StartCoroutine("WaitForCooldown");
-            CmdBuildParentedObject(abilityName);
+            BuildParentedObject(abilityName);
         }
         UpdateAbilityUI();
     }
 
-    [Command]
-    void CmdBuildParentedObject(string name)
+    void BuildParentedObject(string name)
     {
         var newPosition = new Vector3(
-            transform.position.x,
-            transform.position.y + heightOffset,
-            transform.position.z
-        );
-
+           transform.position.x,
+           transform.position.y + heightOffset,
+           transform.position.z
+       );
         newPosition += transform.forward * distanceFactor;
+        CmdBuildObject(buildPrefab.name, newPosition, transform.rotation);
+    }
 
-        var go = (GameObject)Instantiate(Resources.Load(name, typeof(GameObject)), newPosition, transform.rotation);
+    [Command]
+    new public void CmdBuildObject(string name, Vector3 position, Quaternion rotation)
+    {
+        var go = (GameObject)Instantiate(Resources.Load(name, typeof(GameObject)), position, rotation);
         NetworkServer.Spawn(go);
-        go.transform.parent = transform;
         RpcSetParent(gameObject.GetComponent<NetworkIdentity>(), go.GetComponent<NetworkIdentity>());
     }
 

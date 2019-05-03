@@ -84,7 +84,7 @@ public class EnemyController : NetworkBehaviour
         }
     }
 
-    void FindNewTarget()
+    public void FindNewTarget()
     {
         if (!isServer) return;
         try
