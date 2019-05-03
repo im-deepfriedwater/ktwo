@@ -117,11 +117,12 @@ public class DamagableEnemy : Damagable
         invinicibilityComponent.enabled = false;
     }
 
-    public void Die()
+    public void Die(bool countPoints=true)
     {
         if (isServer)
         {
             EnemyManager.instance.zombies.Remove(gameObject);
+            if (countPoints) WaveManager.instance.OnZombieDeath();
             NetworkServer.Destroy(gameObject);
         }
     }

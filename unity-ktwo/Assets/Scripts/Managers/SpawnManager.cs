@@ -22,8 +22,7 @@ public class SpawnManager : MonoBehaviour
 
     public bool SpawnOnStartup;
 
-    public const float SPAWN_DELAY = 1.5f;
-    public const float WAVE_DELAY = 10; // in seconds
+    public const float SPAWN_DELAY = 0.5f;
 
     void Awake()
     {
@@ -47,7 +46,7 @@ public class SpawnManager : MonoBehaviour
         SpawnEnemy(zombie, destination.position, destination.rotation);
     }
 
-    public void SpawnMultipleZombiesAtRandomPoint(int numberOfZombies)
+    public void SpawnMultipleZombiesAtRandomPoints(int numberOfZombies)
     {
         StartCoroutine(TimedSpawn(numberOfZombies));
     }
@@ -57,9 +56,9 @@ public class SpawnManager : MonoBehaviour
         var counter = 0;
         while (counter < numberOfZombies)
         {
-            yield return new WaitForSeconds(SPAWN_DELAY);
             SpawnZombieAtRandomPoint();
             counter++;
+            yield return new WaitForSeconds(SPAWN_DELAY);
         }
     }
 
