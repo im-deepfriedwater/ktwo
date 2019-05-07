@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputButtons: 04000000
-  cooldown: 3
+  cooldown: 5
   abilitySlot: 0
   abilityName: Build Wall
   heightOffset: -1.3
@@ -226,7 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputButtons: 06000000
-  cooldown: 3
+  cooldown: 10
   abilitySlot: 2
   abilityName: Cement Trap
   heightOffset: 0
@@ -246,7 +246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputButtons: 07000000
-  cooldown: 3
+  cooldown: 10
   abilitySlot: 3
   abilityName: Spike Trap
   heightOffset: 0

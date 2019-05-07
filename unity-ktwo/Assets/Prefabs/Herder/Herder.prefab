@@ -1318,7 +1318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputButtons: 07000000
-  cooldown: 3
+  cooldown: 30
   abilitySlot: 3
   abilityName: Bone
   heightOffset: 0
